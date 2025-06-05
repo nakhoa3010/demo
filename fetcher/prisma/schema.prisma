@@ -1,0 +1,143 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Feed {
+  id         Int     @id @default(autoincrement()) @map("feed_id")
+  name       String
+  definition Json
+  adapterId  Int     @map("adapter_id")
+  Data       Data[]
+  adapter    Adapter @relation(fields: [adapterId], references: [id], onDelete: Cascade)
+
+  @@map("feeds")
+}
+
+model Adapter {
+  id          Int          @id @default(autoincrement()) @map("adapter_id")
+  adapterHash String       @unique @map("adapter_hash")
+  name        String
+  decimals    Int
+  Aggregator  Aggregator[]
+  feeds       Feed[]
+
+  @@map("adapters")
+}
+
+model Aggregator {
+  id                Int         @id @default(autoincrement()) @map("aggregator_id")
+  aggregatorHash    String      @unique @map("aggregator_hash")
+  address           String
+  active            Boolean     @default(false)
+  name              String      @unique
+  heartbeat         Int
+  threshold         Float
+  absoluteThreshold Float       @map("absolute_threshold")
+  adapterId         Int         @map("adapter_id")
+  fetcherType       Int         @default(0) @map("fetcher_type")
+  chainId           Int         @map("chain_id")
+  nameHash          String?     @map("name_hash")
+  Aggregate         Aggregate[]
+  adapter           Adapter     @relation(fields: [adapterId], references: [id])
+  Data              Data[]
+  Chain             Chains      @relation(fields: [chainId], references: [chainId])
+
+  @@map("aggregators")
+}
+
+model Data {
+  id           Int        @id @default(autoincrement()) @map("data_id")
+  timestamp    DateTime   @db.Timestamptz(6)
+  value        BigInt
+  aggregatorId Int        @map("aggregator_id")
+  feedId       Int        @map("feed_id")
+  aggregator   Aggregator @relation(fields: [aggregatorId], references: [id], onDelete: Cascade)
+  feed         Feed       @relation(fields: [feedId], references: [id])
+
+  @@map("data")
+}
+
+model Aggregate {
+  id           Int        @id @default(autoincrement()) @map("aggregate_id")
+  timestamp    DateTime   @db.Timestamptz(6)
+  value        BigInt
+  aggregatorId Int        @map("aggregator_id")
+  aggregator   Aggregator @relation(fields: [aggregatorId], references: [id], onDelete: Cascade)
+
+  @@index([aggregatorId, timestamp(sort: Desc)])
+  @@map("aggregates")
+}
+
+model Chains {
+  chainId    Int          @id @default(autoincrement()) @map("chain_id")
+  name       String       @unique
+  reporters  Reporters[]
+  Aggregator Aggregator[]
+  Listener   Listener[]
+  VrfKey     VrfKey[]
+  ChainRpc   ChainRpc[]
+
+  @@map("chains")
+}
+
+model Reporters {
+  address       String   @db.VarChar(42)
+  chainId       Int      @map("chain_id")
+  oracleAddress String   @db.VarChar(42)
+  privateKey    String   @db.VarChar(164)
+  reporterId    Int      @id @default(autoincrement()) @map("reporter_id")
+  serviceId     Int      @map("service_id")
+  Chains        Chains   @relation(fields: [chainId], references: [chainId], onDelete: NoAction, onUpdate: NoAction)
+  Services      Services @relation(fields: [serviceId], references: [serviceId], onDelete: NoAction, onUpdate: NoAction)
+
+  @@map("reporters")
+}
+
+model Services {
+  name      String      @unique
+  serviceId Int         @id @default(autoincrement()) @map("service_id")
+  reporters Reporters[]
+  Listener  Listener[]
+
+  @@map("services")
+}
+
+model Listener {
+  id        Int      @id @default(autoincrement()) @map("listener_id")
+  address   String   @db.VarChar(42)
+  eventName String   @map("event_name") @db.VarChar(255)
+  chain     Chains   @relation(fields: [chainId], references: [chainId])
+  chainId   Int      @map("chain_id")
+  service   Services @relation(fields: [serviceId], references: [serviceId])
+  serviceId Int      @map("service_id")
+
+  @@map("listeners")
+}
+
+model VrfKey {
+  id      Int    @id @default(autoincrement()) @map("vrf_key_id")
+  chainId Int    @map("chain_id")
+  keyHash String @map("key_hash") @db.VarChar(256)
+  pk      String @db.VarChar(256)
+  pkX     String @map("pk_x") @db.VarChar(256)
+  pkY     String @map("pk_y") @db.VarChar(256)
+  sk      String @db.VarChar(256)
+  chain   Chains @relation(fields: [chainId], references: [chainId])
+
+  @@map("vrf_keys")
+}
+
+model ChainRpc {
+  id        Int      @id @default(autoincrement())
+  chainId   Int      @map("chain_id")
+  rpcUrl    String   @map("rpc_url")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  chain     Chains   @relation(fields: [chainId], references: [chainId])
+
+  @@map("chain_rpc")
+}
