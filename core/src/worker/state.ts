@@ -3,7 +3,7 @@ import { Logger } from 'pino'
 import type { RedisClientType } from 'redis'
 import { getAggregators } from './api'
 import { IAggregatorConfig } from './types'
-import { RivalzError, RivalzErrorCode } from '../errors'
+import { XOracleError, XOracleErrorCode } from '../errors'
 
 const FILE_NAME = import.meta.url
 
@@ -99,7 +99,7 @@ export class State {
    * it was in an active state.
    *
    * @param {string} aggregator hash
-   * @exception {RivalzErrorCode.AggregatorNotRemoved} raise when no reporter was removed
+   * @exception {XOracleErrorCode.AggregatorNotRemoved} raise when no reporter was removed
    */
   async remove(aggregatorHash: string) {
     this.logger.debug('remove')
@@ -111,7 +111,7 @@ export class State {
     if (index === -1) {
       const msg = `Aggregator with aggregatorHash=${aggregatorHash} was not found.`
       this.logger.debug({ name: 'remove', file: FILE_NAME }, msg)
-      throw new RivalzError(RivalzErrorCode.AggregatorNotFoundInState, msg)
+      throw new XOracleError(XOracleErrorCode.AggregatorNotFoundInState, msg)
     }
 
     const removedAggregator = activeAggregators.splice(index, 1)[0]
@@ -120,7 +120,7 @@ export class State {
     if (numActiveAggregators == numUpdatedActiveAggregators) {
       const msg = `Aggregator with aggregatorHash=${aggregatorHash} was not removed. Aggregator was not found.`
       this.logger.debug({ name: 'remove', file: FILE_NAME }, msg)
-      throw new RivalzError(RivalzErrorCode.AggregatorNotRemoved, msg)
+      throw new XOracleError(XOracleErrorCode.AggregatorNotRemoved, msg)
     }
 
     // Update active aggregators
@@ -142,7 +142,7 @@ export class State {
     const activeAggregators = await this.active()
     const index = activeAggregators.findIndex((L) => L.address == oracleAddress)
     if (index == -1) {
-      throw new RivalzError(RivalzErrorCode.AggregatorNotFoundInState)
+      throw new XOracleError(XOracleErrorCode.AggregatorNotFoundInState)
     }
     const timestamp = Date.now()
     const updatedAggregator: IAggregatorConfig = {

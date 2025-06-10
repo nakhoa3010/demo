@@ -1,5 +1,5 @@
 import cbor from 'cbor'
-import { RivalzError, RivalzErrorCode } from '../errors'
+import { XOracleError, XOracleErrorCode } from '../errors'
 import { IRequestOperation } from '../types'
 import { remove0x } from '../utils'
 
@@ -11,8 +11,8 @@ export async function decodeRequest(anyRequest: string): Promise<IRequestOperati
 
   // decodedMessage.length is expected to be even, pairs of Key and Value
   if (decodedMessage.length % 2 == 1) {
-    throw new RivalzError(
-      RivalzErrorCode.InvalidDecodedMesssageLength,
+    throw new XOracleError(
+      XOracleErrorCode.InvalidDecodedMesssageLength,
       decodedMessage.length.toString()
     )
   }

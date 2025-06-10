@@ -3,7 +3,7 @@ import { Logger } from 'pino'
 import { IListenerRawConfig } from '../types'
 import { ADCS_API_URL } from '../settings'
 import { buildUrl } from '../utils'
-import { RivalzError, RivalzErrorCode } from '../errors'
+import { XOracleError, XOracleErrorCode } from '../errors'
 
 const FILE_NAME = import.meta.url
 
@@ -41,7 +41,7 @@ export async function getListeners({
     }))
   } catch (e) {
     logger?.error({ name: 'getListeners', file: FILE_NAME, ...e }, 'error')
-    throw new RivalzError(RivalzErrorCode.GetListenerRequestFailed)
+    throw new XOracleError(XOracleErrorCode.GetListenerRequestFailed)
   }
 }
 
@@ -65,6 +65,6 @@ export async function getListener({
     return (await axios.get(endpoint))?.data
   } catch (e) {
     logger?.error({ name: 'getListener', file: FILE_NAME, ...e }, 'error')
-    throw new RivalzError(RivalzErrorCode.GetListenerRequestFailed)
+    throw new XOracleError(XOracleErrorCode.GetListenerRequestFailed)
   }
 }

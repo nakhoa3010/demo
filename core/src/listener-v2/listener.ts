@@ -31,7 +31,7 @@ export async function listenerServiceV2({
 }: {
   processEventQueueName: string
   workerQueueName: string
-  processFn: (log: Log) => Promise<ProcessEventOutputType | undefined>
+  processFn: (log: Log, chain: string) => Promise<ProcessEventOutputType | undefined>
   logger: Logger
 }) {
   const workerQueue = new Queue(workerQueueName, BULLMQ_CONNECTION)
@@ -67,7 +67,7 @@ function processEventJob({
   logger
 }: {
   workerQueue: Queue
-  processFn: (log: Log) => Promise<ProcessEventOutputType | undefined>
+  processFn: (log: Log, chain: string) => Promise<ProcessEventOutputType | undefined>
   logger: Logger
 }) {
   const _logger = logger.child({ name: 'processEventJob', file: FILE_NAME })
@@ -78,7 +78,7 @@ function processEventJob({
     _logger.debug(event, 'event')
 
     try {
-      const jobMetadata = await processFn(event)
+      const jobMetadata = await processFn(event, chain)
       if (jobMetadata) {
         const { jobId, jobName, jobData, jobQueueSettings } = jobMetadata
         const queueSettings = jobQueueSettings ? jobQueueSettings : LISTENER_JOB_SETTINGS

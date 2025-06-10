@@ -1,5 +1,5 @@
 {
-  "name": "@rivalz/oracle-cli",
+  "name": "@xoracle/oracle-cli",
   "version": "1.0.0",
   "type": "module",
   "description": "CLI",
@@ -12,7 +12,7 @@
     "Blockchain",
     "Web3"
   ],
-  "author": "Rivalz",
+  "author": "XOracle",
   "homepage": "",
   "license": "MIT",
   "scripts": {
@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "@jest/globals": "^29.3.1",
-    "@rivalz/vrf": "../vrf",
+    "@xoracle/vrf": "../vrf",
     "@types/node": "^18.11.9",
     "@typescript-eslint/eslint-plugin": "^5.47.0",
     "@typescript-eslint/parser": "^5.47.0",

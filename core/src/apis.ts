@@ -2,7 +2,7 @@ import { Logger } from 'pino'
 import { buildUrl } from './utils'
 import { ADCS_API_URL, API_URL, CHAIN, DATA_FEED_SERVICE_NAME } from './settings'
 import axios from 'axios'
-import { RivalzError, RivalzErrorCode } from './errors'
+import { XOracleError, XOracleErrorCode } from './errors'
 import { IReporterConfig, IVrfConfig } from './types'
 const FILE_NAME = import.meta.url
 
@@ -66,9 +66,9 @@ export async function getReporterByAddress({
   } catch (e) {
     logger.error({ name: 'getReportersByOracleAddress', file: FILE_NAME, ...e }, 'error')
     if (e.code === 'ECONNREFUSED') {
-      throw new RivalzError(RivalzErrorCode.FailedToConnectAPI)
+      throw new XOracleError(XOracleErrorCode.FailedToConnectAPI)
     } else {
-      throw new RivalzError(RivalzErrorCode.GetReporterRequestFailed)
+      throw new XOracleError(XOracleErrorCode.GetReporterRequestFailed)
     }
   }
 }
@@ -93,6 +93,6 @@ export async function getVrfConfig({
     return vrfKeys[0]
   } catch (e) {
     logger?.error({ name: 'getVrfConfig', file: FILE_NAME, ...e }, 'error')
-    throw new RivalzError(RivalzErrorCode.GetVrfConfigRequestFailed)
+    throw new XOracleError(XOracleErrorCode.GetVrfConfigRequestFailed)
   }
 }

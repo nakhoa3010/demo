@@ -8,8 +8,8 @@ async function bootstrap() {
   setAppSetting(app)
   const version = '1.0'
   const config = new DocumentBuilder()
-    .setTitle('Rivalz API')
-    .setDescription('Rivalz API description')
+    .setTitle('X Oracle API')
+    .setDescription('X Oracle API description')
     .setVersion(version)
     .addBearerAuth(
       {

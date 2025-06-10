@@ -1,5 +1,5 @@
 import { Logger } from 'pino'
-import { RivalzError, RivalzErrorCode } from '../errors'
+import { XOracleError, XOracleErrorCode } from '../errors'
 import { IListenerRawConfig, IListenerConfig, IListenerGroupConfig } from '../types'
 
 const FILE_NAME = import.meta.url
@@ -61,8 +61,8 @@ export function postprocessListeners({
   logger?: Logger
 }): IListenerGroupConfig {
   if (listenersRawConfig.length == 0) {
-    throw new RivalzError(
-      RivalzErrorCode.NoListenerFoundGivenRequirements,
+    throw new XOracleError(
+      XOracleErrorCode.NoListenerFoundGivenRequirements,
       `service: [${service}], chain: [${chain}]`
     )
   }
@@ -72,7 +72,7 @@ export function postprocessListeners({
   )
 
   if (!isValid.every((t) => t)) {
-    throw new RivalzError(RivalzErrorCode.InvalidListenerConfig)
+    throw new XOracleError(XOracleErrorCode.InvalidListenerConfig)
   }
 
   logger?.info(

@@ -21,7 +21,7 @@
       }
     ]
   },
-  "ignorePatterns": ["src/cli/rivalz-cli/dist/**"],
+  "ignorePatterns": ["src/cli/x-oracle-cli/dist/**"],
   "parserOptions": {
     "sourceType": "module",
     "ecmaVersion": 2022,

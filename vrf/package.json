@@ -1,5 +1,5 @@
 {
-  "name": "@rivalz/vrf",
+  "name": "@xoracle/vrf",
   "version": "0.1.1",
   "type": "module",
   "description": " VRF",
@@ -16,7 +16,7 @@
     "VRF",
     "Verifiable Random Function"
   ],
-  "author": "Rivalz",
+  "author": "XOracle",
   "homepage": "",
   "license": "MIT",
   "scripts": {

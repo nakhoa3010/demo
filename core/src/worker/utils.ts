@@ -1,6 +1,6 @@
 import { Contract, ethers, JsonRpcProvider, NonceManager, parseUnits } from 'ethers'
 import { PROVIDER_URL } from '../settings'
-import { RivalzError, RivalzErrorCode } from '../errors'
+import { XOracleError, XOracleErrorCode } from '../errors'
 import { Logger } from 'pino'
 import { add0x } from '../utils'
 
@@ -28,7 +28,7 @@ export function buildReducer(reducerMapping, reducers) {
   return reducers.map((r) => {
     const reducer = reducerMapping[r.function]
     if (!reducer) {
-      throw new RivalzError(RivalzErrorCode.InvalidReducer)
+      throw new XOracleError(XOracleErrorCode.InvalidReducer)
     }
     return reducer(r?.args)
   })
@@ -36,7 +36,7 @@ export function buildReducer(reducerMapping, reducers) {
 
 export function uniform(a: number, b: number): number {
   if (a > b) {
-    throw new RivalzError(RivalzErrorCode.UniformWrongParams)
+    throw new XOracleError(XOracleErrorCode.UniformWrongParams)
   }
   return a + Math.round(Math.random() * (b - a))
 }
@@ -122,7 +122,7 @@ export async function sendTransaction({
     const txReceipt = await (await wallet.sendTransaction(tx)).wait(1)
     _logger.debug(txReceipt, 'txReceipt')
     if (txReceipt === null) {
-      throw new RivalzError(RivalzErrorCode.TxNotMined)
+      throw new XOracleError(XOracleErrorCode.TxNotMined)
     }
     return txReceipt
   } catch (e) {
@@ -132,22 +132,22 @@ export async function sendTransaction({
     let error
     if (e.reason == 'invalid address') {
       msg = `TxInvalidAddress ${e.value}`
-      error = new RivalzError(RivalzErrorCode.TxInvalidAddress, msg, e.value)
+      error = new XOracleError(XOracleErrorCode.TxInvalidAddress, msg, e.value)
     } else if (e.reason == 'processing response error') {
       msg = `TxProcessingResponseError ${e.value}`
-      error = new RivalzError(RivalzErrorCode.TxProcessingResponseError, msg, e.value)
+      error = new XOracleError(XOracleErrorCode.TxProcessingResponseError, msg, e.value)
     } else if (e.reason == 'missing response') {
       msg = 'TxMissingResponseError'
-      error = new RivalzError(RivalzErrorCode.TxMissingResponseError, msg)
+      error = new XOracleError(XOracleErrorCode.TxMissingResponseError, msg)
     } else if (e.reason == 'transaction failed') {
       msg = 'TxTransactionFailed'
-      error = new RivalzError(RivalzErrorCode.TxTransactionFailed, msg)
+      error = new XOracleError(XOracleErrorCode.TxTransactionFailed, msg)
     } else if (e.reason == 'insufficient funds for intrinsic transaction cost') {
       msg = 'TxInsufficientFunds'
-      error = new RivalzError(RivalzErrorCode.TxProcessingResponseError, msg)
+      error = new XOracleError(XOracleErrorCode.TxProcessingResponseError, msg)
     } else if (e.code == 'UNPREDICTABLE_GAS_LIMIT') {
       msg = 'TxCannotEstimateGasError'
-      error = new RivalzError(RivalzErrorCode.TxCannotEstimateGasError, msg, e.value)
+      error = new XOracleError(XOracleErrorCode.TxCannotEstimateGasError, msg, e.value)
     } else {
       error = e
     }

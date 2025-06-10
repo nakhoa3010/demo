@@ -1,7 +1,7 @@
 import { parseArgs } from 'node:util'
 import { buildLogger } from '../logger'
 import { buildListener as buildADCSListener } from './adcs'
-import { RivalzError, RivalzErrorCode } from '../errors'
+import { XOracleError, XOracleErrorCode } from '../errors'
 import { hookConsoleError } from '../utils'
 import { IListenersV2 } from './types'
 import express, { Request, Response } from 'express'
@@ -21,7 +21,7 @@ async function main() {
 
   if (!LISTENERS[service]) {
     LOGGER.error({ name: 'listener:main', file: FILE_NAME, service }, 'service')
-    throw new RivalzError(RivalzErrorCode.UndefinedListenerRequested)
+    throw new XOracleError(XOracleErrorCode.UndefinedListenerRequested)
   }
   LISTENERS[service](LOGGER)
   LOGGER.info('Listener launched')

@@ -11,7 +11,7 @@ export function buildLogger(name: string) {
         target: 'pino/file',
         level: LOG_LEVEL,
         options: {
-          destination: path.join(LOG_DIR, `rivalz-${os.hostname()}-${name}.log`)
+          destination: path.join(LOG_DIR, `x-oracle-${os.hostname()}-${name}.log`)
         }
       }
     ]

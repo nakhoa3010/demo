@@ -11,7 +11,7 @@ import {
   IMemeData
 } from '../types'
 import { buildUrl } from '../utils'
-import { RivalzError, RivalzErrorCode } from '../errors'
+import { XOracleError, XOracleErrorCode } from '../errors'
 import { IFetchAiModelData } from './types'
 
 export const AGGREGATE_ENDPOINT = buildUrl(API_URL, 'aggregate')
@@ -44,7 +44,7 @@ export async function fetchDataFeed({
     return (await axios.get(url))?.data
   } catch (e) {
     logger.error(e)
-    throw new RivalzError(RivalzErrorCode.FailedToGetAggregate)
+    throw new XOracleError(XOracleErrorCode.FailedToGetAggregate)
   }
 }
 
@@ -60,7 +60,7 @@ export async function fetchDataFeedByAggregatorId({
     return (await axios.get(url))?.data
   } catch (e) {
     logger.error(e)
-    throw new RivalzError(RivalzErrorCode.FailedToGetAggregate)
+    throw new XOracleError(XOracleErrorCode.FailedToGetAggregate)
   }
 }
 
@@ -87,7 +87,7 @@ export async function getAggregatorGivenAddress({
     response = (await axios.get(url.toString()))?.data
   } catch (e) {
     logger.error(e)
-    throw new RivalzError(RivalzErrorCode.FailedToGetAggregator)
+    throw new XOracleError(XOracleErrorCode.FailedToGetAggregator)
   }
 
   if (response.length == 1) {
@@ -96,11 +96,11 @@ export async function getAggregatorGivenAddress({
   } else if (response.length == 0) {
     const msg = 'No aggregator found'
     logger.error(msg)
-    throw new RivalzError(RivalzErrorCode.FailedToGetAggregator, msg)
+    throw new XOracleError(XOracleErrorCode.FailedToGetAggregator, msg)
   } else {
     const msg = `Expected one aggregator, received ${response.length}`
     logger.error(msg)
-    throw new RivalzError(RivalzErrorCode.FailedToGetAggregator, msg)
+    throw new XOracleError(XOracleErrorCode.FailedToGetAggregator, msg)
   }
 }
 
@@ -133,7 +133,7 @@ export async function getAggregators({
     return response
   } catch (e) {
     logger.error(e)
-    throw new RivalzError(RivalzErrorCode.FailedToGetAggregator)
+    throw new XOracleError(XOracleErrorCode.FailedToGetAggregator)
   }
 }
 
@@ -161,7 +161,7 @@ export async function getAggregator({
     return response
   } catch (e) {
     logger.error(e)
-    throw new RivalzError(RivalzErrorCode.FailedToGetAggregator)
+    throw new XOracleError(XOracleErrorCode.FailedToGetAggregator)
   }
 }
 
@@ -179,7 +179,7 @@ export async function storeErrorMsg({ data, logger }: { data: IErrorMsgData; log
     return response
   } catch (e) {
     logger.error(e)
-    throw new RivalzError(RivalzErrorCode.FailedToStoreErrorMsg)
+    throw new XOracleError(XOracleErrorCode.FailedToStoreErrorMsg)
   }
 }
 
@@ -195,7 +195,7 @@ export async function fetchDataFeedByPairName({
     return (await axios.get(url))?.data
   } catch (e) {
     logger.error(e)
-    throw new RivalzError(RivalzErrorCode.FailedToGetAggregate)
+    throw new XOracleError(XOracleErrorCode.FailedToGetAggregate)
   }
 }
 
@@ -211,7 +211,7 @@ export async function fetchPriceByPairName({
     return (await axios.get(url))?.data
   } catch (e) {
     logger.error(e)
-    throw new RivalzError(RivalzErrorCode.FailedToGetAggregate)
+    throw new XOracleError(XOracleErrorCode.FailedToGetAggregate)
   }
 }
 
@@ -235,7 +235,7 @@ export async function fetchAdapterByJobId(jobId: string, logger: Logger): Promis
     }
   } catch (e) {
     logger.error(e)
-    throw new RivalzError(RivalzErrorCode.FailedToGetAdaptor)
+    throw new XOracleError(XOracleErrorCode.FailedToGetAdaptor)
   }
 }
 
@@ -245,7 +245,7 @@ export async function fetchMemeCoinData({ logger }: { logger: Logger }): Promise
     return (await axios.get(url))?.data
   } catch (e) {
     logger.error(e)
-    throw new RivalzError(RivalzErrorCode.FailedToGetAggregate)
+    throw new XOracleError(XOracleErrorCode.FailedToGetAggregate)
   }
 }
 
@@ -262,7 +262,7 @@ export async function fetchAiModelData({
     return (await axios.post(url, data))?.data.result
   } catch (e) {
     logger.error(e)
-    throw new RivalzError(RivalzErrorCode.FailedToGetAggregate)
+    throw new XOracleError(XOracleErrorCode.FailedToGetAggregate)
   }
 }
 

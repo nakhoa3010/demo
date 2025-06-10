@@ -3,7 +3,7 @@ import { JsonRpcProvider } from 'ethers'
 dotenv.config()
 
 export const CHAIN = process.env.CHAIN || 'localhost'
-export const DEPLOYMENT_NAME = process.env.DEPLOYMENT_NAME || 'rivalz'
+export const DEPLOYMENT_NAME = process.env.DEPLOYMENT_NAME || 'xOracle'
 
 export const DATA_FEED_FULFILL_GAS_MINIMUM = 400_000
 export const VRF_FULLFILL_GAS_PER_WORD = 1_000
@@ -39,6 +39,14 @@ export const ADCS_LISTENER_STATE_NAME = `${DEPLOYMENT_NAME}-adcs-listener-state`
 export const ADCS_SERVICE_NAME = 'ADCS'
 export const WORKER_ADCS_QUEUE_NAME = `${DEPLOYMENT_NAME}-worker-adcs-queue`
 export const WORKER_AUTOMATE_ADCS_QUEUE_NAME = `${DEPLOYMENT_NAME}-worker-automate-adcs-queue`
+
+// VRF
+export const LISTENER_VRF_HISTORY_QUEUE_NAME = `${DEPLOYMENT_NAME}-listener-vrf-history-queue`
+export const LISTENER_VRF_LATEST_QUEUE_NAME = `${DEPLOYMENT_NAME}-listener-vrf-latest-queue`
+export const LISTENER_VRF_PROCESS_EVENT_QUEUE_NAME = `${DEPLOYMENT_NAME}-listener-vrf-process-event-queue`
+export const VRF_LISTENER_STATE_NAME = `${DEPLOYMENT_NAME}-vrf-listener-state`
+export const VRF_SERVICE_NAME = 'VRF'
+export const WORKER_VRF_QUEUE_NAME = `${DEPLOYMENT_NAME}-worker-vrf-queue`
 
 export const REMOVE_ON_COMPLETE = 500
 export const REMOVE_ON_FAIL = 1_000

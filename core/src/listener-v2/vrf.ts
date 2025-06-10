@@ -1,30 +1,27 @@
 import { Interface, Log } from 'ethers'
 import { Logger } from 'pino'
 import { listenerServiceV2 } from './listener'
-import { IDataRequested, IADCSListenerWorker } from '../types'
+import { IRandomWordsRequested, IVrfListenerWorker } from '../types'
+import { IProcessEventListenerJobV2, ProcessEventOutputType } from './types'
 import {
-  IProcessEventListenerJob,
-  IProcessEventListenerJobV2,
-  ProcessEventOutputType
-} from './types'
-import {
-  LISTENER_ADCS_PROCESS_EVENT_QUEUE_NAME,
-  WORKER_ADCS_QUEUE_NAME,
+  LISTENER_VRF_PROCESS_EVENT_QUEUE_NAME,
+  WORKER_VRF_QUEUE_NAME,
   BULLMQ_CONNECTION,
   LISTENER_JOB_SETTINGS,
   LISTENER_V2_PORT,
   WEBHOOK_KEY
 } from '../settings'
-import { ADCS_ABI } from '../constants/adcs.coordinator.abi'
+import { VRF_COORDINATOR_ABI } from '../constants/vrf.coordinator.abi'
 import { Queue } from 'bullmq'
 import { getUniqueEventIdentifier } from './utils'
 import express, { Request, Response } from 'express'
+import { getVrfConfig } from '../apis'
 const FILE_NAME = import.meta.url
 
 export async function buildListener(logger: Logger) {
-  const processEventQueueName = LISTENER_ADCS_PROCESS_EVENT_QUEUE_NAME
-  const workerQueueName = WORKER_ADCS_QUEUE_NAME
-  const iface = new Interface(ADCS_ABI)
+  const processEventQueueName = LISTENER_VRF_PROCESS_EVENT_QUEUE_NAME
+  const workerQueueName = WORKER_VRF_QUEUE_NAME
+  const iface = new Interface(VRF_COORDINATOR_ABI)
   const app = express()
 
   listenerServiceV2({
@@ -49,7 +46,7 @@ export async function buildListener(logger: Logger) {
         }
         const data = JSON.parse(body)
         if (data && data.events && data.events.length > 0) {
-          adcsStreamListener({ chain: data.chain, events: data.events, iface })
+          vrfStreamListener({ chain: data.chain, events: data.events, iface })
         }
         res.status(200).send('Webhook received')
       })
@@ -84,27 +81,40 @@ export async function buildListener(logger: Logger) {
 }
 
 async function processEvent({ iface, logger }: { iface: Interface; logger: Logger }) {
-  const _logger = logger.child({ name: 'adcs-processEvent', file: FILE_NAME })
+  const _logger = logger.child({ name: 'processEvent', file: FILE_NAME })
+
   async function wrapper(log, chain): Promise<ProcessEventOutputType | undefined> {
-    const eventData = iface?.parseLog(log)?.args as unknown as IDataRequested
+    const eventData = iface.parseLog(log)?.args as unknown as IRandomWordsRequested
     _logger.debug(eventData, 'eventData')
-    const requestId = eventData.requestId.toString()
-    const jobData: IADCSListenerWorker = {
-      callbackAddress: log.address,
-      blockNum: Number(eventData.blockNumber),
-      requestId,
-      callbackGasLimit: Number(eventData.callbackGasLimit),
-      sender: eventData.sender,
-      jobId: eventData.jobId,
-      data: eventData.data
+    const { keyHash } = await getVrfConfig({ chain })
+
+    if (eventData.keyHash != keyHash) {
+      _logger.info(`Ignore event with keyhash [${eventData.keyHash}]`)
+    } else {
+      const jobName = 'vrf'
+      const requestId = eventData.requestId.toString()
+      const jobData: IVrfListenerWorker = {
+        callbackAddress: log.address,
+        blockNum: log.blockNumber,
+        blockHash: log.blockHash,
+        requestId,
+        seed: eventData.preSeed.toString(),
+        accId: Number(eventData.accId),
+        callbackGasLimit: eventData.callbackGasLimit,
+        numWords: eventData.numWords,
+        sender: eventData.sender,
+        isDirectPayment: eventData.isDirectPayment
+      }
+      _logger.debug(jobData, 'jobData')
+
+      return { jobName, jobId: requestId, jobData }
     }
-    _logger.debug(jobData, 'jobData')
-    return { jobName: 'adcs-process-event', jobId: requestId, jobData }
   }
 
   return wrapper
 }
-export async function adcsStreamListener({
+
+export async function vrfStreamListener({
   chain,
   events,
   iface
@@ -113,13 +123,13 @@ export async function adcsStreamListener({
   events: Log[]
   iface: Interface
 }) {
-  const processEventQueue = new Queue(LISTENER_ADCS_PROCESS_EVENT_QUEUE_NAME, BULLMQ_CONNECTION)
+  const processEventQueue = new Queue(LISTENER_VRF_PROCESS_EVENT_QUEUE_NAME, BULLMQ_CONNECTION)
   for (const [index, event] of events.entries()) {
     const eventData = iface?.parseLog(event)
     if (!eventData) {
       continue
     }
-    if (eventData.name !== 'DataRequested') {
+    if (eventData.name !== 'RandomWordsRequested') {
       continue
     }
     const outData: IProcessEventListenerJobV2 = {
@@ -132,6 +142,6 @@ export async function adcsStreamListener({
       jobId,
       ...LISTENER_JOB_SETTINGS
     })
-    console.log(`Added job ${jobId} to queue ${LISTENER_ADCS_PROCESS_EVENT_QUEUE_NAME}`)
+    console.log(`Added job ${jobId} to queue ${LISTENER_VRF_PROCESS_EVENT_QUEUE_NAME}`)
   }
 }

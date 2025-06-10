@@ -84,6 +84,7 @@ export interface IRandomWordsRequested {
   sender: string
   isDirectPayment: boolean
   blockNumber: bigint
+  accId: bigint
 }
 
 export interface IRandomWordsFulfilled {
@@ -129,6 +130,8 @@ export interface IVrfListenerWorker {
   numWords: number
   sender: string
   isDirectPayment: boolean
+  accId: number
+  chain?: string
 }
 
 export interface IDataFeedListenerWorker {
@@ -190,7 +193,7 @@ export type Proof = [
 
 export type RequestCommitmentVRF = [
   string /* blockNum */,
-  // string /* accId */,
+  number /* accId */,
   number /* callbackGasLimit */,
   number /* numWords */,
   string /* sender */
@@ -332,6 +335,8 @@ export interface IVrfTransactionParameters {
   preSeed: string
   uPoint: [string, string]
   vComponents: [string, string, string, string]
+  accId: number
+  chain?: string
 }
 
 export interface IADCSTransactionParameters {

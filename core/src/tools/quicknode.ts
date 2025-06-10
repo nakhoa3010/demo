@@ -59,14 +59,12 @@ export async function createCoordinatorStream(
   const qnChain = getQuickNodeChain(chain)
   const filterFunction = `
     function main(stream) {
-        const ADCS_COORDINATOR_ADDRESS = '${coordinatorAddress}'.toLowerCase()
+        const COORDINATOR_ADDRESS = '${coordinatorAddress}'.toLowerCase()
 
         const data = stream.data
-        console.log('data', { data: data })
         let result = null
         try {
             result = data[0]
-            console.log(result)
         } catch (ex) {
             console.log(ex)
         }
@@ -75,7 +73,7 @@ export async function createCoordinatorStream(
             .flat()
             .filter(
                 (log) =>
-                log.address?.toLowerCase() === ADCS_COORDINATOR_ADDRESS &&
+                log.address?.toLowerCase() === COORDINATOR_ADDRESS &&
                 log.topics[0] === '${eventTopic}'
             )
         }
@@ -100,7 +98,7 @@ export async function createCoordinatorStream(
       compression: 'none',
       headers: {
         'Content-Type': 'application/json',
-        'rivalz-key': WEBHOOK_KEY
+        'x-oracle-key': WEBHOOK_KEY
       },
       max_retry: 3,
       retry_interval_sec: 1,

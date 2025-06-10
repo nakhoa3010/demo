@@ -1,7 +1,7 @@
 import { Interface, keccak256, solidityPacked } from 'ethers'
 import { Logger } from 'pino'
 import { RequestCommitmentADCS, ITransactionParameters, IADCSTransactionParameters } from '../types'
-import { RivalzError, RivalzErrorCode } from '../errors'
+import { XOracleError, XOracleErrorCode } from '../errors'
 
 export function buildTransaction(
   payloadParameters: IADCSTransactionParameters,
@@ -16,7 +16,7 @@ export function buildTransaction(
   if (fulfillDataRequestFn == undefined) {
     const msg = `Unknown requestId ${payloadParameters.requestId}`
     logger.error(msg)
-    throw new RivalzError(RivalzErrorCode.UnknownRequestResponseJob, msg)
+    throw new XOracleError(XOracleErrorCode.UnknownRequestResponseJob, msg)
   }
 
   const response = payloadParameters.response
@@ -25,7 +25,7 @@ export function buildTransaction(
     payloadParameters.blockNum,
     payloadParameters.callbackGasLimit,
     payloadParameters.sender,
-    payloadParameters.jobId
+    payloadParameters.jobId || ''
   ]
   logger.debug(rc, 'rc')
 

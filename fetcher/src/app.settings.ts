@@ -2,7 +2,7 @@ import { INestApplication, RequestMethod, VersioningType } from '@nestjs/common'
 import * as dotenv from 'dotenv'
 dotenv.config()
 
-export const FETCHER_QUEUE_NAME = 'rivalz-fetcher-queue'
+export const FETCHER_QUEUE_NAME = 'x-oracle-fetcher-queue'
 
 export const WORKER_OPTS = { concurrency: Number(process.env.CONCURRENCY) || 20 }
 
@@ -10,7 +10,7 @@ export const FETCH_FREQUENCY = 7_200_000
 
 export const FETCH_TIMEOUT = 1_000
 
-export const DEVIATION_QUEUE_NAME = 'rivalz-deviation-queue'
+export const DEVIATION_QUEUE_NAME = 'x-oracle-deviation-queue'
 
 export const FETCHER_TYPE = process.env.FETCHER_TYPE || 0
 

@@ -960,11 +960,6 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@rivalz/vrf@../vrf":
-  version "0.1.1"
-  dependencies:
-    bn.js "^5.2.1"
-    elliptic "^6.5.4"
 
 "@sinclair/typebox@^0.27.8":
   version "0.27.8"

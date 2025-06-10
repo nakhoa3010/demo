@@ -1,17 +1,17 @@
-export class RivalzError extends Error {
+export class XOracleError extends Error {
   constructor(
-    public readonly code: RivalzErrorCode,
+    public readonly code: XOracleErrorCode,
     message?: string,
     public readonly value?
   ) {
     super(message)
-    this.name = RivalzErrorCode[code]
+    this.name = XOracleErrorCode[code]
     this.value = value
     Object.setPrototypeOf(this, new.target.prototype)
   }
 }
 
-export enum RivalzErrorCode {
+export enum XOracleErrorCode {
   NonExistentEventError = 10000,
   AggregatorJobCanTakeMoreBreak,
   FailedToGetAggregate,

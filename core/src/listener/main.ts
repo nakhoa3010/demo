@@ -3,7 +3,7 @@ import type { RedisClientType } from 'redis'
 import { buildLogger } from '../logger'
 import { buildListener as buildADCSListener } from './adcs'
 import { postprocessListeners } from './utils'
-import { RivalzError, RivalzErrorCode } from '../errors'
+import { XOracleError, XOracleErrorCode } from '../errors'
 import { CHAIN, REDIS_HOST, REDIS_PORT, REDIS_USERNAME, REDIS_PASSWORD } from '../settings'
 import { getListeners } from './api'
 import { hookConsoleError } from '../utils'
@@ -32,7 +32,7 @@ async function main() {
 
   if (!LISTENERS[service] || !listenersConfig[service]) {
     LOGGER.error({ name: 'listener:main', file: FILE_NAME, service }, 'service')
-    throw new RivalzError(RivalzErrorCode.UndefinedListenerRequested)
+    throw new XOracleError(XOracleErrorCode.UndefinedListenerRequested)
   }
 
   const redisClient: RedisClientType = createClient({

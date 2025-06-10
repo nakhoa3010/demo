@@ -1,4 +1,4 @@
-import { keygen } from '@rivalz/vrf'
+import { keygen } from '@xoracle/vrf'
 import axios from 'axios'
 import { command, option, string as cmdstring, subcommands } from 'cmd-ts'
 import ethers from 'ethers'

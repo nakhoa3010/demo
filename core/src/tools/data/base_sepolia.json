@@ -1,0 +1,9 @@
+[
+  {
+    "chain": "Base_sepolia",
+    "coordinatorAddress": "0x9A2699517c3F9955B64F848e683aaDF4AB7BD54B",
+    "eventTopic": "",
+    "startBlock": "",
+    "webhookUrl": ""
+  }
+]

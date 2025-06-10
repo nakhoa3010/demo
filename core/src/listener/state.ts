@@ -6,7 +6,7 @@ import { getListeners } from './api'
 import { postprocessListeners } from './utils'
 import { IListenerConfig, IListenerRawConfig } from '../types'
 import { IContracts, ILatestListenerJob, IHistoryListenerJob, ListenerInitType } from './types'
-import { RivalzError, RivalzErrorCode } from '../errors'
+import { XOracleError, XOracleErrorCode } from '../errors'
 import { LISTENER_DELAY, LISTENER_JOB_SETTINGS, getObservedBlockRedisKey } from '../settings'
 
 const FILE_NAME = import.meta.url
@@ -136,7 +136,7 @@ export class State {
    *
    * @param {string} listener ID
    * @return {IListenerConfig}
-   * @exception {RivalzErrorCode.ListenerNotAdded} raise when no listener was added
+   * @exception {XOracleErrorCode.ListenerNotAdded} raise when no listener was added
    */
   async add(id: string): Promise<IListenerConfig> {
     this.logger.debug('State.add')
@@ -148,7 +148,7 @@ export class State {
     if (isAlreadyActive.length > 0) {
       const msg = `Listener with ID=${id} was not added. It is already active.`
       this.logger.warn({ name: 'add', file: FILE_NAME }, msg)
-      throw new RivalzError(RivalzErrorCode.ListenerNotAdded, msg)
+      throw new XOracleError(XOracleErrorCode.ListenerNotAdded, msg)
     }
 
     // Find listener by ID
@@ -166,7 +166,7 @@ export class State {
     if (filteredListeners.length != 1) {
       const msg = `Listener with ID=${id} cannot be found for service=${this.service} on chain=${this.chain}`
       this.logger.error({ name: 'add', file: FILE_NAME }, msg)
-      throw new RivalzError(RivalzErrorCode.ListenerNotAdded, msg)
+      throw new XOracleError(XOracleErrorCode.ListenerNotAdded, msg)
     }
 
     // Update active listeners
@@ -228,7 +228,7 @@ export class State {
    * can be removed only if it is in an active state.
    *
    * @param {string} listener ID
-   * @exception {RivalzErrorCode.ListenerNotRemoved} raise when no listener was removed
+   * @exception {XOracleErrorCode.ListenerNotRemoved} raise when no listener was removed
    */
   async remove(id: string) {
     this.logger.debug('State.remove')
@@ -240,7 +240,7 @@ export class State {
     if (index === -1) {
       const msg = `Listener with ID=${id} was not found.`
       this.logger.warn({ name: 'remove', file: FILE_NAME }, msg)
-      throw new RivalzError(RivalzErrorCode.ListenerNotFoundInState, msg)
+      throw new XOracleError(XOracleErrorCode.ListenerNotFoundInState, msg)
     }
 
     const removedListener = activeListeners.splice(index, 1)[0]
@@ -250,8 +250,8 @@ export class State {
     )
 
     if (jobs.length != 1) {
-      throw new RivalzError(
-        RivalzErrorCode.UnexpectedNumberOfJobsInQueue,
+      throw new XOracleError(
+        XOracleErrorCode.UnexpectedNumberOfJobsInQueue,
         `Number of jobs ${jobs.length}`
       )
     } else {
@@ -265,7 +265,7 @@ export class State {
     if (numActiveListeners === numUpdatedActiveListeners) {
       const msg = `Listener with ID=${id} was not removed.`
       this.logger.error({ name: 'remove', file: FILE_NAME }, msg)
-      throw new RivalzError(RivalzErrorCode.ListenerNotRemoved, msg)
+      throw new XOracleError(XOracleErrorCode.ListenerNotRemoved, msg)
     }
 
     // Update active listeners
