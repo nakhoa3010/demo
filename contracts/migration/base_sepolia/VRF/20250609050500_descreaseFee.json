@@ -1,0 +1,24 @@
+{
+  "vrfCoordinatorAddress": "0x9A2699517c3F9955B64F848e683aaDF4AB7BD54B",
+  "deploy": {
+    "version": "v0.1"
+  },
+  "registerOracle": [],
+  "deregisterOracle": [],
+  "setConfig": {
+    "maxGasLimit": 250000,
+    "gasAfterPaymentCalculation": 90692,
+    "feeConfig": {
+      "fulfillmentFlatFeeKlayPPMTier1": 10,
+      "fulfillmentFlatFeeKlayPPMTier2": 10,
+      "fulfillmentFlatFeeKlayPPMTier3": 10,
+      "fulfillmentFlatFeeKlayPPMTier4": 10,
+      "fulfillmentFlatFeeKlayPPMTier5": 10,
+
+      "reqsForTier2": 0,
+      "reqsForTier3": 0,
+      "reqsForTier4": 0,
+      "reqsForTier5": 0
+    }
+  }
+}

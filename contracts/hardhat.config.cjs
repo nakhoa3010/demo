@@ -13,7 +13,7 @@ const commonConfig = {
 }
 
 const _base_sepolia = {
-  url: 'https://sepolia.base.org',
+  url: process.env.PROVIDER || 'https://sepolia.base.org',
   chainId: 84532,
   ...commonConfig,
 }
@@ -42,6 +42,21 @@ const config = {
   },
   paths: {
     sources: './src',
+  },
+  etherscan: {
+    apiKey: {
+      base_sepolia: process.env.API_KEY,
+    },
+    customChains: [
+      {
+        network: 'base_sepolia',
+        chainId: 84532,
+        urls: {
+          apiURL: 'https://api-sepolia.basescan.org/api',
+          browserURL: 'https://sepolia.basescan.org/',
+        },
+      },
+    ],
   },
   namedAccounts: {
     // migrations

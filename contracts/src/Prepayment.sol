@@ -390,7 +390,7 @@ contract Prepayment is Ownable, IPrepayment, ITypeAndVersion {
      * @inheritdoc IPrepayment
      */
 
-    function createDiscountAccount(
+    function createKlayDiscountAccount(
         uint256 feeRatio,
         address accOwner
     ) external onlyOwner returns (uint64) {

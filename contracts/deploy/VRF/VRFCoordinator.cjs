@@ -103,6 +103,7 @@ const func = async function (hre) {
       if (!validateSetConfig(setConfig)) {
         throw new Error('Invalid VRF setConfig config')
       }
+      console.log('setConfig', setConfig)
 
       await (
         await vrfCoordinator.setConfig(

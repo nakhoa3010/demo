@@ -1,14 +1,14 @@
 {
-  "vrfCoordinatorAddress": "",
+  "vrfCoordinatorAddress": "0x9A2699517c3F9955B64F848e683aaDF4AB7BD54B",
   "deploy": {
     "version": "v0.1"
   },
   "registerOracle": [
     {
-      "address": "",
+      "address": "0xdf9ec4b8a6da1af65b1085f9bb1559debcfd9f38",
       "publicProvingKey": [
-        "102675821939974538534397963307427700107062662888791288986937946659158576016164",
-        "106946388104961728941839399972887002627546856277051972583873921632795672893609"
+        "114710053131072812085132270756337464297995045438788779599973256317729093508342",
+        "9788261883397362097830958838609571401762406712845960936434939340117020012220"
       ]
     }
   ],
@@ -29,7 +29,7 @@
     }
   },
   "addCoordinator": {
-    "prepaymentAddress": "0xf37a736b476fCEaB261371A3B3B330772630b0bF",
-    "coordinatorAddress": ""
+    "prepaymentAddress": "0x4CCA81CB680d0EE88Bc6Db3931d648DB36F83f3B",
+    "coordinatorAddress": "0x9A2699517c3F9955B64F848e683aaDF4AB7BD54B"
   }
 }
