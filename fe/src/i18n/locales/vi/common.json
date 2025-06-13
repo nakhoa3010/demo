@@ -1,0 +1,28 @@
+{
+  "app_name": "Orakl",
+  "nav": {
+    "home": "Trang chủ",
+    "account": "Tài khoản",
+    "data_feed": "Data Feed"
+  },
+  "connect_wallet": "Kết nối ví",
+  "create_account": "Tạo tài khoản",
+  "address_copied": "Địa chỉ đã được sao chép",
+  "account": {
+    "title": "Tạo tài khoản để sử dụng dịch vụ của Orakl",
+    "description": "Để sử dụng dịch vụ VRF và Request-Response, bạn cần tạo tài khoản và đảm bảo có đủ số dư để trả phí liên quan.",
+    "step_prepayment": "Prepayment",
+    "step_request_response": "Request-Response",
+    "step_vrf": "VRF",
+    "step_key_hash": "KeyHash"
+  },
+  "recent_accounts": {
+    "title": "Tài khoản mới",
+    "description": "Tài khoản mới nhất được tạo bởi người dùng",
+    "status": "Trạng thái/ID",
+    "address": "Địa chỉ",
+    "created_at": "Ngày tạo",
+    "consumer": "Người dùng",
+    "balance": "Số dư"
+  }
+}

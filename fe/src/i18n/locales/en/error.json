@@ -1,0 +1,26 @@
+{
+  "404": {
+    "title": "Page Not Found",
+    "message": "Sorry, we couldn't find the page you're looking for.",
+    "back": "Go Back to Home"
+  },
+  "500": {
+    "title": "An error occurred",
+    "message": "An unexpected error occurred. Please try again later.",
+    "retry": "Retry"
+  },
+  "invalid_password": "Email or password is incorrect",
+  "no_valid_account": "Account is not valid",
+  "please_accept_terms_of_service": "Please accept the terms of service",
+  "please_select_chain_and_token": "Please select a chain and token",
+  "connect_wallet_first": "Please connect your wallet first",
+  "order_id_is_required": "Order is invalid",
+  "chain_or_token_is_required": "Chain or token is required",
+  "switch_chain_first": "Please switch to the correct chain first",
+  "signer_not_found": "Please connect your wallet first",
+  "insufficient_balance": "Insufficient balance",
+  "total_amount_is_not_enough": "Total amount is not enough",
+  "internal_server_error": "Internal server error",
+  "image_size_too_large": "Image size is too large",
+  "invalid_image_type": "Invalid image type"
+}

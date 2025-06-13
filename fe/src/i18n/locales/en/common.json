@@ -1,0 +1,28 @@
+{
+  "app_name": "Orakl",
+  "nav": {
+    "home": "Home",
+    "account": "Account",
+    "data_feed": "Data Feed"
+  },
+  "connect_wallet": "Connect wallet",
+  "create_account": "Create account",
+  "address_copied": "Address copied to clipboard",
+  "account": {
+    "title": "Create account to take advantage of Orakl's services",
+    "description": "To utilize the VRF and Request-Response services, one must create an account and ensure that sufficient funds are added to cover the associated costs.",
+    "step_prepayment": "Prepayment",
+    "step_request_response": "Request-Response",
+    "step_vrf": "VRF",
+    "step_key_hash": "KeyHash"
+  },
+  "recent_accounts": {
+    "title": "Recent accounts",
+    "description": "The most recent accounts created by users",
+    "status": "Status/ID",
+    "address": "Address",
+    "created_at": "Created At",
+    "consumer": "Consumer",
+    "balance": "Balance"
+  }
+}
