@@ -1,11 +1,11 @@
 import { AppButton, AppCard } from '@/components/shared-components';
 import Typography from '@/components/shared-components/typography';
 import { SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { useLocalization } from '@/i18n/hooks';
 import { cn } from '@/lib/utils';
 import { shortAddress } from '@/lib/utils/format';
 import { ChevronRight, CloudUpload, SquareUser, Wallet } from 'lucide-react';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 
 const steps = [
   <Wallet key="1" className="size-8 text-green-300" />,
@@ -14,11 +14,12 @@ const steps = [
 ];
 
 interface CreateAccountContentProps {
+  address: string;
   onDoItLater?: () => void;
 }
 
-export default function CreateAccountContent({ onDoItLater }: CreateAccountContentProps) {
-  const { t } = useTranslation();
+export default function CreateAccountContent({ address, onDoItLater }: CreateAccountContentProps) {
+  const { t } = useLocalization();
   return (
     <>
       <SheetHeader>
@@ -63,7 +64,7 @@ export default function CreateAccountContent({ onDoItLater }: CreateAccountConte
             <Typography.Body variant="14_regular" text="Owner address" className="text-white-80" />
             <Typography.Body
               variant="14_medium"
-              text={shortAddress('0x1234567890abcdef1234567890abcdef12345678')}
+              text={shortAddress(address)}
               className="text-white-80"
             />
           </AppCard>

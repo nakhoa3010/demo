@@ -27,15 +27,18 @@ export function LanguageSwitcher() {
           />
         </div>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="shadow-none">
+      <DropdownMenuContent className="border-white-10 bg-black shadow-none">
         {Object.entries(languageNames).map(([code, name]) => {
           return (
             <DropdownMenuItem
               key={code}
               onClick={() => switchLocale(code as Locale)}
-              className="flex cursor-pointer justify-between"
+              className="hover:border-white-10 flex cursor-pointer justify-between focus:bg-transparent focus:text-white"
             >
-              <Typography.Caption text={t(name.toLowerCase())} className="cursor-pointer" />
+              <Typography.Caption
+                text={t(name.toLowerCase())}
+                className="cursor-pointer hover:text-white hover:underline"
+              />
               {currentLocale === code && (
                 <Image src="/icons/check.svg" alt="check" width={12} height={12} />
               )}

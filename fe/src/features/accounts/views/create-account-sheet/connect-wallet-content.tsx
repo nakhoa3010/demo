@@ -1,12 +1,14 @@
 import { AppButton } from '@/components/shared-components';
 import Typography from '@/components/shared-components/typography';
 import { SheetDescription, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { useLocalization } from '@/i18n/hooks';
+import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { Wallet } from 'lucide-react';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 
 export default function ConnectWalletContent() {
-  const { t } = useTranslation();
+  const { t } = useLocalization();
+  const { openConnectModal } = useConnectModal();
   return (
     <>
       <SheetHeader>
@@ -32,6 +34,7 @@ export default function ConnectWalletContent() {
           variant="secondary-gray"
           text={t('connect_wallet')}
           className="hover:border-white-90 hover:text-white-90"
+          onClick={() => openConnectModal?.()}
         />
       </div>
     </>

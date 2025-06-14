@@ -9,6 +9,7 @@ import AppLogo from '../app-logo';
 import Link from 'next/link';
 import { navigations } from '@/lib/constans';
 import { useLocalization } from '@/i18n/hooks';
+import { usePathname } from 'next/navigation';
 interface HeaderProps {
   hideNavigation?: boolean;
   hideOrderNow?: boolean;
@@ -17,6 +18,7 @@ interface HeaderProps {
 }
 export default function Header({ hideNavigation, className, wrapperClassName }: HeaderProps) {
   const { t } = useLocalization('common');
+  const pathname = usePathname();
 
   return (
     <>
@@ -32,7 +34,10 @@ export default function Header({ hideNavigation, className, wrapperClassName }: 
                 <Typography.Body
                   variant="14_medium"
                   text={t(nav.label)}
-                  className="hover_line !text-white-80 uppercase"
+                  className={cn(
+                    'hover_line !text-white-80 uppercase',
+                    pathname.includes(nav.path) && '!text-green-300 underline',
+                  )}
                 />
               </Link>
             ))}

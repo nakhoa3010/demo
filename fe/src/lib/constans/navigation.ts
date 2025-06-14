@@ -27,7 +27,7 @@ const navigations: Navigation[] = [
   },
   {
     isScrollable: false,
-    path: `#${SectionIds.DATA_FEE}`,
+    path: `/data-feed`,
     label: 'nav.data_feed',
     target: '_self',
   },

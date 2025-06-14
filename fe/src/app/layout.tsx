@@ -1,10 +1,11 @@
+import '@rainbow-me/rainbowkit/styles.css';
 import { ReactNode } from 'react';
 import '../styles/globals.css';
 import { defaultLocale } from '@/i18n/types';
 import { LanguageProvider } from '@/providers/language-provider';
 import JotaiProvider from '@/providers/jotai-provider';
 import { Toaster } from '@/components/ui/sonner';
-import { QueryProvider } from '@/providers/query-provider';
+import { Web3Provider } from '@/providers/web3-provider';
 
 export default async function RootLayout({
   children,
@@ -18,11 +19,11 @@ export default async function RootLayout({
   return (
     <html suppressHydrationWarning lang={locale || defaultLocale}>
       <body suppressHydrationWarning>
-        <QueryProvider>
+        <Web3Provider>
           <JotaiProvider>
             <LanguageProvider>{children}</LanguageProvider>
           </JotaiProvider>
-        </QueryProvider>
+        </Web3Provider>
         <Toaster richColors />
       </body>
     </html>

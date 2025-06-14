@@ -32,5 +32,16 @@
     "description": "Tạo một ID tài khoản bằng địa chỉ ví của bạn. ID tài khoản sẽ được sử dụng trong hợp đồng của bạn khi sử dụng dịch vụ VRF hoặc Request-Response.",
     "as_an_owner": "*Là chủ sở hữu, bạn có thể hủy hoặc chỉnh sửa tài khoản bất cứ lúc nào.",
     "do_it_later": "Tôi sẽ tạo sau"
+  },
+  "data_feed": {
+    "page_title": "Data Feed",
+    "page_description": "Orakl Network cung cấp một phạm vi rộng hơn các dữ liệu giá để hỗ trợ hệ sinh thái DeFi và nuôi dưỡng các token mới và sắp ra mắt.",
+    "page_description_2": "Data Feed sử dụng tích hợp dữ liệu ngoài, cung cấp tính ổn định và khả năng mở rộng tốt hơn. Dữ liệu giá có thể được truy cập thông qua hợp đồng Proxy hoặc Router.",
+    "premium": "Cao cấp",
+    "basic": "Cơ bản",
+    "total_market_cap": "Tổng Market Cap",
+    "proxy": "Proxy",
+    "feed": "feed",
+    "search_placeholder": "Tìm kiếm theo symbol, địa chỉ, giá, market cap..."
   }
 }

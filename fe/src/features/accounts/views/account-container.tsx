@@ -7,6 +7,8 @@ import useToast from '@/lib/hooks/use-toast';
 import Image from 'next/image';
 import React, { useState } from 'react';
 import CreateAccountSheet from './create-account-sheet';
+import { useAccount } from 'wagmi';
+import { cn } from '@/lib/utils';
 
 const steps = [
   {
@@ -39,6 +41,7 @@ const steps = [
 
 export default function AccountContainer() {
   const { toastSuccess } = useToast();
+  const { address } = useAccount();
   const { t } = useTranslation(['common']);
   const [open, setOpen] = useState(false);
   return (
@@ -55,19 +58,21 @@ export default function AccountContainer() {
         />
 
         <div className="flex max-w-[780px] flex-row-reverse gap-4">
-          <div className="flex-1">
-            <AppButton
-              variant="secondary-gray"
-              text={t('connect_wallet')}
-              className="text-white-60 border-white-30 hover:text-white-80 w-full border bg-[#262626] uppercase"
-              onClick={() => setOpen(true)}
-            />
-          </div>
+          {!address && (
+            <div className="flex-1">
+              <AppButton
+                variant="secondary-gray"
+                text={t('connect_wallet')}
+                className="text-white-60 border-white-30 hover:text-white-80 w-full border bg-[#262626] uppercase"
+                onClick={() => setOpen(true)}
+              />
+            </div>
+          )}
           <div className="flex-1">
             <AppButton
               variant="primary"
               text={t('create_account')}
-              className="w-full uppercase"
+              className={cn('w-full uppercase lg:w-fit', !address && 'lg:w-full')}
               onClick={() => setOpen(true)}
             />
           </div>
