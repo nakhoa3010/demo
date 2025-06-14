@@ -84,5 +84,5 @@ yarn deploy:localhost:aggregator
 ```shell
 node ./scripts/admin-aggregator/generate-aggregator-deployments.cjs \
   --pairs '["usd-krw", "jpy-usd", "joy-usdc"]' \
-  --chain baobab
+  --chain base_sepolia
 ```

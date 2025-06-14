@@ -1,2 +1,3 @@
-# price-fetcher
-Aggregate token price
+# api
+
+API for the price fetcher

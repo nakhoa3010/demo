@@ -1,0 +1,10 @@
+[
+  {
+    "chain": "Base_sepolia",
+    "name": "rr",
+    "coordinatorAddress": "0xe012c95572096d74966a385b4609cbb5bc376f35",
+    "eventTopic": "0xf5de04e252c7bc264fe51dceea89d95673b5166c209718c5f5a068341dab8111",
+    "startBlock": "27072493",
+    "webhookUrl": "https://webhook.x-oracle.com/events/rr"
+  }
+]

@@ -21,7 +21,8 @@ async function main() {
       coordinatorAddress,
       eventTopic,
       Number(startBlock),
-      webhookUrl
+      webhookUrl,
+      'test'
     )
     console.info({ newStream }, 'Coordinator stream created')
     process.exit(0)

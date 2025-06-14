@@ -44,6 +44,8 @@ function getQuickNodeChain(chain: string) {
       return QuickNodeChain.SEI
     case 'Mantle':
       return QuickNodeChain.MANTLE_MAINNET
+    case 'Base_sepolia':
+      return QuickNodeChain.BASE_SEPOLIA
     default:
       return chain
   }
@@ -54,7 +56,8 @@ export async function createCoordinatorStream(
   coordinatorAddress: string,
   eventTopic: string,
   startBlock: number,
-  webhookUrl: string
+  webhookUrl: string,
+  name: string
 ) {
   const qnChain = getQuickNodeChain(chain)
   const filterFunction = `
@@ -81,7 +84,7 @@ export async function createCoordinatorStream(
     }
   `
   const data = {
-    name: `${chain}-adcs-coordinator`,
+    name: `${chain}-${name}-coordinator`,
     network: qnChain,
     dataset: 'logs',
     filter_function: Buffer.from(filterFunction).toString('base64'),

@@ -1,0 +1,10 @@
+[
+  {
+    "chain": "Base_sepolia",
+    "name": "vrf",
+    "coordinatorAddress": "0x9A2699517c3F9955B64F848e683aaDF4AB7BD54B",
+    "eventTopic": "0x88c0534cab9d18b5e2f8fb9a9d142426403b507f2343cfaafe6cfe45e9900e30",
+    "startBlock": "27072375",
+    "webhookUrl": "https://webhook.x-oracle.com/events/vrf"
+  }
+]
