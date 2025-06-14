@@ -6,6 +6,8 @@
     "data_feed": "Data Feed"
   },
   "connect_wallet": "Kết nối ví",
+  "connect_your_wallet": "Kết nối ví của bạn",
+  "connect_wallet_description": "Để sử dụng dịch vụ của Orakl Network, bạn cần kết nối ví của mình trước.",
   "create_account": "Tạo tài khoản",
   "address_copied": "Địa chỉ đã được sao chép",
   "account": {
@@ -24,5 +26,11 @@
     "created_at": "Ngày tạo",
     "consumer": "Người dùng",
     "balance": "Số dư"
+  },
+  "create_account_sheet": {
+    "title": "Tạo tài khoản",
+    "description": "Tạo một ID tài khoản bằng địa chỉ ví của bạn. ID tài khoản sẽ được sử dụng trong hợp đồng của bạn khi sử dụng dịch vụ VRF hoặc Request-Response.",
+    "as_an_owner": "*Là chủ sở hữu, bạn có thể hủy hoặc chỉnh sửa tài khoản bất cứ lúc nào.",
+    "do_it_later": "Tôi sẽ tạo sau"
   }
 }

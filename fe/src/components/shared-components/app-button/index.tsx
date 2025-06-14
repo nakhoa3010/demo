@@ -25,14 +25,14 @@ interface IAppButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> 
 
 const variantStyles = {
   primary:
-    'bg-[#A6CEEA] text-black hover:bg-primary-dark  disabled:bg-primary-light disabled:text-black-40',
+    'bg-transparent border border-green-300 text-green-300 hover:bg-transparent hover:text-green-500 disabled:border-green-500 disabled:text-green-500',
   black: 'bg-neutral-900 text-neutral-0 hover:bg-neutral-800  disabled:opacity-20',
 
   'secondary-gray':
     'bg-transparent border border-white-30 text-white-60 hover:text-white-60 hover:bg-transparent hover:border-white-60 disabled:border-white-30 disabled:text-white-60',
   'tertiary-gray':
     'bg-neutral-50 text-neutral-900 hover:text-neutral-600 disabled:bg-black-40 hover:bg-neutral-50',
-  link: 'bg-transparent shadow-none text-primary-dark hover:text-primary-dark hover:bg-transparent hover:underline',
+  link: 'bg-transparent shadow-none text-green-300 hover:text-green-500 hover:bg-transparent hover:underline',
   'link-gray':
     'text-neutral-900 underline bg-transparent hover:text-neutral-600 hover:bg-transparent',
 };
@@ -56,7 +56,7 @@ export default function AppButton({
   return (
     <Button
       className={cn(
-        'rounded-12 flex items-center shadow-none hover:cursor-pointer disabled:cursor-not-allowed',
+        'rounded-12 flex cursor-pointer items-center shadow-none hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-50',
         variantStyles[variant],
         sizeStyles[size],
         className,

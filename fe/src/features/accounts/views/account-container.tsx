@@ -64,7 +64,12 @@ export default function AccountContainer() {
             />
           </div>
           <div className="flex-1">
-            <AppButton variant="primary" text={t('create_account')} className="w-full uppercase" />
+            <AppButton
+              variant="primary"
+              text={t('create_account')}
+              className="w-full uppercase"
+              onClick={() => setOpen(true)}
+            />
           </div>
         </div>
       </div>

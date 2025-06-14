@@ -6,6 +6,8 @@
     "data_feed": "Data Feed"
   },
   "connect_wallet": "Connect wallet",
+  "connect_your_wallet": "Connect your wallet",
+  "connect_wallet_description": "To use Orakl Network services, you need to connect to your wallet first.",
   "create_account": "Create account",
   "address_copied": "Address copied to clipboard",
   "account": {
@@ -24,5 +26,11 @@
     "created_at": "Created At",
     "consumer": "Consumer",
     "balance": "Balance"
+  },
+  "create_account_sheet": {
+    "title": "Create account",
+    "description": "Create an account ID using your wallet address. The account ID will be used in your contract when utilizing the VRF or Request-Response service.",
+    "as_an_owner": "*As an owner, you can cancel or edit the account at any time.",
+    "do_it_later": "I'll do it later"
   }
 }
