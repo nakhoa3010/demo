@@ -12,11 +12,12 @@
   "author": "XOracle",
   "license": "MIT",
   "devDependencies": {
-    "@xoracle/vrf": "../vrf",
     "@0glabs/0g-ts-sdk": "^0.2.8",
+    "@nestjs/bullmq": "^11.0.2",
     "@slack/webhook": "^7.0.3",
     "@types/express": "^4.17.21",
     "@typescript-eslint/eslint-plugin": "^6.4.1",
+    "@xoracle/vrf": "../vrf",
     "cbor": "^9.0.2",
     "console-hook": "^0.0.2",
     "eslint-config-prettier": "^9.0.0",
