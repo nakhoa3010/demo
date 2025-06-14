@@ -1,6 +1,6 @@
 import { Logger } from 'pino'
 import { buildUrl } from './utils'
-import { ADCS_API_URL, API_URL, CHAIN, DATA_FEED_SERVICE_NAME } from './settings'
+import { API_URL, CHAIN, DATA_FEED_SERVICE_NAME } from './settings'
 import axios from 'axios'
 import { XOracleError, XOracleErrorCode } from './errors'
 import { IReporterConfig, IVrfConfig } from './types'
@@ -51,8 +51,8 @@ export async function getReporterByAddress({
 }): Promise<IReporterConfig> {
   try {
     const endpoint = buildUrl(
-      ADCS_API_URL,
-      `reporters/by-chain-and-contract?chain=${chain}&contractAddress=${oracleAddress}`
+      API_URL,
+      `reporter/by-chain-and-contract?chain=${chain}&contractAddress=${oracleAddress}`
     )
     console.log('endpoint', endpoint)
     const reporter = (await axios.get(endpoint))?.data
@@ -83,7 +83,6 @@ export async function getVrfConfig({
   try {
     const endpoint = buildUrl(API_URL, 'vrf')
     const vrfKeys = (await axios.get(endpoint, { data: { chain } }))?.data
-
     if (vrfKeys.length == 0) {
       throw new Error(`Found no VRF key for chain [${chain}]`)
     } else if (vrfKeys.length > 1) {

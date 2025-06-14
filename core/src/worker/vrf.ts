@@ -4,10 +4,8 @@ import { Logger } from 'pino'
 import type { RedisClientType } from 'redis'
 import {
   BULLMQ_CONNECTION,
-  VRF_FULFILL_GAS_MINIMUM,
   VRF_FULLFILL_GAS_PER_WORD,
   VRF_SERVICE_NAME,
-  WORKER_ADCS_QUEUE_NAME,
   WORKER_VRF_QUEUE_NAME
 } from '../settings'
 import {
@@ -27,7 +25,6 @@ import { remove0x } from '../utils'
 import { processVrfRequest } from '@xoracle/vrf'
 
 const FILE_NAME = import.meta.url
-const DECIMALS = 6
 
 export async function buildWorker(redisClient: RedisClientType, _logger: Logger) {
   const logger = _logger.child({ name: 'worker', file: FILE_NAME })
@@ -87,7 +84,7 @@ export async function job(_logger: Logger) {
       const tx = buildTransaction(
         payloadParameters,
         to,
-        VRF_FULFILL_GAS_MINIMUM + VRF_FULLFILL_GAS_PER_WORD * inData.numWords,
+        reporter.fulfillMinimumGas + VRF_FULLFILL_GAS_PER_WORD * inData.numWords,
         iface,
         logger
       )
@@ -156,9 +153,9 @@ async function sendTx(tx: any, reporter: IReporterConfig, logger: Logger) {
     wallet,
     to: tx.to,
     payload: tx.payload,
-    gasLimit: reporter.fulfillMinimumGas,
+    gasLimit: tx.gasLimit,
     logger
   }
   const txReceipt = await sendTransaction(txParams)
-  console.log('txReceipt', txReceipt)
+  logger.info(`submitted tx ${txReceipt.hash}`)
 }

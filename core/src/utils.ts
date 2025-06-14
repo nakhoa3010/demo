@@ -5,6 +5,8 @@ import os from 'node:os'
 import type { RedisClientType } from 'redis'
 import { createClient } from 'redis'
 import { SLACK_WEBHOOK_URL } from './settings'
+import { XOracleErrorCode } from './errors'
+import { XOracleError } from './errors'
 
 export async function loadJson(filepath) {
   const json = await Fs.readFile(filepath, 'utf8')
@@ -134,4 +136,113 @@ export function convertBigIntToString<T>(obj: T): T {
     })
   )
   return str
+}
+
+export const REDUCER_MAPPING = {
+  PATH: parseFn,
+  PARSE: parseFn,
+  MUL: mulFn,
+  POW10: pow10Fn,
+  ROUND: roundFn,
+  INDEX: indexFn,
+  DIV: divFn,
+  DIVFROM: divFromFn
+}
+
+/**
+ * Access data in JSON based on given path.
+ *
+ * Example
+ * let obj = {
+ *     RAW: { ETH: { USD: { PRICE: 123 } } },
+ *     DISPLAY: { ETH: { USD: [Object] } }
+ * }
+ * const fn = parseFn(['RAW', 'ETH', 'USD', 'PRICE'])
+ * fn(obj) // return 123
+ */
+
+export function parseFn(args: string | string[]) {
+  if (typeof args == 'string') {
+    args = args.split(',')
+  }
+
+  function wrapper(obj) {
+    for (const a of args) {
+      if (a in obj) obj = obj[a]
+      else throw new XOracleError(XOracleErrorCode.MissingKeyInJson)
+    }
+    return obj
+  }
+  return wrapper
+}
+
+export function mulFn(args: number) {
+  function wrapper(value: number) {
+    return value * args
+  }
+  return wrapper
+}
+
+export function divFn(args: number) {
+  function wrapper(value: number) {
+    return value / args
+  }
+  return wrapper
+}
+
+export function divFromFn(args: number) {
+  function wrapper(value: number) {
+    if (value == 0) {
+      throw new XOracleError(XOracleErrorCode.DivisionByZero)
+    }
+    return args / value
+  }
+  return wrapper
+}
+
+export function pow10Fn(args: number) {
+  function wrapper(value: number) {
+    return Number(Math.pow(10, args)) * value
+  }
+  return wrapper
+}
+
+export function roundFn() {
+  function wrapper(value: number) {
+    return Math.round(value)
+  }
+  return wrapper
+}
+
+export function indexFn(args: number) {
+  if (args < 0) {
+    throw new XOracleError(XOracleErrorCode.IndexOutOfBoundaries)
+  }
+
+  function wrapper(obj) {
+    if (args >= obj.length) {
+      throw new XOracleError(XOracleErrorCode.IndexOutOfBoundaries)
+    } else {
+      return obj[args]
+    }
+  }
+  return wrapper
+}
+
+export function buildReducer(reducerMapping, reducers) {
+  return reducers.map((r) => {
+    const reducer = reducerMapping[r.function.toUpperCase()]
+    if (!reducer) {
+      throw new XOracleError(XOracleErrorCode.InvalidReducer)
+    }
+    return reducer(r?.args)
+  })
+}
+
+export function checkDataFormat(data) {
+  if (!data) {
+    throw new XOracleError(XOracleErrorCode.InvalidData)
+  } else if (!Number.isInteger(data)) {
+    throw new XOracleError(XOracleErrorCode.InvalidDataFormat)
+  }
 }

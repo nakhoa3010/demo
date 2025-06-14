@@ -5,10 +5,15 @@ import { IWorkers } from './types'
 import { buildLogger } from '../logger'
 import { REDIS_HOST, REDIS_PASSWORD, REDIS_PORT, REDIS_USERNAME } from '../settings'
 import { buildWorker as adcsWorker } from './adcs'
-import { ZeroG } from './og'
+import { buildWorker as vrfWorker } from './vrf'
+import { buildWorker as dataFeedWorker } from './dataFeed'
+import { buildWorker as rrWorker } from './request-response'
 
 const WORKERS: IWorkers = {
-  ADCS: adcsWorker
+  ADCS: adcsWorker,
+  VRF: vrfWorker,
+  DATA_FEED: dataFeedWorker,
+  RR: rrWorker
 }
 
 const LOGGER = buildLogger('worker')
@@ -20,9 +25,8 @@ async function main() {
     url: `redis://${REDIS_USERNAME}:${REDIS_PASSWORD}@${REDIS_HOST}:${REDIS_PORT}`
   })
   await redisClient.connect()
-  const zeroG = new ZeroG()
 
-  WORKERS[worker](redisClient, LOGGER, zeroG)
+  WORKERS[worker](redisClient, LOGGER)
 
   LOGGER.info('Worker launched')
 }

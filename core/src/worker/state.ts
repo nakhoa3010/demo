@@ -1,9 +1,12 @@
 import { Queue } from 'bullmq'
 import { Logger } from 'pino'
 import type { RedisClientType } from 'redis'
-import { getAggregators } from './api'
+import { getAggregator, getAggregators } from './api'
 import { IAggregatorConfig } from './types'
 import { XOracleError, XOracleErrorCode } from '../errors'
+import { SUBMIT_HEARTBEAT_QUEUE_SETTINGS } from '../settings'
+import { IAggregatorSubmitHeartbeatWorker } from '../types'
+import { getSynchronizedDelay } from './data-feed.utils'
 
 const FILE_NAME = import.meta.url
 
@@ -157,5 +160,73 @@ export class State {
     )
 
     return updatedAggregator
+  }
+
+  /**
+   * Add aggregator given `aggregatorHash`. Aggregator can be added only if it
+   * corresponds to the `chain` state.
+   *
+   * @param {string} aggregator hash
+   * @return {IAggregatorConfig}
+   * @exception {RivalzErrorCode.AggregatorNotAdded} raise when no aggregator was added
+   */
+  async add(aggregatorHash: string): Promise<IAggregatorConfig> {
+    this.logger.debug('add')
+
+    // Check if reporter is not active in service yet
+    const activeAggregators = await this.active()
+
+    // TODO store in dictionary instead
+    const isAlreadyActive =
+      activeAggregators.filter((L) => L.aggregatorHash === aggregatorHash) || []
+
+    if (isAlreadyActive.length > 0) {
+      const msg = `Aggregator with aggregatorHash=${aggregatorHash} was not added. It is already active.`
+      this.logger.debug({ name: 'add', file: FILE_NAME }, msg)
+      throw new XOracleError(XOracleErrorCode.AggregatorNotAdded, msg)
+    }
+
+    const toAddAggregator = await getAggregator({
+      aggregatorHash,
+      chain: this.chain,
+      logger: this.logger
+    })
+    if (!toAddAggregator || !toAddAggregator.active) {
+      const msg = `Aggregator with aggregatorHash=${aggregatorHash} cannot be found / is not active on chain=${this.chain}`
+      this.logger.debug({ name: 'add', file: FILE_NAME }, msg)
+      throw new XOracleError(XOracleErrorCode.AggregatorNotAdded, msg)
+    }
+
+    // Update active aggregators
+    const aggregatorConfig: IAggregatorConfig = {
+      id: toAddAggregator.id.toString(),
+      aggregatorHash: toAddAggregator.aggregatorHash,
+      name: toAddAggregator.name,
+      address: toAddAggregator.address,
+      heartbeat: toAddAggregator.heartbeat,
+      threshold: toAddAggregator.threshold,
+      absoluteThreshold: toAddAggregator.absoluteThreshold,
+      chain: this.chain,
+      timestamp: Date.now()
+    }
+    await this.redisClient.set(
+      this.stateName,
+      JSON.stringify([...activeAggregators, aggregatorConfig])
+    )
+
+    const outDataSubmitHeartbeat: IAggregatorSubmitHeartbeatWorker = {
+      oracleAddress: toAddAggregator.address,
+      delay: await getSynchronizedDelay({
+        oracleAddress: toAddAggregator.address,
+        heartbeat: toAddAggregator.heartbeat,
+        logger: this.logger
+      })
+    }
+    this.logger.debug(outDataSubmitHeartbeat, 'outDataSubmitHeartbeat')
+    await this.submitHeartbeatQueue.add('state-submission', outDataSubmitHeartbeat, {
+      ...SUBMIT_HEARTBEAT_QUEUE_SETTINGS
+    })
+
+    return aggregatorConfig
   }
 }

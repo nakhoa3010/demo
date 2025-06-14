@@ -78,5 +78,8 @@ export enum XOracleErrorCode {
   AxiosNotSupported,
   AxiosInvalidUrl,
   FailedToConnectAPI,
-  FailedToGetAdaptor
+  FailedToGetAdaptor,
+  DivisionByZero,
+  InvalidData,
+  InvalidDataFormat
 }

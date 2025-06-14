@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param } from '@nestjs/common'
+import { Body, Controller, Get, Param, Query } from '@nestjs/common'
 import { ApiTags } from '@nestjs/swagger'
 import { ReporterService } from './reporter.service'
 
@@ -14,5 +14,13 @@ export class ReporterController {
     @Body('service') service: string
   ) {
     return await this.reporterService.reporterByAddress(address, chain, service)
+  }
+
+  @Get('by-chain-and-contract')
+  async byChainAndContract(
+    @Query('chain') chain: string,
+    @Query('contractAddress') contractAddress: string
+  ) {
+    return await this.reporterService.reporterByChainAndContract(chain, contractAddress)
   }
 }

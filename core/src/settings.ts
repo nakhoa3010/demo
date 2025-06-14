@@ -7,7 +7,7 @@ export const DEPLOYMENT_NAME = process.env.DEPLOYMENT_NAME || 'xOracle'
 
 export const DATA_FEED_FULFILL_GAS_MINIMUM = 400_000
 export const VRF_FULLFILL_GAS_PER_WORD = 1_000
-export const VRF_FULFILL_GAS_MINIMUM = 1_000_000
+export const RR_FULLFILL_GAS_MINIMUM = 500_000
 
 export const WORKER_PORT = process.env.WORKER_PORT || 3011
 export const LISTENER_PORT = process.env.LISTENER_PORT || 3012
@@ -32,6 +32,7 @@ export const WORKER_CHECK_HEARTBEAT_QUEUE_NAME = `${DEPLOYMENT_NAME}-worker-chec
 
 export const WORKER_DEVIATION_QUEUE_NAME = `${DEPLOYMENT_NAME}-deviation-queue`
 
+// ADCS
 export const LISTENER_ADCS_HISTORY_QUEUE_NAME = `${DEPLOYMENT_NAME}-listener-adcs-history-queue`
 export const LISTENER_ADCS_LATEST_QUEUE_NAME = `${DEPLOYMENT_NAME}-listener-adcs-latest-queue`
 export const LISTENER_ADCS_PROCESS_EVENT_QUEUE_NAME = `${DEPLOYMENT_NAME}-listener-adcs-process-event-queue`
@@ -54,6 +55,14 @@ export const CONCURRENCY = 12
 // Data Feed
 export const MAX_DATA_STALENESS = 60_000
 
+// Request Response
+export const LISTENER_RR_HISTORY_QUEUE_NAME = `${DEPLOYMENT_NAME}-listener-rr-history-queue`
+export const LISTENER_RR_PROCESS_EVENT_QUEUE_NAME = `${DEPLOYMENT_NAME}-listener-rr-process-event-queue`
+export const LISTENER_RR_LATEST_QUEUE_NAME = `${DEPLOYMENT_NAME}-listener-rr-latest-queue`
+export const RR_LISTENER_STATE_NAME = `${DEPLOYMENT_NAME}-rr-listener-state`
+export const RR_SERVICE_NAME = 'RR'
+export const WORKER_RR_QUEUE_NAME = `${DEPLOYMENT_NAME}-worker-rr-queue`
+
 export const LOG_LEVEL = process.env.LOG_LEVEL || 'info'
 export const LOG_DIR = process.env.LOG_DIR || './log'
 
@@ -64,15 +73,14 @@ export const REDIS_USERNAME = process.env.REDIS_USERNAME || ''
 export const REDIS_PASSWORD = process.env.REDIS_PASSWORD || ''
 
 export const PROVIDER_URL = process.env.PROVIDER_URL || 'http://127.0.0.1:8545'
-export const API_URL = process.env.API_URL || 'http://localhost:3010'
+export const API_URL = process.env.API_URL || 'http://localhost:3000'
 export const SLACK_WEBHOOK_URL = process.env.SLACK_WEBHOOK_URL || ''
-export const ADCS_API_URL = process.env.ADCS_API_URL || 'http://localhost:3012'
 export const INTFERENCE_API_URL = process.env.INTFERENCE_API_URL || 'http://localhost:3013'
 
-export const D0G_PRIVATE_KEY = process.env.D0G_PRIVATE_KEY || ''
-export const ZeroG_RPC_URL = process.env.ZeroG_RPC_URL || ''
+export const LISTENER_VRF_PORT = process.env.LISTENER_VRF_PORT || '3001'
+export const LISTENER_RR_PORT = process.env.LISTENER_RR_PORT || '3002'
+export const LISTENER_ADCS_PORT = process.env.LISTENER_ADCS_PORT || '3003'
 
-export const LISTENER_V2_PORT = process.env.LISTENER_V2_PORT || '3000'
 export const QUICKNODE_API_KEY = process.env.QUICKNODE_API_KEY || ''
 export const WEBHOOK_KEY = process.env.WEBHOOK_KEY || ''
 
@@ -155,12 +163,3 @@ export const PROVIDER = createJsonRpcProvider()
 export function getObservedBlockRedisKey(contractAddress: string) {
   return `${contractAddress}-listener-${DEPLOYMENT_NAME}`
 }
-
-console.log(process.env.REDIS_HOST)
-console.log(process.env.REDIS_USERNAME)
-console.log(process.env.REDIS_PORT)
-console.log(process.env.PROVIDER_URL)
-console.log(process.env.API_URL)
-console.log(process.env.ADCS_API_URL)
-console.log(process.env.CHAIN)
-console.log(process.env.LOG_DIR)

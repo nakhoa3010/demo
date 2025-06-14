@@ -33,9 +33,13 @@ export interface ILog {
 }
 
 export interface IRequestOperation {
-  name: string
-  value: string
+  function: string
+  args: string
 }
+// export interface IRequestOperation {
+//   name: string
+//   value: string
+// }
 
 export interface ILatestRoundData {
   roundId: bigint
@@ -73,6 +77,9 @@ export interface IDataRequested {
   jobId: string
   blockNumber: bigint
   data: string
+  isDirectPayment: boolean
+  accId: bigint
+  numSubmission: bigint
 }
 
 export interface IRandomWordsRequested {
@@ -138,6 +145,20 @@ export interface IDataFeedListenerWorker {
   oracleAddress: string
   roundId: number
   workerSource: string
+}
+
+export interface IRequestResponseListenerWorker {
+  callbackAddress: string
+  blockNum: number
+  requestId: string
+  jobId: string
+  accId: string
+  callbackGasLimit: number
+  sender: string
+  isDirectPayment: boolean
+  numSubmission: number
+  data: string
+  chain?: string
 }
 
 // Worker -> Worker
@@ -354,6 +375,19 @@ export interface IDataFeedTransactionParameters {
   submission: bigint
 }
 
+export interface IRequestResponseTransactionParameters {
+  blockNum: number
+  accId: string
+  jobId: string
+  requestId: string
+  numSubmission: number
+  callbackGasLimit: number
+  sender: string
+  isDirectPayment: boolean
+  response: any // eslint-disable-line @typescript-eslint/no-explicit-any
+  chain?: string
+}
+
 export interface MockQueue {
   add: any // eslint-disable-line @typescript-eslint/no-explicit-any
   process: any // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -394,3 +428,13 @@ export interface IMemeData {
     decision: boolean
   }
 }
+
+export type RequestCommitmentRequestResponse = [
+  number /* blockNum */,
+  string /* accId */,
+  number /* numSubmission */,
+  number /* callbackGasLimit */,
+  string /* sender */,
+  boolean /* isDirectPayment */,
+  string /* jobId */
+]

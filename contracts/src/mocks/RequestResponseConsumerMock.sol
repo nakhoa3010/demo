@@ -47,11 +47,8 @@ contract RequestResponseConsumerMock is
         bytes32 jobId = keccak256(abi.encodePacked("uint128"));
         Orakl.Request memory req = buildRequest(jobId);
         //change here for your expected data
-        req.add(
-            "get",
-            "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=KLAY&tsyms=USD"
-        );
-        req.add("path", "RAW,KLAY,USD,PRICE");
+        req.add("get", "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC&tsyms=USD");
+        req.add("path", "RAW,BTC,USD,PRICE");
         req.add("pow10", "8");
 
         requestId = COORDINATOR.requestData(req, callbackGasLimit, accId, numSubmission);
@@ -65,11 +62,8 @@ contract RequestResponseConsumerMock is
         bytes32 jobId = keccak256(abi.encodePacked("uint128"));
         Orakl.Request memory req = buildRequest(jobId);
         //change here for your expected data
-        req.add(
-            "get",
-            "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=KLAY&tsyms=USD"
-        );
-        req.add("path", "RAW,KLAY,USD,PRICE");
+        req.add("get", "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC&tsyms=USD");
+        req.add("path", "RAW,BTC,USD,PRICE");
         req.add("pow10", "8");
 
         requestId = COORDINATOR.requestData{value: msg.value}(
@@ -89,11 +83,8 @@ contract RequestResponseConsumerMock is
         bytes32 jobId = keccak256(abi.encodePacked("int256"));
         Orakl.Request memory req = buildRequest(jobId);
         //change here for your expected data
-        req.add(
-            "get",
-            "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=KLAY&tsyms=USD"
-        );
-        req.add("path", "RAW,KLAY,USD,PRICE");
+        req.add("get", "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC&tsyms=USD");
+        req.add("path", "RAW,BTC,USD,PRICE");
         req.add("pow10", "8");
 
         requestId = COORDINATOR.requestData(req, callbackGasLimit, accId, numSubmission);
@@ -107,11 +98,8 @@ contract RequestResponseConsumerMock is
         bytes32 jobId = keccak256(abi.encodePacked("int256"));
         Orakl.Request memory req = buildRequest(jobId);
         //change here for your expected data
-        req.add(
-            "get",
-            "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=KLAY&tsyms=USD"
-        );
-        req.add("path", "RAW,KLAY,USD,PRICE");
+        req.add("get", "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC&tsyms=USD");
+        req.add("path", "RAW,BTC,USD,PRICE");
         req.add("pow10", "8");
 
         requestId = COORDINATOR.requestData{value: msg.value}(
@@ -130,11 +118,8 @@ contract RequestResponseConsumerMock is
     ) public onlyOwner returns (uint256 requestId) {
         bytes32 jobId = keccak256(abi.encodePacked("bool"));
         Orakl.Request memory req = buildRequest(jobId);
-        req.add(
-            "get",
-            "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=KLAY&tsyms=USD"
-        );
-        req.add("path", "RAW,KLAY,USD,PRICE");
+        req.add("get", "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC&tsyms=USD");
+        req.add("path", "RAW,BTC,USD,PRICE");
         req.add("pow10", "8");
 
         requestId = COORDINATOR.requestData(req, callbackGasLimit, accId, numSubmission);
@@ -150,9 +135,9 @@ contract RequestResponseConsumerMock is
         //change here for your expected data
         req.add(
             "get",
-            "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=KLAY&tsyms=USD"
+            "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC &tsyms=USD"
         );
-        req.add("path", "RAW,KLAY,USD,PRICE");
+        req.add("path", "RAW,BTC,USD,PRICE");
         req.add("pow10", "8");
 
         requestId = COORDINATOR.requestData{value: msg.value}(
@@ -171,11 +156,8 @@ contract RequestResponseConsumerMock is
     ) public onlyOwner returns (uint256 requestId) {
         bytes32 jobId = keccak256(abi.encodePacked("string"));
         Orakl.Request memory req = buildRequest(jobId);
-        req.add(
-            "get",
-            "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=KLAY&tsyms=USD"
-        );
-        req.add("path", "RAW,KLAY,USD,PRICE");
+        req.add("get", "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC&tsyms=USD");
+        req.add("path", "RAW,BTC,USD,PRICE");
         req.add("pow10", "8");
 
         requestId = COORDINATOR.requestData(req, callbackGasLimit, accId, numSubmission);
@@ -188,11 +170,8 @@ contract RequestResponseConsumerMock is
     ) public payable onlyOwner returns (uint256 requestId) {
         bytes32 jobId = keccak256(abi.encodePacked("string"));
         Orakl.Request memory req = buildRequest(jobId);
-        req.add(
-            "get",
-            "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=KLAY&tsyms=USD"
-        );
-        req.add("path", "RAW,KLAY,USD,PRICE");
+        req.add("get", "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC&tsyms=USD");
+        req.add("path", "RAW,BTC,USD,PRICE");
         req.add("pow10", "8");
 
         requestId = COORDINATOR.requestData{value: msg.value}(
@@ -211,11 +190,8 @@ contract RequestResponseConsumerMock is
     ) public onlyOwner returns (uint256 requestId) {
         bytes32 jobId = keccak256(abi.encodePacked("bytes32"));
         Orakl.Request memory req = buildRequest(jobId);
-        req.add(
-            "get",
-            "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=KLAY&tsyms=USD"
-        );
-        req.add("path", "RAW,KLAY,USD,PRICE");
+        req.add("get", "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC&tsyms=USD");
+        req.add("path", "RAW,BTC,USD,PRICE");
         req.add("pow10", "8");
 
         requestId = COORDINATOR.requestData(req, callbackGasLimit, accId, numSubmission);
@@ -228,11 +204,8 @@ contract RequestResponseConsumerMock is
     ) public payable onlyOwner returns (uint256 requestId) {
         bytes32 jobId = keccak256(abi.encodePacked("bytes32"));
         Orakl.Request memory req = buildRequest(jobId);
-        req.add(
-            "get",
-            "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=KLAY&tsyms=USD"
-        );
-        req.add("path", "RAW,KLAY,USD,PRICE");
+        req.add("get", "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC&tsyms=USD");
+        req.add("path", "RAW,BTC,USD,PRICE");
         req.add("pow10", "8");
 
         requestId = COORDINATOR.requestData{value: msg.value}(
@@ -251,11 +224,8 @@ contract RequestResponseConsumerMock is
     ) public onlyOwner returns (uint256 requestId) {
         bytes32 jobId = keccak256(abi.encodePacked("bytes"));
         Orakl.Request memory req = buildRequest(jobId);
-        req.add(
-            "get",
-            "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=KLAY&tsyms=USD"
-        );
-        req.add("path", "RAW,KLAY,USD,PRICE");
+        req.add("get", "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC&tsyms=USD");
+        req.add("path", "RAW,BTC,USD,PRICE");
         req.add("pow10", "8");
 
         requestId = COORDINATOR.requestData(req, callbackGasLimit, accId, numSubmission);
@@ -268,11 +238,8 @@ contract RequestResponseConsumerMock is
     ) public payable onlyOwner returns (uint256 requestId) {
         bytes32 jobId = keccak256(abi.encodePacked("bytes"));
         Orakl.Request memory req = buildRequest(jobId);
-        req.add(
-            "get",
-            "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=KLAY&tsyms=USD"
-        );
-        req.add("path", "RAW,KLAY,USD,PRICE");
+        req.add("get", "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC&tsyms=USD");
+        req.add("path", "RAW,BTC,USD,PRICE");
         req.add("pow10", "8");
 
         requestId = COORDINATOR.requestData{value: msg.value}(

@@ -86,14 +86,15 @@ model Chains {
 }
 
 model Reporters {
-  address       String   @db.VarChar(42)
-  chainId       Int      @map("chain_id")
-  oracleAddress String   @db.VarChar(42)
-  privateKey    String   @db.VarChar(164)
-  reporterId    Int      @id @default(autoincrement()) @map("reporter_id")
-  serviceId     Int      @map("service_id")
-  Chains        Chains   @relation(fields: [chainId], references: [chainId], onDelete: NoAction, onUpdate: NoAction)
-  Services      Services @relation(fields: [serviceId], references: [serviceId], onDelete: NoAction, onUpdate: NoAction)
+  address           String   @db.VarChar(42)
+  chainId           Int      @map("chain_id")
+  oracleAddress     String   @db.VarChar(42)
+  privateKey        String   @db.VarChar(164)
+  reporterId        Int      @id @default(autoincrement()) @map("reporter_id")
+  serviceId         Int      @map("service_id")
+  fulfillMinimumGas Int?     @map("fulfill_minimum_gas")
+  Chains            Chains   @relation(fields: [chainId], references: [chainId], onDelete: NoAction, onUpdate: NoAction)
+  Services          Services @relation(fields: [serviceId], references: [serviceId], onDelete: NoAction, onUpdate: NoAction)
 
   @@map("reporters")
 }

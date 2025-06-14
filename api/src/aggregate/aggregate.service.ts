@@ -94,14 +94,11 @@ export class AggregateService {
 
     const redisKey = `latestAggregate:${aggregatorId.toString()}`
     const rawResult = await this.redis.get(redisKey)
-
     if (!rawResult) {
-      console.log({ aggregatorId })
       return await this.findLatestByAggregatorIdFromPrisma(aggregatorId)
     }
-    console.log({ aggregatorId, rawResult })
     const { timestamp, value } = JSON.parse(rawResult)
-    return { timestamp, value }
+    return { timestamp: timestamp.toString(), value: value.toString() }
   }
 
   async findLatestByAggregatorIdFromPrisma(aggregatorId) {
@@ -114,7 +111,7 @@ export class AggregateService {
     }
 
     const { timestamp, value } = prismaResult
-    return { timestamp, value }
+    return { timestamp: new Date(timestamp).getTime(), value: value.toString() }
   }
 
   /*

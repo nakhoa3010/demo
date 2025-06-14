@@ -354,7 +354,10 @@ contract Account is IAccount, ITypeAndVersion {
      * @inheritdoc IAccount
      */
     function cancelAccount(address to) external onlyPaymentSolution {
-        selfdestruct(payable(to));
+        uint256 balance = sBalance;
+        sBalance = 0;
+        (bool success, ) = payable(to).call{value: balance}("");
+        require(success, "Transfer failed");
     }
 
     /**

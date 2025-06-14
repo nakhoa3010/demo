@@ -31,17 +31,19 @@
   "scripts": {
     "clean": "rm -rf dist",
     "build": "yarn clean && tsc",
-    "start:listener": "node --no-warnings --import=specifier-resolution-node/register --experimental-specifier-resolution=node --experimental-json-modules dist/listener/main",
-    "start:listener:adcs": "yarn start:listener --service ADCS",
     "start:worker": "node --no-warnings --import=specifier-resolution-node/register --experimental-json-modules --experimental-specifier-resolution=node dist/worker/main.js",
     "start:worker:adcs": "yarn start:worker --worker ADCS",
     "start:worker:vrf": "yarn start:worker --worker VRF",
+    "start:worker:dataFeed": "yarn start:worker --worker DATA_FEED",
+    "start:worker:rr": "yarn start:worker --worker RR",
     "flush": "node --no-warnings --experimental-specifier-resolution=node --experimental-json-modules dist/tools/flush-queues.js",
     "test": "node --no-warnings --import=specifier-resolution-node/register --experimental-json-modules --experimental-specifier-resolution=node dist/worker/test.js",
     "lint": "DEBUG=eslint:cli-engine npx eslint 'src/**/*.ts' 'src/*.ts'",
     "remove-job": "node --no-warnings --import=specifier-resolution-node/register --experimental-specifier-resolution=node --experimental-json-modules dist/cmd/removeRepeatingJob.js",
-    "start:listener-v2": "node --no-warnings --import=specifier-resolution-node/register --experimental-specifier-resolution=node --experimental-json-modules dist/listener-v2/main",
-    "start:listener-v2:adcs": "yarn start:listener-v2 --service ADCS",
+    "start:listener": "node --no-warnings --import=specifier-resolution-node/register --experimental-specifier-resolution=node --experimental-json-modules dist/listener-v2/main",
+    "start:listener:adcs": "yarn start:listener --service ADCS",
+    "start:listener:vrf": "yarn start:listener --service VRF",
+    "start:listener:rr": "yarn start:listener --service RR",
     "create-qn-stream": "node --no-warnings --import=specifier-resolution-node/register --experimental-specifier-resolution=node --experimental-json-modules dist/tools/createQnStreams"
   },
   "dependencies": {

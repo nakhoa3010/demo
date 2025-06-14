@@ -8,7 +8,7 @@ import {
   WORKER_VRF_QUEUE_NAME,
   BULLMQ_CONNECTION,
   LISTENER_JOB_SETTINGS,
-  LISTENER_V2_PORT,
+  LISTENER_VRF_PORT,
   WEBHOOK_KEY
 } from '../settings'
 import { VRF_COORDINATOR_ABI } from '../constants/vrf.coordinator.abi'
@@ -31,8 +31,8 @@ export async function buildListener(logger: Logger) {
     logger
   })
 
-  app.post('/events', async (req: Request, res: Response) => {
-    logger.debug('/events')
+  app.post('/events/vrf', async (req: Request, res: Response) => {
+    logger.debug('/events/vrf')
     try {
       let body = ''
       req.on('data', (chunk) => {
@@ -56,8 +56,8 @@ export async function buildListener(logger: Logger) {
     }
   })
 
-  app.listen(LISTENER_V2_PORT, () => {
-    logger.info(`Listener v2 listening on port ${LISTENER_V2_PORT}`)
+  app.listen(LISTENER_VRF_PORT, () => {
+    logger.info(`Listener v2 listening on port ${LISTENER_VRF_PORT}`)
   })
 
   // Handle graceful shutdown
@@ -100,11 +100,12 @@ async function processEvent({ iface, logger }: { iface: Interface; logger: Logge
         requestId,
         seed: eventData.preSeed.toString(),
         accId: Number(eventData.accId),
-        callbackGasLimit: eventData.callbackGasLimit,
-        numWords: eventData.numWords,
+        callbackGasLimit: Number(eventData.callbackGasLimit),
+        numWords: Number(eventData.numWords),
         sender: eventData.sender,
         isDirectPayment: eventData.isDirectPayment
       }
+      console.log('jobData', { jobData })
       _logger.debug(jobData, 'jobData')
 
       return { jobName, jobId: requestId, jobData }

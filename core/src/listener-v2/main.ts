@@ -4,12 +4,13 @@ import { buildListener as buildADCSListener } from './adcs'
 import { XOracleError, XOracleErrorCode } from '../errors'
 import { hookConsoleError } from '../utils'
 import { IListenersV2 } from './types'
-import express, { Request, Response } from 'express'
-import { LISTENER_V2_PORT } from '../settings'
-const app = express()
+import { buildListener as buildVRFListener } from './vrf'
+import { buildListener as buildRRListener } from './request-response'
 
 const LISTENERS: IListenersV2 = {
-  ADCS: buildADCSListener
+  ADCS: buildADCSListener,
+  VRF: buildVRFListener,
+  RR: buildRRListener
 }
 
 const FILE_NAME = import.meta.url

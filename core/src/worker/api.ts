@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { URL } from 'node:url'
 import { Logger } from 'pino'
-import { API_URL, ADCS_API_URL } from '../settings'
+import { API_URL } from '../settings'
 import {
   IAdapter,
   IAggregate,
@@ -18,9 +18,9 @@ export const AGGREGATE_ENDPOINT = buildUrl(API_URL, 'aggregate')
 export const AGGREGATOR_ENDPOINT = buildUrl(API_URL, 'aggregator')
 export const ERROR_ENDPOINT = buildUrl(API_URL, 'error')
 export const PRICE_ENDPOINT = buildUrl(API_URL, 'price')
-export const OUTPUT_TYPE_ENDPOINT = buildUrl(ADCS_API_URL, 'adaptors/by-job-id')
-export const MEME_ENDPOINT = buildUrl(ADCS_API_URL, 'inference')
-export const ADD_0G_KEY_ENDPOINT = buildUrl(ADCS_API_URL, 'zero')
+export const OUTPUT_TYPE_ENDPOINT = buildUrl(API_URL, 'adaptors/by-job-id')
+export const MEME_ENDPOINT = buildUrl(API_URL, 'inference')
+export const ADD_0G_KEY_ENDPOINT = buildUrl(API_URL, 'zero')
 
 /**
 /**
@@ -272,5 +272,32 @@ export async function add0GKey(txHash: string, rootHash: string) {
     await axios.post(url)
   } catch (error) {
     console.log(error)
+  }
+}
+
+export async function executeAdapterById(code: string, input: { [key: string]: any }) {
+  try {
+    const url = buildUrl(OUTPUT_TYPE_ENDPOINT, `/${code}`)
+    const adapter = (await axios.get(url))?.data
+    if (!adapter) {
+      throw new XOracleError(XOracleErrorCode.FailedToGetAdaptor, 'No adapter found')
+    }
+    const inputObject = adapter.inputEntity
+    const compare = Object.keys(inputObject).every((key) => input[key] !== undefined)
+    if (!compare) {
+      throw new XOracleError(XOracleErrorCode.FailedToGetAdaptor, 'Input is not valid')
+    }
+    const response = await axios.post(buildUrl(API_URL, `v1/adapter/run/${code}`), {
+      input: input
+    })
+    return {
+      response: response.data,
+      fulfillDataRequestFn: adapter.fulfillDataRequestFn,
+      outputType: adapter.outputType,
+      outputEntity: adapter.outputEntity
+    }
+  } catch (e) {
+    console.error(e)
+    throw new XOracleError(XOracleErrorCode.FailedToGetAdaptor, 'Failed to execute adapter')
   }
 }
