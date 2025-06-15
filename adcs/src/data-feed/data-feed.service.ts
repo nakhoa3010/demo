@@ -3,6 +3,7 @@ import axios from 'axios'
 import { COINGECKO_API_KEY, COINGECKO_API_URL } from '../app.settings'
 import { PrismaService } from '../prisma.service'
 import { RedisService } from '../redis/redis.service'
+import { FeedType } from './data-feed.types'
 
 @Injectable()
 export class DataFeedService {
@@ -23,7 +24,8 @@ export class DataFeedService {
             timestamp: 'desc'
           },
           take: 1
-        }
+        },
+        Chain: true
       }
     })
 
@@ -57,7 +59,11 @@ export class DataFeedService {
           name: m.name,
           decimals: m.adapter.decimals,
           lastedPrice: m.Aggregate[0].value.toString(),
-          marketCap: marketCap?.data[symbol]?.usd_market_cap || 0
+          marketCap: marketCap?.data[symbol]?.usd_market_cap || 0,
+          chainId: m.Chain.chainId,
+          chainName: m.Chain.name,
+          iconUrl: m.Chain.iconUrl,
+          type: FeedType.premium
         }
       })
     )

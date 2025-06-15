@@ -76,6 +76,7 @@ model Aggregate {
 model Chains {
   chainId    Int          @id @default(autoincrement()) @map("chain_id")
   name       String       @unique
+  iconUrl    String?      @map("icon_url")
   reporters  Reporters[]
   Aggregator Aggregator[]
   Listener   Listener[]
