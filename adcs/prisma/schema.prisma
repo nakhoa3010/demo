@@ -143,7 +143,6 @@ model ChainRpc {
   @@map("chain_rpc")
 }
 
-
 // Prepayment account
 model PrepaymentAccount {
   id        Int      @id
