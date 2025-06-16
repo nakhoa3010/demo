@@ -4,13 +4,11 @@ import { createClient } from 'redis'
 import { IWorkers } from './types'
 import { buildLogger } from '../logger'
 import { REDIS_HOST, REDIS_PASSWORD, REDIS_PORT, REDIS_USERNAME } from '../settings'
-import { buildWorker as adcsWorker } from './adcs'
 import { buildWorker as vrfWorker } from './vrf'
 import { buildWorker as dataFeedWorker } from './dataFeed'
 import { buildWorker as rrWorker } from './request-response'
 
 const WORKERS: IWorkers = {
-  ADCS: adcsWorker,
   VRF: vrfWorker,
   DATA_FEED: dataFeedWorker,
   RR: rrWorker
