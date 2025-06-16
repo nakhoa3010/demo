@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { Loader2 } from 'lucide-react';
 import React, { ReactNode } from 'react';
 
 type AppButtonVariant =
@@ -50,6 +51,7 @@ export default function AppButton({
   variant = 'primary',
   className,
   size = '56',
+  isLoading,
   onClick,
   ...props
 }: IAppButtonProps) {
@@ -61,12 +63,13 @@ export default function AppButton({
         sizeStyles[size],
         className,
       )}
+      disabled={props.disabled || isLoading}
       onClick={onClick}
       {...props}
     >
-      {iconLeft}
-      {text}
-      {iconRight}
+      {!isLoading && iconLeft}
+      {isLoading ? <Loader2 className="size-4 animate-spin" /> : text}
+      {!isLoading && iconRight}
     </Button>
   );
 }

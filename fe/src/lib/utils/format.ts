@@ -24,3 +24,7 @@ export const formatDate = (date: string, locale: Locale) => {
 export const shortAddress = (address: string) => {
   return `${address.slice(0, 6)}...${address.slice(-6)}`;
 };
+
+export const formatWithDecimals = (value: string | number, decimals = 18) => {
+  return Number(value) / 10 ** decimals;
+};

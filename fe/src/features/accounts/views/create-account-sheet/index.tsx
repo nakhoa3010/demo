@@ -14,7 +14,10 @@ export default function CreateAccountSheet({ open, onOpenChange }: CreateAccount
   const { address } = useAccount();
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent className="bg-black-90 max-w-[400px] py-5">
+      <SheetContent
+        className="bg-black-90 max-w-[400px] py-5"
+        onPointerDownOutside={(e) => e.preventDefault()}
+      >
         <ScrollArea className="h-full">
           {!address && <ConnectWalletContent />}
           {address && (

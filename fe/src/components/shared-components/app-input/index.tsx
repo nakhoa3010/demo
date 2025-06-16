@@ -12,6 +12,7 @@ interface IAppInputProps extends InputHTMLAttributes<HTMLInputElement> {
   isRequired?: boolean;
   onIconClick?: () => void;
   className?: string;
+  inputClassName?: string;
 }
 
 export default function AppInput({
@@ -22,27 +23,30 @@ export default function AppInput({
   isRequired,
   onIconClick,
   className,
+  inputClassName,
   ...props
 }: IAppInputProps) {
   const borderColor = error ? 'border-red' : 'border-black/10';
   return (
     <div className={cn('flex w-full flex-col gap-2', className)}>
-      <div className="flex items-center justify-between">
-        {label && (
+      {label && (
+        <div className="flex items-center justify-between">
           <div className="flex items-center gap-1">
             <Typography.Caption variant="caption_1_regular" text={label}>
               {isRequired && <span className="text-red">*</span>}
             </Typography.Caption>
             {isRequired && <span className="text-red">*</span>}
           </div>
-        )}
-        {action && action}
-      </div>
+
+          {action && action}
+        </div>
+      )}
       <div className="relative">
         <Input
           className={cn(
             'place bg-neutral-0 caret-primary-dark h-12 px-4 py-3 text-sm leading-[22px] font-normal placeholder:text-neutral-400 focus:shadow-none',
             borderColor,
+            inputClassName,
             error && 'focus-visible:border-red',
           )}
           {...props}

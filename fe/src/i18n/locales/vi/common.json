@@ -5,6 +5,7 @@
     "account": "Tài khoản",
     "data_feed": "Data Feed"
   },
+  "please_connect_wallet_first": "Vui lòng kết nối ví trước",
   "connect_wallet": "Kết nối ví",
   "connect_your_wallet": "Kết nối ví của bạn",
   "connect_wallet_description": "Để sử dụng dịch vụ của Orakl Network, bạn cần kết nối ví của mình trước.",
@@ -31,7 +32,18 @@
     "title": "Tạo tài khoản",
     "description": "Tạo một ID tài khoản bằng địa chỉ ví của bạn. ID tài khoản sẽ được sử dụng trong hợp đồng của bạn khi sử dụng dịch vụ VRF hoặc Request-Response.",
     "as_an_owner": "*Là chủ sở hữu, bạn có thể hủy hoặc chỉnh sửa tài khoản bất cứ lúc nào.",
-    "do_it_later": "Tôi sẽ tạo sau"
+    "do_it_later": "Tôi sẽ tạo sau",
+    "add_deposit": "Thêm số dư",
+    "add_consumer": "Thêm người dùng",
+    "consumer_description": "Thêm địa chỉ người dùng để cho phép họ truy cập và sử dụng dịch vụ của tài khoản. Người dùng này sẽ có quyền tương tác với tài khoản của bạn dựa trên quyền được cấp.",
+    "consumer_placeholder": "Nhập địa chỉ người dùng",
+    "error_add_consumer": "Lỗi khi thêm người dùng",
+    "success_add_consumer": "Thêm người dùng thành công",
+    "deposit_description": "Thêm ETH vào tài khoản của bạn để tài trợ cho hoạt động và giao dịch. Số dư này sẽ được sử dụng để bù đắp phí gas và các chi phí khác liên quan đến việc sử dụng dịch vụ tài khoản.",
+    "your_balance": "Số dư của bạn: {balanceValue} ETH",
+    "enter_amount": "Nhập số lượng (ETH)",
+    "max": "Tối đa",
+    "owner_address": "Địa chỉ chủ sở hữu"
   },
   "data_feed": {
     "page_title": "Data Feed",
@@ -42,6 +54,7 @@
     "total_market_cap": "Tổng Market Cap",
     "proxy": "Proxy",
     "feed": "feed",
+    "address": "Địa chỉ",
     "search_placeholder": "Tìm kiếm theo symbol, địa chỉ, giá, market cap..."
   }
 }
