@@ -1,0 +1,7 @@
+{
+  "invalid_email": "Invalid email",
+  "invalid_password": "Invalid password",
+  "invalid_confirm_password": "Passwords do not match",
+  "password_validation": "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number",
+  "password_not_match": "Passwords do not match"
+}

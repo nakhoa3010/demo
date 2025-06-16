@@ -1,0 +1,26 @@
+{
+  "404": {
+    "title": "Không Tìm Thấy Trang",
+    "message": "Xin lỗi, chúng tôi không thể tìm thấy trang bạn đang tìm.",
+    "back": "Quay lại Trang Chủ"
+  },
+  "500": {
+    "title": "Đã Xảy Ra Lỗi",
+    "message": "Đã xảy ra lỗi không mong muốn. Vui lòng thử lại sau.",
+    "retry": "Thử lại"
+  },
+  "invalid_password": "Email hoặc mật khẩu không chính xác",
+  "no_valid_account": "Tài khoản không hợp lệ",
+  "please_accept_terms_of_service": "Vui lòng chấp thuận điều khoản dịch vụ",
+  "please_select_chain_and_token": "Vui lòng chọn network và token",
+  "connect_wallet_first": "Vui lòng kết nối ví trước",
+  "order_id_is_required": "Đơn hàng không hợp lệ",
+  "chain_or_token_is_required": "Network hoặc token không hợp lệ",
+  "switch_chain_first": "Vui lòng chuyển sang network đúng trước",
+  "signer_not_found": "Vui lòng kết nối ví trước",
+  "insufficient_balance": "Số dư không đủ",
+  "total_amount_is_required": "Tổng số tiền không hợp lệ",
+  "internal_server_error": "Lỗi server, vui lòng thử lại sau",
+  "image_size_too_large": "Image size is too large",
+  "invalid_image_type": "Invalid image type"
+}

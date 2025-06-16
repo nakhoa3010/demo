@@ -1,0 +1,60 @@
+{
+  "app_name": "Orakl",
+  "nav": {
+    "home": "Home",
+    "account": "Account",
+    "data_feed": "Data Feed"
+  },
+  "please_connect_wallet_first": "Please connect your wallet first",
+  "connect_wallet": "Connect wallet",
+  "connect_your_wallet": "Connect your wallet",
+  "connect_wallet_description": "To use Orakl Network services, you need to connect to your wallet first.",
+  "create_account": "Create account",
+  "address_copied": "Address copied to clipboard",
+  "account": {
+    "title": "Create account to take advantage of Orakl's services",
+    "description": "To utilize the VRF and Request-Response services, one must create an account and ensure that sufficient funds are added to cover the associated costs.",
+    "step_prepayment": "Prepayment",
+    "step_request_response": "Request-Response",
+    "step_vrf": "VRF",
+    "step_key_hash": "KeyHash"
+  },
+  "recent_accounts": {
+    "title": "Recent accounts",
+    "description": "The most recent accounts created by users",
+    "status": "Status/ID",
+    "address": "Address",
+    "created_at": "Created At",
+    "consumer": "Consumer",
+    "balance": "Balance"
+  },
+  "create_account_sheet": {
+    "title": "Create account",
+    "description": "Create an account ID using your wallet address. The account ID will be used in your contract when utilizing the VRF or Request-Response service.",
+    "as_an_owner": "*As an owner, you can cancel or edit the account at any time.",
+    "do_it_later": "I'll do it later",
+    "add_deposit": "Add deposit",
+    "add_consumer": "Add consumer",
+    "consumer_description": "Add a consumer address to your account to allow them to access and use your account services. This consumer will be able to interact with your account based on the permissions granted.",
+    "consumer_placeholder": "Enter consumer address",
+    "error_add_consumer": "Error when adding consumer",
+    "success_add_consumer": "Consumer added successfully",
+    "deposit_description": "Add ETH to your account to fund your operations and transactions. This deposit will be used to cover gas fees and other costs associated with using the account services.",
+    "your_balance": "Your balance: {balanceValue} ETH",
+    "enter_amount": "Enter amount (ETH)",
+    "max": "MAX",
+    "owner_address": "Owner address"
+  },
+  "data_feed": {
+    "page_title": "Data Feed",
+    "page_description": "Orakl Network offers an enhanced range of price feeds to support the broad DeFi ecosystem and nurture new and upcoming tokens.",
+    "page_description_2": "Data Feed leverages offchain aggregation, providing better stability and scalability. Price feeds can be accessed through Proxy or Router contracts.",
+    "premium": "Premium",
+    "basic": "Basic",
+    "total_market_cap": "Total Market Cap",
+    "proxy": "Proxy",
+    "feed": "Feed",
+    "address": "Address",
+    "search_placeholder": "Search by symbol, address, price, market cap..."
+  }
+}
