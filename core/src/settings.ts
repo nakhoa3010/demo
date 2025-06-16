@@ -53,7 +53,7 @@ export const REMOVE_ON_COMPLETE = 500
 export const REMOVE_ON_FAIL = 1_000
 export const CONCURRENCY = 12
 // Data Feed
-export const MAX_DATA_STALENESS = 60_000
+export const MAX_DATA_STALENESS = 600_000
 
 // Request Response
 export const LISTENER_RR_HISTORY_QUEUE_NAME = `${DEPLOYMENT_NAME}-listener-rr-history-queue`
