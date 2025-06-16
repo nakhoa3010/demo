@@ -43,21 +43,40 @@ export function buildTransaction(
   switch (payloadParameters.jobId) {
     case JOB_ID_UINT128:
     case JOB_ID_INT256:
-      response = Math.floor(payloadParameters.response)
+      let responseOriginal = payloadParameters.response
+      if (typeof responseOriginal === 'object') {
+        responseOriginal = Object.values(payloadParameters.response)[0]
+      }
+      response = Math.floor(responseOriginal)
       break
     case JOB_ID_BOOL:
-      if (payloadParameters.response.toLowerCase() == 'false') {
+      let responseOriginalBool = payloadParameters.response
+      if (typeof responseOriginalBool === 'object') {
+        responseOriginalBool = Object.values(payloadParameters.response)[0]
+      }
+      if (
+        typeof responseOriginalBool === 'string' &&
+        responseOriginalBool.toLowerCase() == 'false'
+      ) {
         response = false
       } else {
-        response = Boolean(payloadParameters.response)
+        response = Boolean(responseOriginalBool)
       }
       break
     case JOB_ID_STRING:
-      response = String(payloadParameters.response)
+      let responseOriginalString = payloadParameters.response
+      if (typeof responseOriginalString === 'object') {
+        responseOriginalString = Object.values(payloadParameters.response)[0]
+      }
+      response = String(responseOriginalString)
       break
     case JOB_ID_BYTES32:
     case JOB_ID_BYTES:
-      response = payloadParameters.response
+      let responseOriginalBytes = payloadParameters.response
+      if (typeof responseOriginalBytes === 'object') {
+        responseOriginalBytes = Object.values(payloadParameters.response)[0]
+      }
+      response = responseOriginalBytes
       break
   }
 

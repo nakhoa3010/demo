@@ -83,6 +83,7 @@ export const LISTENER_ADCS_PORT = process.env.LISTENER_ADCS_PORT || '3003'
 
 export const QUICKNODE_API_KEY = process.env.QUICKNODE_API_KEY || ''
 export const WEBHOOK_KEY = process.env.WEBHOOK_KEY || ''
+export const ADCS_API_URL = process.env.ADCS_API_URL || 'http://localhost:3004'
 
 export const BULLMQ_CONNECTION = {
   concurrency: CONCURRENCY,

@@ -6,7 +6,8 @@ import {
   BULLMQ_CONNECTION,
   RR_FULLFILL_GAS_MINIMUM,
   RR_SERVICE_NAME,
-  WORKER_RR_QUEUE_NAME
+  WORKER_RR_QUEUE_NAME,
+  ADCS_API_URL
 } from '../settings'
 import {
   IRequestResponseListenerWorker,
@@ -100,16 +101,37 @@ async function processRequest(reqEnc: string, _logger: Logger): Promise<string |
   const logger = _logger.child({ name: 'processRequest', file: FILE_NAME })
   const req = await decodeRequest(reqEnc)
   logger.debug(req, 'req')
+  console.log({ req })
+  const firstKey = req[0].function
+  console.log({ firstKey })
+  if (firstKey === 'adcs_adapter') {
+    // TODO: handle adcs adapter
+    const adaptorId = req[0].args
+    const endpoint = `${ADCS_API_URL}/adapter/run/${adaptorId}`
+    const inputRequest = req.filter((key) => key.function.includes('input_'))
+    const reducerReq = req.slice(1).filter((key) => !key.function.includes('input_'))
 
-  const options = {
-    method: 'GET'
+    const payload = {
+      input: inputRequest.reduce((acc, key) => {
+        acc[key.function.split('_')[1]] = key.args
+        return acc
+      }, {})
+    }
+    const rawData = await axios.post(endpoint, payload)
+    const reducers = buildReducer(REDUCER_MAPPING, reducerReq)
+    const res = pipe(...reducers)(rawData.data)
+    return res
+  } else {
+    const options = {
+      method: 'GET'
+    }
+    const rawData = (await axios.get(req[0].args, options)).data
+    const reducers = buildReducer(REDUCER_MAPPING, req.slice(1))
+    const res = pipe(...reducers)(rawData)
+
+    logger.debug(res, 'res')
+    return res
   }
-  const rawData = (await axios.get(req[0].args, options)).data
-  const reducers = buildReducer(REDUCER_MAPPING, req.slice(1))
-  const res = pipe(...reducers)(rawData)
-
-  logger.debug(res, 'res')
-  return res
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
