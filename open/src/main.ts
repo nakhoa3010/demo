@@ -9,8 +9,8 @@ async function bootstrap() {
   setAppSetting(app)
   const version = '1.0'
   const config = new DocumentBuilder()
-    .setTitle('ADCS open API')
-    .setDescription('ADCS open API description')
+    .setTitle('X Oracle open API')
+    .setDescription('X Oracle open API description')
     .setVersion(version)
     .addBearerAuth(
       {
@@ -25,7 +25,7 @@ async function bootstrap() {
     )
     .build()
   const document = SwaggerModule.createDocument(app, config)
-  SwaggerModule.setup('adcs/docs', app, document)
+  SwaggerModule.setup('open/docs', app, document)
   const configService = app.get(ConfigService)
   const port = configService.get('APP_PORT')
   const server = await app.listen(port)
