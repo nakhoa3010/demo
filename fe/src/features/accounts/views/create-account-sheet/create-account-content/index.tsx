@@ -5,12 +5,7 @@ import React, { useState } from 'react';
 import CreateAccountStep from './create-account-step';
 import AddDepositStep from './add-deposit-step';
 import AddConsumerStep from './add-consumer-step';
-
-const steps = [
-  <Wallet key="1" className="size-8 text-green-300" />,
-  <Vault key="2" className="size-8 text-green-300" />,
-  <UserPlus key="3" className="size-8 text-green-300" />,
-];
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface CreateAccountContentProps {
   address: string;
@@ -22,6 +17,29 @@ type StepValue = 'CREATE_ACCOUNT' | 'ADD_DEPOSIT' | 'ADD_CONSUMER';
 export default function CreateAccountContent({ address, onDoItLater }: CreateAccountContentProps) {
   const [currentStep, setCurrentStep] = useState<StepValue>('CREATE_ACCOUNT');
   const [accId, setAccId] = useState<number | null>(1);
+
+  const steps = [
+    <Wallet
+      key="1"
+      className={cn(
+        'size-8',
+        ['CREATE_ACCOUNT', 'ADD_DEPOSIT', 'ADD_CONSUMER'].includes(currentStep)
+          ? 'text-green-300'
+          : 'text-green-800',
+      )}
+    />,
+    <Vault
+      key="2"
+      className={cn(
+        'size-8',
+        ['ADD_DEPOSIT', 'ADD_CONSUMER'].includes(currentStep) ? 'text-green-300' : 'text-green-800',
+      )}
+    />,
+    <UserPlus
+      key="3"
+      className={cn('size-8', currentStep === 'ADD_CONSUMER' ? 'text-green-300' : 'text-green-800')}
+    />,
+  ];
 
   return (
     <>
@@ -48,22 +66,32 @@ export default function CreateAccountContent({ address, onDoItLater }: CreateAcc
         <SheetTitle />
       </SheetHeader>
 
-      {currentStep === 'CREATE_ACCOUNT' && (
-        <CreateAccountStep
-          address={address}
-          onDoItLater={onDoItLater}
-          onSuccess={(accId) => {
-            setAccId(accId);
-            setCurrentStep('ADD_DEPOSIT');
-          }}
-        />
-      )}
-      {currentStep === 'ADD_DEPOSIT' && accId && (
-        <AddDepositStep accId={accId} onSuccess={() => setCurrentStep('ADD_CONSUMER')} />
-      )}
-      {currentStep === 'ADD_CONSUMER' && accId && (
-        <AddConsumerStep accId={accId} onSuccess={() => onDoItLater?.()} />
-      )}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentStep}
+          initial={{ x: 100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          exit={{ x: -100, opacity: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          {currentStep === 'CREATE_ACCOUNT' && (
+            <CreateAccountStep
+              address={address}
+              onDoItLater={onDoItLater}
+              onSuccess={(accId) => {
+                setAccId(accId);
+                setCurrentStep('ADD_DEPOSIT');
+              }}
+            />
+          )}
+          {currentStep === 'ADD_DEPOSIT' && accId && (
+            <AddDepositStep accId={accId} onSuccess={() => setCurrentStep('ADD_CONSUMER')} />
+          )}
+          {currentStep === 'ADD_CONSUMER' && accId && (
+            <AddConsumerStep accId={accId} onSuccess={() => onDoItLater?.()} />
+          )}
+        </motion.div>
+      </AnimatePresence>
     </>
   );
 }
