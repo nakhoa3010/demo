@@ -39,12 +39,17 @@ export class AccountService {
         }
       }
     })
+    if (!account) {
+      throw new Error('Account not found')
+    }
+    const balance = await this.provider.getBalance(account.account)
     const returnData = {
       id: account.id,
       account: account.account,
       owner: account.owner,
       accType: account.accType,
       status: account.status,
+      balance: balance,
       createdAt: account.createdAt,
       consumerCount: account.Consumer.length,
       consumers: account.Consumer.map((consumer) => ({
