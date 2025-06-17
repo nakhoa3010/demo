@@ -1,5 +1,6 @@
 {
   "app_name": "X-Oracle",
+  "logout": "Đăng xuất",
   "nav": {
     "home": "Trang chủ",
     "account": "Tài khoản",
@@ -27,7 +28,9 @@
     "address": "Địa chỉ",
     "created_at": "Ngày tạo",
     "consumer": "Người dùng",
-    "balance": "Số dư"
+    "balance": "Số dư",
+    "created_by_me": "Tạo bởi tôi",
+    "add_consumer": "Thêm người dùng vào tài khoản"
   },
   "create_account_sheet": {
     "title": "Tạo tài khoản",

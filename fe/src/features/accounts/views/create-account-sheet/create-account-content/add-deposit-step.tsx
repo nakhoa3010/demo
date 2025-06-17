@@ -6,7 +6,6 @@ import { useLocalization } from '@/i18n/hooks';
 import { ChevronRight } from 'lucide-react';
 import React, { useState } from 'react';
 import useToast from '@/lib/hooks/use-toast';
-import { Trans } from 'react-i18next';
 
 interface AddDepositStepProps {
   accId: number;

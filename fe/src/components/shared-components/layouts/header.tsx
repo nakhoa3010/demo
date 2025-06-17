@@ -10,6 +10,7 @@ import Link from 'next/link';
 import { navigations } from '@/lib/constans';
 import { useLocalization, useLocalizedRoutes } from '@/i18n/hooks';
 import { usePathname } from 'next/navigation';
+import UserInfo from './user-info';
 interface HeaderProps {
   hideNavigation?: boolean;
   hideOrderNow?: boolean;
@@ -51,6 +52,7 @@ export default function Header({ hideNavigation, className, wrapperClassName }: 
 
           <div className="flex items-center gap-6">
             <LanguageSwitcher />
+            <UserInfo />
             <MenuIcon />
           </div>
         </Wrapper>

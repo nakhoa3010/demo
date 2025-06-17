@@ -14,7 +14,6 @@ interface AddConsumerStepProps {
 export default function AddConsumerStep({ accId, onSuccess }: AddConsumerStepProps) {
   const { t } = useLocalization();
   const { toastError, toastSuccess } = useToast();
-
   const [consumerAddress, setConsumerAddress] = useState<string>('');
 
   const { addConsumer, isConsumerPending } = useAddConsumer();
@@ -22,6 +21,7 @@ export default function AddConsumerStep({ accId, onSuccess }: AddConsumerStepPro
   const handleAddConsumer = async () => {
     try {
       await addConsumer({ accId, consumerAddress });
+      setConsumerAddress('');
       toastSuccess(t('create_account_sheet.success_add_consumer'));
       onSuccess();
     } catch (ex) {

@@ -3,7 +3,7 @@
 import Typography from '@/components/shared-components/typography';
 import Wrapper from '@/components/shared-components/wrapper';
 import { useLocalization } from '@/i18n/hooks';
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { formatDate, formatWithDecimals, shortAddress } from '@/lib/utils/format';
 import { useLocalizedRoutes } from '@/i18n/hooks';
@@ -12,12 +12,23 @@ import { envConfig } from '@/lib/configs';
 import { cn } from '@/lib/utils';
 import { Skeleton } from '@/components/ui/skeleton';
 import useAllAccounts from '../hooks/apis/use-all-accounts';
-import { AccountStatus } from '@/types/account-type';
+import { AccountItem, AccountStatus } from '@/types/account-type';
 import { FadeInUp } from '@/components/animations';
+import CreateAccountSheet from './create-account-sheet';
+import { useAccount } from 'wagmi';
+import { Check, UserPlus } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { AppButton } from '@/components/shared-components';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
 export default function RecentAccounts() {
   const { currentLocale } = useLocalizedRoutes();
+  const { address } = useAccount();
   const { t } = useLocalization('common');
+
+  const [isCreatedByMe, setIsCreatedByMe] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [accId, setAccId] = useState<number | null>(null);
 
   const { accounts, isAccountsLoading } = useAllAccounts();
 
@@ -26,20 +37,62 @@ export default function RecentAccounts() {
     return `/profiles/profile_${randomNumber}.jpg`;
   };
 
+  const onOpenCreateAccountSheet = (item: AccountItem) => {
+    setAccId(item.id);
+    setIsOpen(true);
+  };
+
+  const onCloseCreateAccountSheet = () => {
+    setAccId(null);
+    setIsOpen(false);
+  };
+
+  const accountsFiltered = useMemo(() => {
+    if (isCreatedByMe && address) {
+      return accounts.filter((item) => item.owner === address);
+    }
+    return accounts;
+  }, [accounts, isCreatedByMe, address]);
+
+  const isHasCreatedByMe = useMemo(() => {
+    if (!address) return false;
+    const isCreatedByMe = accounts.some((item) => item.owner === address);
+    return isCreatedByMe;
+  }, [accounts, address]);
+
   return (
     <FadeInUp>
       <Wrapper className="flex flex-col gap-4">
-        <div className="flex flex-col gap-2">
-          <Typography.Headline
-            variant="h4"
-            text={t('recent_accounts.title')}
-            className="text-white-70"
-          />
-          <Typography.Body
-            variant="14_regular"
-            text={t('recent_accounts.description')}
-            className="text-white-60"
-          />
+        <div className="flex justify-between">
+          <div className="flex flex-col gap-2">
+            <Typography.Headline
+              variant="h4"
+              text={t('recent_accounts.title')}
+              className="text-white-70"
+            />
+            <Typography.Body
+              variant="14_regular"
+              text={t('recent_accounts.description')}
+              className="text-white-60"
+            />
+          </div>
+
+          {address && (
+            <div className="flex cursor-pointer items-center gap-2">
+              <div
+                className={cn(
+                  'flex size-4 items-center justify-center rounded-[5px] border border-green-500',
+                )}
+                onClick={() => setIsCreatedByMe(!isCreatedByMe)}
+              >
+                {isCreatedByMe && <Check className="h-3 w-3 text-green-500" />}
+              </div>
+              <Typography.Caption
+                text={t('recent_accounts.created_by_me')}
+                className="text-green-500"
+              />
+            </div>
+          )}
         </div>
         <div className="bg-gradient rounded-12 border-white-10 flex flex-col items-start justify-start gap-6 p-5">
           <ScrollArea className="w-full">
@@ -81,14 +134,15 @@ export default function RecentAccounts() {
                       text={t('recent_accounts.balance')}
                     />
                   </th>
+                  {isHasCreatedByMe && <th className="w-[50px] p-4"></th>}
                 </tr>
               </thead>
               <tbody>
                 {!isAccountsLoading &&
-                  accounts.map((item, index) => (
+                  accountsFiltered.map((item, index) => (
                     <tr
                       key={item.id}
-                      className={`hover:bg-white-10 ${index === accounts.length - 1 ? '' : 'border-bottom-white-10'}`}
+                      className={`hover:bg-white-10 ${index === accountsFiltered.length - 1 ? '' : 'border-bottom-white-10'}`}
                     >
                       <td className="p-4">
                         <div className="flex items-center gap-2">
@@ -142,6 +196,26 @@ export default function RecentAccounts() {
                           className="text-white-70"
                         />
                       </td>
+                      {isHasCreatedByMe && item.owner === address && (
+                        <td className="p-4">
+                          <Tooltip>
+                            <TooltipTrigger>
+                              <div
+                                onClick={() => onOpenCreateAccountSheet(item)}
+                                className="flex size-6 cursor-pointer items-center justify-center rounded-[5px] border border-green-500 p-1"
+                              >
+                                <UserPlus className="size-4 text-green-500" />
+                              </div>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <Typography.Caption
+                                text={t('recent_accounts.add_consumer')}
+                                className="text-white-70"
+                              />
+                            </TooltipContent>
+                          </Tooltip>
+                        </td>
+                      )}
                     </tr>
                   ))}
 
@@ -171,6 +245,13 @@ export default function RecentAccounts() {
           </ScrollArea>
         </div>
       </Wrapper>
+
+      <CreateAccountSheet
+        stepTo="ADD_CONSUMER"
+        open={isOpen}
+        onOpenChange={setIsOpen}
+        accIdValue={accId || undefined}
+      />
     </FadeInUp>
   );
 }

@@ -1,5 +1,6 @@
 {
   "app_name": "X-Oracle",
+  "logout": "Logout",
   "nav": {
     "home": "Home",
     "account": "Account",
@@ -27,7 +28,9 @@
     "address": "Address",
     "created_at": "Created At",
     "consumer": "Consumer",
-    "balance": "Balance"
+    "balance": "Balance",
+    "created_by_me": "Created by me",
+    "add_consumer": "Add consumer to account"
   },
   "create_account_sheet": {
     "title": "Create account",

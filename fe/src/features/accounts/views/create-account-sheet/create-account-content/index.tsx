@@ -7,16 +7,24 @@ import AddDepositStep from './add-deposit-step';
 import AddConsumerStep from './add-consumer-step';
 import { motion, AnimatePresence } from 'framer-motion';
 
+type StepValue = 'CREATE_ACCOUNT' | 'ADD_DEPOSIT' | 'ADD_CONSUMER';
+
 interface CreateAccountContentProps {
   address: string;
+
+  accIdValue?: number;
+  stepTo?: StepValue;
   onDoItLater?: () => void;
 }
 
-type StepValue = 'CREATE_ACCOUNT' | 'ADD_DEPOSIT' | 'ADD_CONSUMER';
-
-export default function CreateAccountContent({ address, onDoItLater }: CreateAccountContentProps) {
-  const [currentStep, setCurrentStep] = useState<StepValue>('CREATE_ACCOUNT');
-  const [accId, setAccId] = useState<number | null>(1);
+export default function CreateAccountContent({
+  address,
+  accIdValue,
+  stepTo,
+  onDoItLater,
+}: CreateAccountContentProps) {
+  const [currentStep, setCurrentStep] = useState<StepValue>(stepTo || 'CREATE_ACCOUNT');
+  const [accId, setAccId] = useState<number | null>(accIdValue || null);
 
   const steps = [
     <Wallet
