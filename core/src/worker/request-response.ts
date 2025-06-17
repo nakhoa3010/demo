@@ -163,15 +163,15 @@ async function sendTx(
   try {
     const prepaymentInterface = new Interface(PREPAYMENT_ACCOUNT_ABI)
     const prepaymentLog = prepaymentInterface.parseLog(txReceipt.logs[0])
-    const oldBalance = prepaymentLog?.args?.oldBalance || 0n
-    const newBalance = prepaymentLog?.args?.newBalance || 0n
+    const oldBalance = BigInt(prepaymentLog?.args?.oldBalance || 0)
+    const newBalance = BigInt(prepaymentLog?.args?.newBalance || 0)
 
     await addFulfillmentTx({
       txHash: txReceipt.hash,
       requestId: payloadParameters.requestId,
       consumerAddress: tx.to,
       service: 'Request-Response',
-      amount: oldBalance.sub(newBalance).toString(),
+      amount: (oldBalance - newBalance).toString(),
       balance: newBalance.toString(),
       status: 'fulfilled'
     })
