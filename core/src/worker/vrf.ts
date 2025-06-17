@@ -95,7 +95,7 @@ export async function job(_logger: Logger) {
       )
       logger.debug(tx, 'tx')
       // send transaction
-      await sendTx(tx, reporter, logger)
+      await sendTx(tx, reporter, inData.sender, logger)
       return tx
     } catch (e) {
       logger.error(e)
@@ -146,7 +146,7 @@ function buildTransaction(
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function sendTx(tx: any, reporter: IReporterConfig, logger: Logger) {
+async function sendTx(tx: any, reporter: IReporterConfig, sender: string, logger: Logger) {
   const wallet = buildWallet({
     privateKey: reporter.privateKey,
     providerUrl: reporter.chainRpcs[0].rpcUrl
@@ -173,7 +173,7 @@ async function sendTx(tx: any, reporter: IReporterConfig, logger: Logger) {
     await addFulfillmentTx({
       txHash: txReceipt.hash,
       requestId: '0',
-      consumerAddress: tx.to,
+      consumerAddress: sender,
       service: 'VRF',
       amount: (oldBalance - newBalance).toString(),
       balance: newBalance.toString(),

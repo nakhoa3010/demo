@@ -169,7 +169,7 @@ async function sendTx(
     await addFulfillmentTx({
       txHash: txReceipt.hash,
       requestId: payloadParameters.requestId,
-      consumerAddress: tx.to,
+      consumerAddress: payloadParameters.sender,
       service: 'Request-Response',
       amount: (oldBalance - newBalance).toString(),
       balance: newBalance.toString(),
