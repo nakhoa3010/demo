@@ -179,5 +179,7 @@ async function sendTx(tx: any, reporter: IReporterConfig, logger: Logger) {
       balance: newBalance.toString(),
       status: 'fulfilled'
     })
-  } catch (e) {}
+  } catch (e) {
+    console.log(e)
+  }
 }
