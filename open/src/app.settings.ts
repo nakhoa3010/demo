@@ -31,22 +31,9 @@ export function setAppSetting(app: INestApplication) {
     type: VersioningType.URI
   })
   app.enableCors({
-    origin: [
-      'http://localhost:3000',
-      'https://rivalz.ai',
-      'https://dev.rivalz.ai',
-      /\.rivalz.ai$/,
-      'https://adcsdev.rivalz.ai',
-      'https://adcs.rivalz.ai',
-      'https://testnet-adcs.rivalz.ai',
-      'https://testnet-adcs-v2.rivalz.ai'
-    ],
+    origin: ['http://localhost:3000', 'https://x-oracle.com'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     preflightContinue: false,
     optionsSuccessStatus: 204
   })
 }
-console.log('Database URL:', process.env.DATABASE_URL)
-console.log('API URL:', process.env.API_URL)
-console.log('RPC URL:', process.env.RPC_URL)
-console.log('APP PORT:', process.env.APP_PORT)
