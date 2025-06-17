@@ -16,4 +16,9 @@ export class AccountController {
   async create(@Param('txHash') txHash: string) {
     return await this.accountService.createPrepaymentAccount(txHash)
   }
+
+  @Post('create-consumer/:txHash')
+  async createConsumer(@Param('txHash') txHash: string) {
+    return await this.accountService.createConsumer(txHash)
+  }
 }
