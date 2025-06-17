@@ -315,7 +315,7 @@ model User {
 
 model Consumer {
   id                Int                @id @default(autoincrement())
-  address           String             @unique @map("address")
+  address           String             @map("address")
   status            String             @default("active") @map("status") // active, inactive, deleted
   accId             Int                @map("acc_id")
   requestCount      Int                @default(0) @map("request_count")
