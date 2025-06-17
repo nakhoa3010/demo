@@ -28,3 +28,19 @@ export const shortAddress = (address: string) => {
 export const formatWithDecimals = (value: string | number, decimals = 18) => {
   return Number(value) / 10 ** decimals;
 };
+
+/**
+ * format number to K, M, B, T
+ */
+export const formatNumberWithUnit = (value: number) => {
+  if (value >= 1000000000) {
+    return (value / 1000000000).toFixed(1) + 'B';
+  }
+  if (value >= 1000000) {
+    return (value / 1000000).toFixed(1) + 'M';
+  }
+  if (value >= 1000) {
+    return (value / 1000).toFixed(1) + 'K';
+  }
+  return value.toString();
+};

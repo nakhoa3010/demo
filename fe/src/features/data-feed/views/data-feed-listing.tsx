@@ -11,7 +11,7 @@ import useToast from '@/lib/hooks/use-toast';
 import { Input } from '@/components/ui/input';
 import DataFeedSkeleton from '../components/data-feed-skeleton';
 import { useAllDataFeedQuery } from '../hooks/apis';
-import { formatWithDecimals, shortAddress } from '@/lib/utils/format';
+import { formatNumberWithUnit, formatWithDecimals, shortAddress } from '@/lib/utils/format';
 
 export default function DataFeedListing() {
   const { t } = useLocalization('common');
@@ -70,7 +70,7 @@ export default function DataFeedListing() {
                 <Typography.Body variant="16_regular" text={item.name} className="text-white-80" />
                 <Typography.Body
                   variant="18_regular"
-                  text={formatWithDecimals(item.lastedPrice, item.decimals).toString()}
+                  text={formatNumberWithUnit(formatWithDecimals(item.lastedPrice, item.decimals))}
                   className="text-white-90"
                 />
               </div>
@@ -83,7 +83,7 @@ export default function DataFeedListing() {
                 />
                 <Typography.Body
                   variant="18_regular"
-                  text={item.marketCap.toString()}
+                  text={formatNumberWithUnit(item.marketCap)}
                   className="text-white-90"
                 />
               </div>
@@ -108,24 +108,6 @@ export default function DataFeedListing() {
                     />
                   </div>
                 </div>
-                {/* <div className="border-white-20 flex h-full gap-2 border-l" />
-                <div className="flex flex-1 flex-col gap-1">
-                  <Typography.Caption
-                    variant="caption_1_regular"
-                    text={t('data_feed.feed')}
-                    className="text-white-60"
-                  />
-                  <div className="flex items-center justify-between gap-1">
-                    <Typography.Body variant="14_regular" text={item.feed} />
-                    <CopyButton
-                      imgClassName="size-3"
-                      onClick={() => {
-                        navigator.clipboard.writeText(item.feed);
-                        toastSuccess(t('address_copied'));
-                      }}
-                    />
-                  </div>
-                </div> */}
               </div>
             </div>
           ))}

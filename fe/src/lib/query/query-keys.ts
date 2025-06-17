@@ -3,6 +3,7 @@ export const QueryKeys = {
   home: ['home'] as const,
   allDataFeed: ['all-data-feed'] as const,
   allAccounts: ['all-accounts'] as const,
+  allADCS: ['all-adcs'] as const,
 };
 
 export type QueryKeyFromFn<T> = T extends (...args: any[]) => infer R ? R : T;

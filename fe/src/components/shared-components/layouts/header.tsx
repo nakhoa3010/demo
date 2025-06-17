@@ -8,7 +8,7 @@ import Wrapper from '../wrapper';
 import AppLogo from '../app-logo';
 import Link from 'next/link';
 import { navigations } from '@/lib/constans';
-import { useLocalization } from '@/i18n/hooks';
+import { useLocalization, useLocalizedRoutes } from '@/i18n/hooks';
 import { usePathname } from 'next/navigation';
 interface HeaderProps {
   hideNavigation?: boolean;
@@ -18,6 +18,7 @@ interface HeaderProps {
 }
 export default function Header({ hideNavigation, className, wrapperClassName }: HeaderProps) {
   const { t } = useLocalization('common');
+  const { currentLocale } = useLocalizedRoutes();
   const pathname = usePathname();
 
   return (
@@ -30,7 +31,12 @@ export default function Header({ hideNavigation, className, wrapperClassName }: 
 
           <div className="hidden items-center gap-12 lg:flex">
             {navigations.map((nav) => (
-              <Link href={nav.path} target={nav.target} key={nav.label}>
+              <Link
+                href={`/${currentLocale}${nav.path}`}
+                target={nav.target}
+                key={nav.label}
+                className="hover:text-green-300"
+              >
                 <Typography.Body
                   variant="14_medium"
                   text={t(nav.label)}

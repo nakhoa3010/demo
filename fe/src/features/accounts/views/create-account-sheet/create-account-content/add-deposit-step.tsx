@@ -6,6 +6,7 @@ import { useLocalization } from '@/i18n/hooks';
 import { ChevronRight } from 'lucide-react';
 import React, { useState } from 'react';
 import useToast from '@/lib/hooks/use-toast';
+import { Trans } from 'react-i18next';
 
 interface AddDepositStepProps {
   accId: number;
@@ -13,7 +14,7 @@ interface AddDepositStepProps {
 }
 
 export default function AddDepositStep({ accId, onSuccess }: AddDepositStepProps) {
-  const { t } = useLocalization();
+  const { t } = useLocalization('common');
   const { toastError } = useToast();
   const [amount, setAmount] = useState<string>('');
 
@@ -59,7 +60,9 @@ export default function AddDepositStep({ accId, onSuccess }: AddDepositStepProps
         <Typography.Caption
           variant="caption_1_regular"
           className="text-white-60"
-          text={t('create_account_sheet.your_balance', { balanceValue })}
+          text={t('create_account_sheet.your_balance', {
+            balanceValue: Number(balanceValue).toFixed(4),
+          })}
         />
         <div className="relative flex w-full">
           <AppInput

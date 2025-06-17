@@ -19,7 +19,7 @@ export default function CreateAccountSheet({ open, onOpenChange }: CreateAccount
         onPointerDownOutside={(e) => e.preventDefault()}
       >
         <ScrollArea className="h-full">
-          {!address && <ConnectWalletContent />}
+          {!address && <ConnectWalletContent onClose={() => onOpenChange?.(false)} />}
           {address && (
             <CreateAccountContent address={address} onDoItLater={() => onOpenChange?.(false)} />
           )}

@@ -13,12 +13,12 @@ export const SectionIds = {
 };
 
 const navigations: Navigation[] = [
-  {
-    isScrollable: false,
-    path: `#${SectionIds.HOME}`,
-    label: 'nav.home',
-    target: '_self',
-  },
+  // {
+  //   isScrollable: false,
+  //   path: `#${SectionIds.HOME}`,
+  //   label: 'nav.home',
+  //   target: '_self',
+  // },
   {
     isScrollable: false,
     path: `/account`,
@@ -29,6 +29,12 @@ const navigations: Navigation[] = [
     isScrollable: false,
     path: `/data-feed`,
     label: 'nav.data_feed',
+    target: '_self',
+  },
+  {
+    isScrollable: false,
+    path: `/adcs`,
+    label: 'nav.adcs',
     target: '_self',
   },
 ];

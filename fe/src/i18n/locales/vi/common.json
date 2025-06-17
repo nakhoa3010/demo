@@ -1,18 +1,19 @@
 {
-  "app_name": "Orakl",
+  "app_name": "X-Oracle",
   "nav": {
     "home": "Trang chủ",
     "account": "Tài khoản",
-    "data_feed": "Data Feed"
+    "data_feed": "Data Feed",
+    "adcs": "ADCS"
   },
   "please_connect_wallet_first": "Vui lòng kết nối ví trước",
   "connect_wallet": "Kết nối ví",
   "connect_your_wallet": "Kết nối ví của bạn",
-  "connect_wallet_description": "Để sử dụng dịch vụ của Orakl Network, bạn cần kết nối ví của mình trước.",
+  "connect_wallet_description": "Để sử dụng dịch vụ của X-Oracle Network, bạn cần kết nối ví của mình trước.",
   "create_account": "Tạo tài khoản",
   "address_copied": "Địa chỉ đã được sao chép",
   "account": {
-    "title": "Tạo tài khoản để sử dụng dịch vụ của Orakl",
+    "title": "Tạo tài khoản để sử dụng dịch vụ của X-Oracle",
     "description": "Để sử dụng dịch vụ VRF và Request-Response, bạn cần tạo tài khoản và đảm bảo có đủ số dư để trả phí liên quan.",
     "step_prepayment": "Prepayment",
     "step_request_response": "Request-Response",
@@ -40,14 +41,14 @@
     "error_add_consumer": "Lỗi khi thêm người dùng",
     "success_add_consumer": "Thêm người dùng thành công",
     "deposit_description": "Thêm ETH vào tài khoản của bạn để tài trợ cho hoạt động và giao dịch. Số dư này sẽ được sử dụng để bù đắp phí gas và các chi phí khác liên quan đến việc sử dụng dịch vụ tài khoản.",
-    "your_balance": "Số dư của bạn: {balanceValue} ETH",
+    "your_balance": "Số dư của bạn: {{balanceValue}} ETH",
     "enter_amount": "Nhập số lượng (ETH)",
     "max": "Tối đa",
     "owner_address": "Địa chỉ chủ sở hữu"
   },
   "data_feed": {
     "page_title": "Data Feed",
-    "page_description": "Orakl Network cung cấp một phạm vi rộng hơn các dữ liệu giá để hỗ trợ hệ sinh thái DeFi và nuôi dưỡng các token mới và sắp ra mắt.",
+    "page_description": "X-Oracle cung cấp một phạm vi rộng hơn các dữ liệu giá để hỗ trợ hệ sinh thái DeFi và nuôi dưỡng các token mới và sắp ra mắt.",
     "page_description_2": "Data Feed sử dụng tích hợp dữ liệu ngoài, cung cấp tính ổn định và khả năng mở rộng tốt hơn. Dữ liệu giá có thể được truy cập thông qua hợp đồng Proxy hoặc Router.",
     "premium": "Cao cấp",
     "basic": "Cơ bản",
@@ -56,5 +57,13 @@
     "feed": "feed",
     "address": "Địa chỉ",
     "search_placeholder": "Tìm kiếm theo symbol, địa chỉ, giá, market cap..."
+  },
+  "adcs": {
+    "ai_model": "Mô hình {modelName}",
+    "request_count": "Số lượng yêu cầu",
+    "output_type": "Đầu ra",
+    "input_type": "Đầu vào",
+    "page_title": "Khám phá ADCS",
+    "page_description": "ADCS là một template tùy chỉnh có thể tùy chỉnh các yêu cầu suy luận ngoài, đảm bảo luồng dữ liệu giữa môi trường trên–chai và ngoài–chai."
   }
 }
