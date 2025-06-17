@@ -90,9 +90,15 @@ export class AccountService {
     }
     const { accId, account, owner, accType } = parsedEvent.args
     const accountUser = await this.prisma.prepaymentAccount.upsert({
-      where: { account },
+      where: { account: account.toLowerCase() },
       update: {},
-      create: { account, txHash, owner, accType: accType.toString(), id: Number(accId) }
+      create: {
+        account: account.toLowerCase(),
+        txHash,
+        owner: owner.toLowerCase(),
+        accType: accType.toString(),
+        id: Number(accId)
+      }
     })
     return accountUser
   }
