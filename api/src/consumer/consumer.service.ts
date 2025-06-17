@@ -15,6 +15,9 @@ export class ConsumerService {
     const consumer = await this.prisma.consumer.findFirst({
       where: { address: dto.consumerAddress.toLowerCase() }
     })
+    if (!consumer) {
+      throw new Error('Consumer not found')
+    }
 
     const tx = await this.prisma.consumerRequest.create({
       data: {
@@ -24,7 +27,7 @@ export class ConsumerService {
         amount: dto.amount,
         balance: dto.balance,
         status: dto.status,
-        Consumer: { connect: { id: consumer.id } }
+        consumerId: consumer.id
       }
     })
     return tx
