@@ -49,7 +49,7 @@ export class AccountService {
       owner: account.owner,
       accType: account.accType,
       status: account.status,
-      balance: balance,
+      balance: balance.toString(),
       createdAt: account.createdAt,
       consumerCount: account.Consumer.length,
       consumers: account.Consumer.map((consumer) => ({
