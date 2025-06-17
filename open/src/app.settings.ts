@@ -20,7 +20,7 @@ export const API_KEY_SECRET = process.env.API_KEY_SECRET || 'secret'
 export const ALLORA_API_URL = process.env.ALLORA_API_URL || 'https://api.allora.ai'
 export const ALLORA_API_KEY = process.env.ALLORA_API_KEY || 'allora-api-key'
 export const PREPAYMENT_ACCOUNT_ADDRESS = process.env.PREPAYMENT_ACCOUNT_ADDRESS || ''
-export const COINGECKO_API_URL = process.env.COINGECKO_API_URL || 'https://api.coingecko.com/api/v3'
+export const COINGECKO_API_URL = process.env.COINGECKO_API_URL || ''
 export const COINGECKO_API_KEY = process.env.COINGECKO_API_KEY || ''
 
 export function setAppSetting(app: INestApplication) {
