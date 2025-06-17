@@ -1,0 +1,1421 @@
+export const PREPAYMENT_ACCOUNT_ABI = [
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'protocolFeeRecipient',
+        type: 'address'
+      }
+    ],
+    stateMutability: 'nonpayable',
+    type: 'constructor'
+  },
+  {
+    inputs: [],
+    name: 'BurnFeeFailed',
+    type: 'error'
+  },
+  {
+    inputs: [],
+    name: 'CoordinatorExists',
+    type: 'error'
+  },
+  {
+    inputs: [],
+    name: 'FailedToDeposit',
+    type: 'error'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint64',
+        name: 'accId',
+        type: 'uint64'
+      }
+    ],
+    name: 'FailedToWithdraw',
+    type: 'error'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint64',
+        name: 'accId',
+        type: 'uint64'
+      }
+    ],
+    name: 'FailedToWithdrawFromTemporaryAccount',
+    type: 'error'
+  },
+  {
+    inputs: [],
+    name: 'InsufficientBalance',
+    type: 'error'
+  },
+  {
+    inputs: [],
+    name: 'InvalidAccount',
+    type: 'error'
+  },
+  {
+    inputs: [],
+    name: 'InvalidCoordinator',
+    type: 'error'
+  },
+  {
+    inputs: [],
+    name: 'MustBeAccountOwner',
+    type: 'error'
+  },
+  {
+    inputs: [],
+    name: 'OperatorFeeFailed',
+    type: 'error'
+  },
+  {
+    inputs: [],
+    name: 'PendingRequestExists',
+    type: 'error'
+  },
+  {
+    inputs: [],
+    name: 'ProtocolFeeFailed',
+    type: 'error'
+  },
+  {
+    inputs: [],
+    name: 'RatioOutOfBounds',
+    type: 'error'
+  },
+  {
+    inputs: [],
+    name: 'TooHighFeeRatio',
+    type: 'error'
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'uint64',
+        name: 'accId',
+        type: 'uint64'
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'oldBalance',
+        type: 'uint256'
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'newBalance',
+        type: 'uint256'
+      }
+    ],
+    name: 'AccountBalanceDecreased',
+    type: 'event'
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'uint64',
+        name: 'accId',
+        type: 'uint64'
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'oldBalance',
+        type: 'uint256'
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'newBalance',
+        type: 'uint256'
+      }
+    ],
+    name: 'AccountBalanceIncreased',
+    type: 'event'
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'uint64',
+        name: 'accId',
+        type: 'uint64'
+      },
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'to',
+        type: 'address'
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256'
+      }
+    ],
+    name: 'AccountCanceled',
+    type: 'event'
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'uint64',
+        name: 'accId',
+        type: 'uint64'
+      },
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'consumer',
+        type: 'address'
+      }
+    ],
+    name: 'AccountConsumerAdded',
+    type: 'event'
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'uint64',
+        name: 'accId',
+        type: 'uint64'
+      },
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'consumer',
+        type: 'address'
+      }
+    ],
+    name: 'AccountConsumerRemoved',
+    type: 'event'
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'uint64',
+        name: 'accId',
+        type: 'uint64'
+      },
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'account',
+        type: 'address'
+      },
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'owner',
+        type: 'address'
+      },
+      {
+        indexed: false,
+        internalType: 'enum IAccount.AccountType',
+        name: 'accType',
+        type: 'uint8'
+      }
+    ],
+    name: 'AccountCreated',
+    type: 'event'
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'uint64',
+        name: 'accId',
+        type: 'uint64'
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'startDate',
+        type: 'uint256'
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'period',
+        type: 'uint256'
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'reqPeriodCount',
+        type: 'uint256'
+      }
+    ],
+    name: 'AccountDetailUpdated',
+    type: 'event'
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'uint64',
+        name: 'accId',
+        type: 'uint64'
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'discount',
+        type: 'uint256'
+      }
+    ],
+    name: 'AccountFeeRatioSet',
+    type: 'event'
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'uint64',
+        name: 'accId',
+        type: 'uint64'
+      },
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'from',
+        type: 'address'
+      },
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'to',
+        type: 'address'
+      }
+    ],
+    name: 'AccountOwnerTransferRequested',
+    type: 'event'
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'uint64',
+        name: 'accId',
+        type: 'uint64'
+      },
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'from',
+        type: 'address'
+      },
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'to',
+        type: 'address'
+      }
+    ],
+    name: 'AccountOwnerTransferred',
+    type: 'event'
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'uint64',
+        name: 'accId',
+        type: 'uint64'
+      }
+    ],
+    name: 'AccountPeriodReqIncreased',
+    type: 'event'
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'accId',
+        type: 'uint256'
+      }
+    ],
+    name: 'AccountSubscriptionPaidSet',
+    type: 'event'
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'uint8',
+        name: 'ratio',
+        type: 'uint8'
+      }
+    ],
+    name: 'BurnRatioSet',
+    type: 'event'
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'uint64',
+        name: 'accId',
+        type: 'uint64'
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256'
+      }
+    ],
+    name: 'BurnedFee',
+    type: 'event'
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'coordinator',
+        type: 'address'
+      }
+    ],
+    name: 'CoordinatorAdded',
+    type: 'event'
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'coordinator',
+        type: 'address'
+      }
+    ],
+    name: 'CoordinatorRemoved',
+    type: 'event'
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'previousOwner',
+        type: 'address'
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'newOwner',
+        type: 'address'
+      }
+    ],
+    name: 'OwnershipTransferred',
+    type: 'event'
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'uint8',
+        name: 'ratio',
+        type: 'uint8'
+      }
+    ],
+    name: 'ProtocolFeeRatioSet',
+    type: 'event'
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'uint64',
+        name: 'accId',
+        type: 'uint64'
+      },
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'owner',
+        type: 'address'
+      }
+    ],
+    name: 'TemporaryAccountCreated',
+    type: 'event'
+  },
+  {
+    inputs: [],
+    name: 'MAX_RATIO',
+    outputs: [
+      {
+        internalType: 'uint8',
+        name: '',
+        type: 'uint8'
+      }
+    ],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [],
+    name: 'MIN_RATIO',
+    outputs: [
+      {
+        internalType: 'uint8',
+        name: '',
+        type: 'uint8'
+      }
+    ],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint64',
+        name: 'accId',
+        type: 'uint64'
+      }
+    ],
+    name: 'acceptAccountOwnerTransfer',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint64',
+        name: 'accId',
+        type: 'uint64'
+      },
+      {
+        internalType: 'address',
+        name: 'consumer',
+        type: 'address'
+      }
+    ],
+    name: 'addConsumer',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'coordinator',
+        type: 'address'
+      }
+    ],
+    name: 'addCoordinator',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint64',
+        name: 'accId',
+        type: 'uint64'
+      },
+      {
+        internalType: 'address',
+        name: 'to',
+        type: 'address'
+      }
+    ],
+    name: 'cancelAccount',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint64',
+        name: 'accId',
+        type: 'uint64'
+      },
+      {
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256'
+      }
+    ],
+    name: 'chargeFee',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256'
+      }
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint64',
+        name: 'accId',
+        type: 'uint64'
+      }
+    ],
+    name: 'chargeFeeTemporary',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: 'totalAmount',
+        type: 'uint256'
+      },
+      {
+        internalType: 'uint256',
+        name: 'operatorAmount',
+        type: 'uint256'
+      }
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint64',
+        name: 'accId',
+        type: 'uint64'
+      },
+      {
+        internalType: 'uint256',
+        name: 'operatorFee',
+        type: 'uint256'
+      },
+      {
+        internalType: 'address',
+        name: 'operatorFeeRecipient',
+        type: 'address'
+      }
+    ],
+    name: 'chargeOperatorFee',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'operatorFee',
+        type: 'uint256'
+      },
+      {
+        internalType: 'address',
+        name: 'operatorFeeRecipient',
+        type: 'address'
+      }
+    ],
+    name: 'chargeOperatorFeeTemporary',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [],
+    name: 'createAccount',
+    outputs: [
+      {
+        internalType: 'uint64',
+        name: '',
+        type: 'uint64'
+      }
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'startDate',
+        type: 'uint256'
+      },
+      {
+        internalType: 'uint256',
+        name: 'period',
+        type: 'uint256'
+      },
+      {
+        internalType: 'uint256',
+        name: 'reqPeriodCount',
+        type: 'uint256'
+      },
+      {
+        internalType: 'address',
+        name: 'accOwner',
+        type: 'address'
+      }
+    ],
+    name: 'createFiatSubscriptionAccount',
+    outputs: [
+      {
+        internalType: 'uint64',
+        name: '',
+        type: 'uint64'
+      }
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'feeRatio',
+        type: 'uint256'
+      },
+      {
+        internalType: 'address',
+        name: 'accOwner',
+        type: 'address'
+      }
+    ],
+    name: 'createKlayDiscountAccount',
+    outputs: [
+      {
+        internalType: 'uint64',
+        name: '',
+        type: 'uint64'
+      }
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'startDate',
+        type: 'uint256'
+      },
+      {
+        internalType: 'uint256',
+        name: 'period',
+        type: 'uint256'
+      },
+      {
+        internalType: 'uint256',
+        name: 'reqPeriodCount',
+        type: 'uint256'
+      },
+      {
+        internalType: 'uint256',
+        name: 'subscriptionPrice',
+        type: 'uint256'
+      },
+      {
+        internalType: 'address',
+        name: 'accOwner',
+        type: 'address'
+      }
+    ],
+    name: 'createKlaySubscriptionAccount',
+    outputs: [
+      {
+        internalType: 'uint64',
+        name: '',
+        type: 'uint64'
+      }
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'owner',
+        type: 'address'
+      }
+    ],
+    name: 'createTemporaryAccount',
+    outputs: [
+      {
+        internalType: 'uint64',
+        name: '',
+        type: 'uint64'
+      }
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint64',
+        name: 'accId',
+        type: 'uint64'
+      }
+    ],
+    name: 'deposit',
+    outputs: [],
+    stateMutability: 'payable',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint64',
+        name: 'accId',
+        type: 'uint64'
+      }
+    ],
+    name: 'depositTemporary',
+    outputs: [],
+    stateMutability: 'payable',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint64',
+        name: 'accId',
+        type: 'uint64'
+      }
+    ],
+    name: 'getAccount',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: 'balance',
+        type: 'uint256'
+      },
+      {
+        internalType: 'uint64',
+        name: 'reqCount',
+        type: 'uint64'
+      },
+      {
+        internalType: 'address',
+        name: 'owner',
+        type: 'address'
+      },
+      {
+        internalType: 'address[]',
+        name: 'consumers',
+        type: 'address[]'
+      },
+      {
+        internalType: 'enum IAccount.AccountType',
+        name: 'accType',
+        type: 'uint8'
+      }
+    ],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint64',
+        name: 'accId',
+        type: 'uint64'
+      }
+    ],
+    name: 'getAccountDetail',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256'
+      },
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256'
+      },
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256'
+      },
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256'
+      }
+    ],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint64',
+        name: 'accId',
+        type: 'uint64'
+      }
+    ],
+    name: 'getAccountOwner',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address'
+      }
+    ],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint64',
+        name: 'accId',
+        type: 'uint64'
+      }
+    ],
+    name: 'getBalance',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: 'balance',
+        type: 'uint256'
+      }
+    ],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [],
+    name: 'getBurnFeeRatio',
+    outputs: [
+      {
+        internalType: 'uint8',
+        name: '',
+        type: 'uint8'
+      }
+    ],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [],
+    name: 'getCoordinators',
+    outputs: [
+      {
+        internalType: 'contract ICoordinatorBase[]',
+        name: '',
+        type: 'address[]'
+      }
+    ],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint64',
+        name: 'accId',
+        type: 'uint64'
+      }
+    ],
+    name: 'getFeeRatio',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256'
+      }
+    ],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint64',
+        name: 'accId',
+        type: 'uint64'
+      },
+      {
+        internalType: 'address',
+        name: 'consumer',
+        type: 'address'
+      }
+    ],
+    name: 'getNonce',
+    outputs: [
+      {
+        internalType: 'uint64',
+        name: '',
+        type: 'uint64'
+      }
+    ],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [],
+    name: 'getProtocolFeeRatio',
+    outputs: [
+      {
+        internalType: 'uint8',
+        name: '',
+        type: 'uint8'
+      }
+    ],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [],
+    name: 'getProtocolFeeRecipient',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address'
+      }
+    ],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint64',
+        name: 'accId',
+        type: 'uint64'
+      }
+    ],
+    name: 'getReqCount',
+    outputs: [
+      {
+        internalType: 'uint64',
+        name: '',
+        type: 'uint64'
+      }
+    ],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint64',
+        name: 'accId',
+        type: 'uint64'
+      }
+    ],
+    name: 'getSubscriptionPaid',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool'
+      }
+    ],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint64',
+        name: 'accId',
+        type: 'uint64'
+      },
+      {
+        internalType: 'address',
+        name: 'consumer',
+        type: 'address'
+      }
+    ],
+    name: 'increaseNonce',
+    outputs: [
+      {
+        internalType: 'uint64',
+        name: '',
+        type: 'uint64'
+      }
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint64',
+        name: 'accId',
+        type: 'uint64'
+      }
+    ],
+    name: 'increaseSubReqCount',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint64',
+        name: 'accId',
+        type: 'uint64'
+      },
+      {
+        internalType: 'address',
+        name: 'consumer',
+        type: 'address'
+      }
+    ],
+    name: 'isValidAccount',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool'
+      }
+    ],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint64',
+        name: 'accId',
+        type: 'uint64'
+      }
+    ],
+    name: 'isValidReq',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool'
+      }
+    ],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [],
+    name: 'owner',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address'
+      }
+    ],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint64',
+        name: 'accId',
+        type: 'uint64'
+      }
+    ],
+    name: 'pendingRequestExists',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool'
+      }
+    ],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint64',
+        name: 'accId',
+        type: 'uint64'
+      }
+    ],
+    name: 'pendingRequestExistsTemporary',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool'
+      }
+    ],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint64',
+        name: 'accId',
+        type: 'uint64'
+      },
+      {
+        internalType: 'address',
+        name: 'consumer',
+        type: 'address'
+      }
+    ],
+    name: 'removeConsumer',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'coordinator',
+        type: 'address'
+      }
+    ],
+    name: 'removeCoordinator',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [],
+    name: 'renounceOwnership',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint64',
+        name: 'accId',
+        type: 'uint64'
+      },
+      {
+        internalType: 'address',
+        name: 'requestedOwner',
+        type: 'address'
+      }
+    ],
+    name: 'requestAccountOwnerTransfer',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256'
+      }
+    ],
+    name: 'sCoordinators',
+    outputs: [
+      {
+        internalType: 'contract ICoordinatorBase',
+        name: '',
+        type: 'address'
+      }
+    ],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint8',
+        name: 'ratio',
+        type: 'uint8'
+      }
+    ],
+    name: 'setBurnFeeRatio',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint64',
+        name: 'accId',
+        type: 'uint64'
+      },
+      {
+        internalType: 'uint256',
+        name: 'discount',
+        type: 'uint256'
+      }
+    ],
+    name: 'setFeeRatio',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint8',
+        name: 'ratio',
+        type: 'uint8'
+      }
+    ],
+    name: 'setProtocolFeeRatio',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'protocolFeeRecipient',
+        type: 'address'
+      }
+    ],
+    name: 'setProtocolFeeRecipient',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint64',
+        name: 'accId',
+        type: 'uint64'
+      }
+    ],
+    name: 'setSubscriptionPaid',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'newOwner',
+        type: 'address'
+      }
+    ],
+    name: 'transferOwnership',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [],
+    name: 'typeAndVersion',
+    outputs: [
+      {
+        internalType: 'string',
+        name: '',
+        type: 'string'
+      }
+    ],
+    stateMutability: 'pure',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint64',
+        name: 'accId',
+        type: 'uint64'
+      },
+      {
+        internalType: 'uint256',
+        name: 'startTime',
+        type: 'uint256'
+      },
+      {
+        internalType: 'uint256',
+        name: 'period',
+        type: 'uint256'
+      },
+      {
+        internalType: 'uint256',
+        name: 'periodReqCount',
+        type: 'uint256'
+      },
+      {
+        internalType: 'uint256',
+        name: 'subscriptionPrice',
+        type: 'uint256'
+      }
+    ],
+    name: 'updateAccountDetail',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint64',
+        name: 'accId',
+        type: 'uint64'
+      },
+      {
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256'
+      }
+    ],
+    name: 'withdraw',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint64',
+        name: 'accId',
+        type: 'uint64'
+      },
+      {
+        internalType: 'address payable',
+        name: 'to',
+        type: 'address'
+      }
+    ],
+    name: 'withdrawTemporary',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  }
+]

@@ -4,7 +4,7 @@ pragma solidity ^0.8.16;
 import "../RequestResponseConsumerFulfill.sol";
 import "../RequestResponseConsumerBase.sol";
 
-contract ADCSConsumerMock is RequestResponseConsumerFulfillBool {
+contract InferenceConsumerMock is RequestResponseConsumerFulfillBool {
     using Orakl for Orakl.Request;
     bool public sResponseBool;
 
@@ -37,7 +37,7 @@ contract ADCSConsumerMock is RequestResponseConsumerFulfillBool {
     ) public onlyOwner returns (uint256 requestId) {
         bytes32 jobId = keccak256(abi.encodePacked("bool"));
         Orakl.Request memory req = buildRequest(jobId);
-        req.add("adcs_adapter", adapterId);
+        req.add("inference_adapter", adapterId);
         req.add("input_coinName", symbol);
         req.add("input_predictionType", predictionType);
         req.add("path", "isBuy");
@@ -54,7 +54,7 @@ contract ADCSConsumerMock is RequestResponseConsumerFulfillBool {
     ) public payable onlyOwner returns (uint256 requestId) {
         bytes32 jobId = keccak256(abi.encodePacked("bool"));
         Orakl.Request memory req = buildRequest(jobId);
-        req.add("adcs_adapter", adapterId);
+        req.add("inference_adapter", adapterId);
         req.add("input_coinName", symbol);
         req.add("input_predictionType", predictionType);
         req.add("path", "isBuy");

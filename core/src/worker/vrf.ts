@@ -17,12 +17,17 @@ import {
   Proof
 } from '../types'
 
-import { VRF_COORDINATOR_ABI as VRFAbis } from '../constants/vrf.coordinator.abi'
+import {
+  VRF_COORDINATOR_ABI,
+  VRF_COORDINATOR_ABI as VRFAbis
+} from '../constants/vrf.coordinator.abi'
 import { getReporterByAddress, getVrfConfig } from '../apis'
 import { buildWallet, sendTransaction } from './utils'
 
 import { remove0x } from '../utils'
 import { processVrfRequest } from '@xoracle/vrf'
+import { PREPAYMENT_ACCOUNT_ABI } from '../constants/prepayment.abi'
+import { addFulfillmentTx } from './api'
 
 const FILE_NAME = import.meta.url
 
@@ -158,4 +163,21 @@ async function sendTx(tx: any, reporter: IReporterConfig, logger: Logger) {
   }
   const txReceipt = await sendTransaction(txParams)
   logger.info(`submitted tx ${txReceipt.hash}`)
+
+  try {
+    const prepaymentInterface = new Interface(PREPAYMENT_ACCOUNT_ABI)
+    const prepaymentLog = prepaymentInterface.parseLog(txReceipt.logs[0])
+    const oldBalance = prepaymentLog?.args?.oldBalance || 0n
+    const newBalance = prepaymentLog?.args?.newBalance || 0n
+
+    await addFulfillmentTx({
+      txHash: txReceipt.hash,
+      requestId: '0',
+      consumerAddress: tx.to,
+      service: 'VRF',
+      amount: oldBalance.sub(newBalance).toString(),
+      balance: newBalance.toString(),
+      status: 'fulfilled'
+    })
+  } catch (e) {}
 }

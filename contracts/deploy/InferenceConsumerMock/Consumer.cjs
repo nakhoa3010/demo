@@ -3,17 +3,17 @@ const func = async function (hre) {
   const { deploy, get } = deployments
   const { deployer } = await getNamedAccounts()
 
-  console.log('ADCSConsumerMock.ts')
+  console.log('InferenceConsumerMock.ts')
   const coordinator = await get('RequestResponseCoordinator_v0.1')
-  const consumerDeployment = await deploy('ADCSConsumerMock', {
+  const consumerDeployment = await deploy('InferenceConsumerMock', {
     args: [coordinator.address],
     from: deployer,
     log: true,
   })
-  console.log('ADCSConsumerMock deployed to', consumerDeployment.address)
+  console.log('InferenceConsumerMock deployed to', consumerDeployment.address)
 }
 
-func.id = 'deploy-adcs-consumer-mock'
-func.tags = ['adcs-consumer-mock']
+func.id = 'deploy-inference-consumer-mock'
+func.tags = ['inference-consumer-mock']
 
 module.exports = func
