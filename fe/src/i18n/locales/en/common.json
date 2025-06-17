@@ -5,7 +5,7 @@
     "home": "Home",
     "account": "Account",
     "data_feed": "Data Feed",
-    "adcs": "ADCS"
+    "adcs": "Inference Oracle"
   },
   "please_connect_wallet_first": "Please connect your wallet first",
   "connect_wallet": "Connect wallet",
@@ -66,7 +66,7 @@
     "request_count": "Request count",
     "output_type": "Output",
     "input_type": "Input",
-    "page_title": "Explore ADCS",
-    "page_description": "ADCS is a customizable template that structures off-chain inference requests, ensuring data flow between on–chain and off–chain environments."
+    "page_title": "Explore Inference Oracle",
+    "page_description": "Inference Oracle is a customizable template that structures off-chain inference requests, ensuring data flow between on–chain and off–chain environments."
   }
 }

@@ -18,9 +18,9 @@ export default function AppLogo({ className, linkClassName }: AppLogoProps) {
           alt={APP_NAME}
           width={200}
           height={200}
-          className={cn('w-[40px]', className)}
+          className={cn('w-[40px] lg:w-[120px]', className)}
         />
-        <h1 className="text-2xl font-bold">{APP_NAME}</h1>
+        <h1 className="hidden text-2xl font-bold">{APP_NAME}</h1>
       </div>
     </Link>
   );

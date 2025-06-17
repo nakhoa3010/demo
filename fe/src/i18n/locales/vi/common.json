@@ -5,7 +5,7 @@
     "home": "Trang chủ",
     "account": "Tài khoản",
     "data_feed": "Data Feed",
-    "adcs": "ADCS"
+    "adcs": "Inference Oracle"
   },
   "please_connect_wallet_first": "Vui lòng kết nối ví trước",
   "connect_wallet": "Kết nối ví",
@@ -66,7 +66,7 @@
     "request_count": "Số lượng yêu cầu",
     "output_type": "Đầu ra",
     "input_type": "Đầu vào",
-    "page_title": "Khám phá ADCS",
-    "page_description": "ADCS là một template tùy chỉnh có thể tùy chỉnh các yêu cầu suy luận ngoài, đảm bảo luồng dữ liệu giữa môi trường trên–chai và ngoài–chai."
+    "page_title": "Khám phá Inference Oracle",
+    "page_description": "Inference Oracle là một template tùy chỉnh có thể tùy chỉnh các yêu cầu suy luận ngoài, đảm bảo luồng dữ liệu giữa môi trường trên–chai và ngoài–chai."
   }
 }
