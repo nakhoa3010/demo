@@ -14,18 +14,53 @@ export class AccountService {
   async all() {
     const accounts = await this.prisma.prepaymentAccount.findMany()
     const accountBalances = []
-    const consumerCount = await this.prisma.consumer.count({
-      where: { accId: { in: accounts.map((acc) => acc.id) } }
-    })
+
     for (const acc of accounts) {
       const balance = await this.provider.getBalance(acc.account)
       accountBalances.push({
         ...acc,
         balance: balance.toString(),
-        consumerCount: consumerCount
+        consumerCount: await this.prisma.consumer.count({
+          where: { accId: acc.id }
+        })
       })
     }
     return accountBalances
+  }
+
+  async detail(accId: number) {
+    const account = await this.prisma.prepaymentAccount.findUnique({
+      where: { id: accId },
+      include: {
+        Consumer: {
+          include: {
+            ConsumerRequest: true
+          }
+        }
+      }
+    })
+    const returnData = {
+      id: account.id,
+      account: account.account,
+      owner: account.owner,
+      accType: account.accType,
+      status: account.status,
+      createdAt: account.createdAt,
+      consumerCount: account.Consumer.length,
+      consumers: account.Consumer.map((consumer) => ({
+        ...consumer,
+        requestCount: consumer.ConsumerRequest.length,
+        spendCount: consumer.ConsumerRequest.reduce((acc, curr) => acc + Number(curr.amount), 0),
+        ConsumerRequest: undefined
+      })),
+      history: account.Consumer.flatMap((consumer) =>
+        consumer.ConsumerRequest.map((request) => ({
+          ...request,
+          consumer: consumer.address
+        }))
+      )
+    }
+    return returnData
   }
 
   async createPrepaymentAccount(txHash: string) {

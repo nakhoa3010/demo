@@ -336,6 +336,9 @@ model ConsumerRequest {
   requestId  String   @map("request_id")
   txHash     String   @map("tx_hash")
   status     String   @default("pending") @map("status") // pending, fulfilled, failed
+  service    String   @default("VRF") @map("service") // VRF,Request-Response
+  amount     String   @default("0") @map("amount")
+  balance    String   @default("0") @map("balance")
   createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz
   updatedAt  DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz
   Consumer   Consumer @relation(fields: [consumerId], references: [id])
