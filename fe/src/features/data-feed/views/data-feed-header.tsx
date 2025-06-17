@@ -8,6 +8,7 @@ import { shortAddress } from '@/lib/utils/format';
 import { Database, Route } from 'lucide-react';
 import React from 'react';
 import { motion } from 'framer-motion';
+import { FadeInDown } from '@/components/animations';
 
 const Routes = [
   {
@@ -29,26 +30,27 @@ export default function DataFeedHeader() {
   const { t } = useLocalization('common');
   const { toastSuccess } = useToast();
   return (
-    <Wrapper className="flex min-h-[500px] flex-1 flex-col items-center gap-6 py-20 lg:flex-row">
-      <div className="flex flex-1 flex-col gap-4">
-        <Typography.Display text={t('data_feed.page_title')} />
-        <div className="flex flex-col gap-2">
-          <Typography.Body
-            variant="16_regular"
-            text={t('data_feed.page_description')}
-            className="text-white-60"
-          />
-          <Typography.Body
-            variant="16_regular"
-            text={t('data_feed.page_description_2')}
-            className="text-white-60"
-          />
+    <FadeInDown>
+      <Wrapper className="flex min-h-[500px] flex-1 flex-col items-center gap-6 py-20 lg:flex-row">
+        <div className="flex flex-1 flex-col gap-4">
+          <Typography.Display text={t('data_feed.page_title')} />
+          <div className="flex flex-col gap-2">
+            <Typography.Body
+              variant="16_regular"
+              text={t('data_feed.page_description')}
+              className="text-white-60"
+            />
+            <Typography.Body
+              variant="16_regular"
+              text={t('data_feed.page_description_2')}
+              className="text-white-60"
+            />
+          </div>
         </div>
-      </div>
 
-      <div className="flex flex-1 justify-end">
-        <div className="grid grid-cols-2 gap-4">
-          {Routes.map((step, index) => (
+        <div className="flex flex-1 justify-end">
+          <div className="grid grid-cols-2 gap-4">
+            {/* {Routes.map((step, index) => (
             <motion.div
               key={`${step.title}-${index}`}
               className="bg-gradient rounded-12 border-white-10 flex flex-col items-start justify-start gap-6 border p-5"
@@ -85,9 +87,10 @@ export default function DataFeedHeader() {
                 </div>
               </div>
             </motion.div>
-          ))}
+          ))} */}
+          </div>
         </div>
-      </div>
-    </Wrapper>
+      </Wrapper>
+    </FadeInDown>
   );
 }

@@ -6,7 +6,7 @@ import AppLogo from '../app-logo';
 import { LanguageSwitcher } from '../language-switcher';
 import { APP_NAME, AppLinks, navigations } from '@/lib/constans';
 import { Facebook, Instagram, Twitter, Linkedin } from '@/assets/icons';
-import { useLocalization } from '@/i18n/hooks';
+import { useLocalization, useLocalizedRoutes } from '@/i18n/hooks';
 
 const socials = [
   {
@@ -29,6 +29,7 @@ const socials = [
 
 export default function Footer() {
   const { t } = useLocalization('common');
+  const { currentLocale } = useLocalizedRoutes();
   return (
     <div
       className="bg-gradient-bg border-neutral-05 border-white-05 mt-32 flex flex-col rounded-t-[16px] border-t"
@@ -43,7 +44,11 @@ export default function Footer() {
         </div>
         <div className="mt-8 flex flex-1 flex-col gap-8 lg:mt-0 lg:flex-row">
           {navigations.map((nav, index) => (
-            <Link href={nav.path} target={nav.target} key={`${nav.label}-${index}`}>
+            <Link
+              href={`/${currentLocale}${nav.path}`}
+              target={nav.target}
+              key={`${nav.label}-${index}`}
+            >
               <Typography.Headline
                 variant="h6-mobile"
                 text={t(nav.label)}

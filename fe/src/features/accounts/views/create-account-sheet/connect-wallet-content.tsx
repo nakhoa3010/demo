@@ -6,9 +6,18 @@ import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { Wallet } from 'lucide-react';
 import React from 'react';
 
-export default function ConnectWalletContent() {
+interface ConnectWalletContentProps {
+  onClose?: () => void;
+}
+export default function ConnectWalletContent({ onClose }: ConnectWalletContentProps) {
   const { t } = useLocalization();
   const { openConnectModal } = useConnectModal();
+
+  const onHandleConnect = () => {
+    openConnectModal?.();
+    onClose?.();
+  };
+
   return (
     <>
       <SheetHeader>
@@ -34,7 +43,7 @@ export default function ConnectWalletContent() {
           variant="secondary-gray"
           text={t('connect_wallet')}
           className="hover:border-white-90 hover:text-white-90"
-          onClick={() => openConnectModal?.()}
+          onClick={onHandleConnect}
         />
       </div>
     </>
