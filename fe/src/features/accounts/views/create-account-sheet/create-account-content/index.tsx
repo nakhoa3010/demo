@@ -6,22 +6,31 @@ import CreateAccountStep from './create-account-step';
 import AddDepositStep from './add-deposit-step';
 import AddConsumerStep from './add-consumer-step';
 import { motion, AnimatePresence } from 'framer-motion';
+import WithdrawStep from './withdraw-step';
 
-type StepValue = 'CREATE_ACCOUNT' | 'ADD_DEPOSIT' | 'ADD_CONSUMER';
+export type StepValue = 'CREATE_ACCOUNT' | 'ADD_DEPOSIT' | 'ADD_CONSUMER' | 'WITHDRAW';
 
 interface CreateAccountContentProps {
   address: string;
 
   accIdValue?: number;
   stepTo?: StepValue;
+
+  isAutoGoNext?: boolean;
+  accountBalance?: number;
+
   onDoItLater?: () => void;
+  onCallBack?: () => void;
 }
 
 export default function CreateAccountContent({
   address,
   accIdValue,
   stepTo,
+  isAutoGoNext = true,
+  accountBalance,
   onDoItLater,
+  onCallBack,
 }: CreateAccountContentProps) {
   const [currentStep, setCurrentStep] = useState<StepValue>(stepTo || 'CREATE_ACCOUNT');
   const [accId, setAccId] = useState<number | null>(accIdValue || null);
@@ -88,15 +97,41 @@ export default function CreateAccountContent({
               onDoItLater={onDoItLater}
               onSuccess={(accId) => {
                 setAccId(accId);
-                setCurrentStep('ADD_DEPOSIT');
+                if (isAutoGoNext) {
+                  setCurrentStep('ADD_DEPOSIT');
+                }
+                onCallBack?.();
               }}
             />
           )}
           {currentStep === 'ADD_DEPOSIT' && accId && (
-            <AddDepositStep accId={accId} onSuccess={() => setCurrentStep('ADD_CONSUMER')} />
+            <AddDepositStep
+              accId={accId}
+              onSuccess={() => {
+                if (isAutoGoNext) {
+                  setCurrentStep('ADD_CONSUMER');
+                }
+                onCallBack?.();
+              }}
+            />
           )}
           {currentStep === 'ADD_CONSUMER' && accId && (
-            <AddConsumerStep accId={accId} onSuccess={() => onDoItLater?.()} />
+            <AddConsumerStep
+              accId={accId}
+              onSuccess={() => {
+                onDoItLater?.();
+                onCallBack?.();
+              }}
+            />
+          )}
+          {currentStep === 'WITHDRAW' && accId && (
+            <WithdrawStep
+              accId={accId}
+              accountBalance={accountBalance}
+              onSuccess={() => {
+                onCallBack?.();
+              }}
+            />
           )}
         </motion.div>
       </AnimatePresence>

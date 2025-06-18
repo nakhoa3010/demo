@@ -1,17 +1,18 @@
 import { SheetContent, Sheet } from '@/components/ui/sheet';
 import React from 'react';
 import ConnectWalletContent from './connect-wallet-content';
-import CreateAccountContent from './create-account-content';
+import CreateAccountContent, { StepValue } from './create-account-content';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useAccount } from 'wagmi';
 
-type StepValue = 'CREATE_ACCOUNT' | 'ADD_DEPOSIT' | 'ADD_CONSUMER';
-
 interface CreateAccountSheetProps {
   open?: boolean;
-  onOpenChange?: (open: boolean) => void;
   accIdValue?: number;
   stepTo?: StepValue;
+  isAutoGoNext?: boolean;
+  accountBalance?: number;
+  onCallBack?: () => void;
+  onOpenChange?: (open: boolean) => void;
 }
 
 export default function CreateAccountSheet({
@@ -19,6 +20,9 @@ export default function CreateAccountSheet({
   onOpenChange,
   accIdValue,
   stepTo,
+  isAutoGoNext = true,
+  accountBalance,
+  onCallBack,
 }: CreateAccountSheetProps) {
   const { address } = useAccount();
   return (
@@ -32,9 +36,12 @@ export default function CreateAccountSheet({
           {address && (
             <CreateAccountContent
               address={address}
-              onDoItLater={() => onOpenChange?.(false)}
               accIdValue={accIdValue}
               stepTo={stepTo}
+              isAutoGoNext={isAutoGoNext}
+              accountBalance={accountBalance}
+              onCallBack={onCallBack}
+              onDoItLater={() => onOpenChange?.(false)}
             />
           )}
         </ScrollArea>

@@ -30,7 +30,8 @@
     "consumer": "Người dùng",
     "balance": "Số dư",
     "created_by_me": "Tạo bởi tôi",
-    "add_consumer": "Thêm người dùng vào tài khoản"
+    "add_consumer": "Thêm người dùng vào tài khoản",
+    "view_detail": "Xem chi tiết tài khoản"
   },
   "create_account_sheet": {
     "title": "Tạo tài khoản",
@@ -47,7 +48,11 @@
     "your_balance": "Số dư của bạn: {{balanceValue}} ETH",
     "enter_amount": "Nhập số lượng (ETH)",
     "max": "Tối đa",
-    "owner_address": "Địa chỉ chủ sở hữu"
+    "owner_address": "Địa chỉ chủ sở hữu",
+    "withdraw_title": "Rút tiền",
+    "withdraw_description": "Rút ETH từ tài khoản của bạn về ví đã kết nối. Điều này cho phép bạn thu hồi số tiền chưa sử dụng đã được nạp trước đó cho các hoạt động tài khoản. Số tiền rút sẽ được chuyển trực tiếp đến địa chỉ ví của bạn và có thể được sử dụng cho các mục đích khác hoặc giữ làm số dư.",
+    "withdraw": "Rút tiền",
+    "withdraw_balance": "Số dư tài khoản của bạn: {{balanceValue}} ETH"
   },
   "data_feed": {
     "page_title": "Data Feed",
@@ -68,5 +73,32 @@
     "input_type": "Đầu vào",
     "page_title": "Khám phá Inference Oracle",
     "page_description": "Inference Oracle là một template tùy chỉnh có thể tùy chỉnh các yêu cầu suy luận ngoài, đảm bảo luồng dữ liệu giữa môi trường trên–chai và ngoài–chai."
+  },
+  "account_detail": {
+    "page_title": "Chi tiết tài khoản",
+    "status": "Trạng thái",
+    "time": "Thời gian",
+    "request": "Thời gian yêu cầu",
+    "transaction_hash": "Hash giao dịch",
+    "consumer": "Người dùng",
+    "amount": "Số lượng",
+    "balance": "Số dư",
+    "address": "Địa chỉ",
+    "added": "Thêm",
+    "last_fulfillment": "Lần thực hiện cuối",
+    "total_spent": "Tổng số tiền",
+    "remove": "Xóa",
+    "consumers": "Danh sách người dùng",
+    "add_consumer": "Thêm người dùng vào tài khoản",
+    "active": "Hoạt động",
+    "account_id": "ID tài khoản",
+    "owner": "Chủ sở hữu",
+    "consumers_count": "Số lượng người dùng",
+    "balance_value": "Số dư",
+    "withdraw": "Rút tiền",
+    "deposit": "Nạp tiền",
+    "history": "Lịch sử giao dịch",
+    "no_consumers": "Người dùng chưa được thêm vào tài khoản",
+    "withdraw_success": "Rút tiền thành công. Vui lòng kiểm tra ví của bạn để xem giao dịch."
   }
 }

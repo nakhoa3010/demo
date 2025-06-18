@@ -5,6 +5,7 @@ import { ChevronRight } from 'lucide-react';
 import React, { useState } from 'react';
 import useToast from '@/lib/hooks/use-toast';
 import useAddConsumer from '@/features/accounts/hooks/contracts/use-add-consumer';
+import useAddConsumerApi from '@/features/accounts/hooks/apis/use-add-consumer';
 
 interface AddConsumerStepProps {
   accId: number;
@@ -17,15 +18,16 @@ export default function AddConsumerStep({ accId, onSuccess }: AddConsumerStepPro
   const [consumerAddress, setConsumerAddress] = useState<string>('');
 
   const { addConsumer, isConsumerPending } = useAddConsumer();
+  const { addConsumerApi } = useAddConsumerApi();
 
   const handleAddConsumer = async () => {
     try {
-      await addConsumer({ accId, consumerAddress });
+      const txHash = await addConsumer({ accId, consumerAddress });
+      await addConsumerApi({ txHash });
       setConsumerAddress('');
       toastSuccess(t('create_account_sheet.success_add_consumer'));
       onSuccess();
     } catch (ex) {
-      console.log(ex);
       toastError(t('create_account_sheet.error_add_consumer'));
     }
   };

@@ -28,6 +28,13 @@ export default class PrepaymentContract extends BaseInterface {
     return { hash };
   };
 
+  withdrawMutation = async (accId: number, amount: number): Promise<{ hash: string }> => {
+    const amountInWei = ethers.utils.parseEther(amount.toString());
+    const response = await this._contract.withdraw(accId, amountInWei, this._option);
+    const hash = (await this._handleTransactionResponse(response)) as string;
+    return { hash };
+  };
+
   addConsumerMutation = async (
     accId: number,
     consumerAddress: string,

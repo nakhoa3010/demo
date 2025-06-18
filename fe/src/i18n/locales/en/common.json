@@ -30,7 +30,8 @@
     "consumer": "Consumer",
     "balance": "Balance",
     "created_by_me": "Created by me",
-    "add_consumer": "Add consumer to account"
+    "add_consumer": "Add consumer to account",
+    "view_detail": "View account detail"
   },
   "create_account_sheet": {
     "title": "Create account",
@@ -47,7 +48,11 @@
     "your_balance": "Your balance: {{balanceValue}} ETH",
     "enter_amount": "Enter amount (ETH)",
     "max": "MAX",
-    "owner_address": "Owner address"
+    "owner_address": "Owner address",
+    "withdraw_title": "Withdraw",
+    "withdraw_description": "Withdraw ETH from your account back to your connected wallet. This allows you to reclaim unused funds that were previously deposited for account operations. The withdrawn amount will be transferred directly to your wallet address and can be used for other purposes or kept as a balance.",
+    "withdraw": "Withdraw now",
+    "withdraw_balance": "Your account balance: {{balanceValue}} ETH"
   },
   "data_feed": {
     "page_title": "Data Feed",
@@ -68,5 +73,32 @@
     "input_type": "Input",
     "page_title": "Explore Inference Oracle",
     "page_description": "Inference Oracle is a customizable template that structures off-chain inference requests, ensuring data flow between on–chain and off–chain environments."
+  },
+  "account_detail": {
+    "page_title": "Account Detail",
+    "status": "Status",
+    "time": "Time",
+    "request": "Request",
+    "transaction_hash": "Transaction Hash",
+    "consumer": "Consumer",
+    "amount": "Amount",
+    "balance": "Balance",
+    "address": "Address",
+    "added": "Added",
+    "last_fulfillment": "Last Fulfillment",
+    "total_spent": "Total Spent",
+    "remove": "Remove",
+    "consumers": "Consumers",
+    "add_consumer": "Add Consumer",
+    "active": "Active",
+    "account_id": "Account ID",
+    "owner": "Owner",
+    "consumers_count": "Consumers",
+    "balance_value": "Balance",
+    "withdraw": "Withdraw",
+    "deposit": "Deposit",
+    "history": "Transaction History",
+    "no_consumers": "No consumers",
+    "withdraw_success": "Withdrawal successful. Please check your wallet for the transaction."
   }
 }
