@@ -12,14 +12,12 @@ import { envConfig } from '@/lib/configs';
 import { cn } from '@/lib/utils';
 import { Skeleton } from '@/components/ui/skeleton';
 import useAllAccounts from '../hooks/apis/use-all-accounts';
-import { AccountItem, AccountStatus } from '@/types/account-type';
+import { AccountStatus } from '@/types/account-type';
 import { FadeInUp } from '@/components/animations';
-import CreateAccountSheet from './create-account-sheet';
 import { useAccount } from 'wagmi';
 import { Check, ChevronRight } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { getRandomAvatar } from '../helpers';
-import { useRouter } from 'next/navigation';
 
 export default function RecentAccounts() {
   const { currentLocale } = useLocalizedRoutes();
@@ -27,15 +25,8 @@ export default function RecentAccounts() {
   const { t } = useLocalization('common');
 
   const [isCreatedByMe, setIsCreatedByMe] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
-  const [accId, setAccId] = useState<number | null>(null);
 
   const { accounts, isAccountsLoading } = useAllAccounts();
-
-  const onCloseCreateAccountSheet = () => {
-    setAccId(null);
-    setIsOpen(false);
-  };
 
   const accountsFiltered = useMemo(() => {
     if (isCreatedByMe && address) {
@@ -154,7 +145,7 @@ export default function RecentAccounts() {
                             className="size-6 rounded-full"
                           />
                           <Link
-                            href={`${envConfig.baseExplorerUrl}address/${item.txHash}`}
+                            href={`${envConfig.baseExplorerUrl}address/${item.account}`}
                             target="_blank"
                             className="hover:underline"
                           >
@@ -189,7 +180,7 @@ export default function RecentAccounts() {
                       </td>
                       {isHasCreatedByMe && item.owner === address?.toLowerCase() && (
                         <td className="p-4">
-                          <Link href={`/account/${item.id}`}>
+                          <Link href={`/${currentLocale}/account/${item.id}`}>
                             <Tooltip>
                               <TooltipTrigger>
                                 <div className="flex size-6 cursor-pointer items-center justify-center rounded-[5px] border border-green-500 p-1">

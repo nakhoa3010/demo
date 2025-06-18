@@ -75,6 +75,7 @@
     "page_description": "Inference Oracle là một template tùy chỉnh có thể tùy chỉnh các yêu cầu suy luận ngoài, đảm bảo luồng dữ liệu giữa môi trường trên–chai và ngoài–chai."
   },
   "account_detail": {
+    "list_accounts": "Danh sách tài khoản",
     "page_title": "Chi tiết tài khoản",
     "status": "Trạng thái",
     "time": "Thời gian",

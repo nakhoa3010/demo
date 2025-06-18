@@ -12,17 +12,23 @@ import { getRandomAvatar } from '../../helpers';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useParams } from 'next/navigation';
 import { useGetAccountDetail } from '../../hooks/apis';
-import { formatDate, formatWithDecimals, shortAddress } from '@/lib/utils/format';
+import {
+  formatDate,
+  formatNumberWithUnit,
+  formatWithDecimals,
+  shortAddress,
+} from '@/lib/utils/format';
 import useToast from '@/lib/hooks/use-toast';
 import CreateAccountSheet from '../create-account-sheet';
 import { StepValue } from '../create-account-sheet/create-account-content';
+import Link from 'next/link';
+import { FadeInDown, FadeInUp } from '@/components/animations';
 
 export default function AccountDetailHeader() {
   const { currentLocale } = useLocalizedRoutes();
   const { t } = useLocalization('common');
   const { toastSuccess } = useToast();
   const params = useParams();
-
   const accountId = params.id as string;
 
   //State to open create account sheet
@@ -58,246 +64,261 @@ export default function AccountDetailHeader() {
 
   return (
     <Wrapper className="flex min-h-[50vh] flex-col justify-center py-10">
-      <Typography.Display text={t('account_detail.page_title')} />
-
-      <AppCard className="mt-10 flex flex-col gap-10 lg:flex-row">
-        <div className="flex flex-2 flex-col gap-4">
-          <div className="flex items-center gap-2">
-            <Image
-              src={getRandomAvatar()}
-              alt="avatar"
-              width={40}
-              height={40}
-              className="size-10 rounded-full object-cover"
-            />
+      <div id="breadcrumb" className="flex items-center gap-2">
+        <Link href={`/${currentLocale}/account`} className="text-white-70 hover:underline">
+          <Typography.Body
+            variant="14_medium"
+            text={t('account_detail.list_accounts')}
+            className="text-white-70 underline"
+          />
+        </Link>
+      </div>
+      <FadeInDown>
+        <AppCard className="mt-10 flex flex-col gap-10 lg:flex-row">
+          <div className="flex flex-2 flex-col gap-4">
             <div className="flex items-center gap-2">
-              <div className="flex items-center gap-2">
-                <div className="size-3 rounded-full bg-green-500" />
-                <Typography.Body
-                  variant="14_medium"
-                  className="text-green-500"
-                  text={t('account_detail.active')}
-                />
-              </div>
-              <div className="bg-white-60 h-[10px] w-[1px]" />
-              <Typography.Body
-                variant="14_medium"
-                className="text-white"
-                text={t('account_detail.account_id')}
-              />
-              <Typography.Body
-                variant="14_medium"
-                className="text-white"
-                text={accountDetail?.id?.toString() || ''}
-              />
-            </div>
-          </div>
-
-          <div className="flex items-center gap-6">
-            <div className="flex flex-1 flex-col gap-2">
-              <Typography.Body
-                variant="14_medium"
-                className="text-white-60"
-                text={t('account_detail.owner')}
+              <Image
+                src={getRandomAvatar()}
+                alt="avatar"
+                width={40}
+                height={40}
+                className="size-10 rounded-full object-cover"
               />
               <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2">
+                  <div className="size-3 rounded-full bg-green-500" />
+                  <Typography.Body
+                    variant="14_medium"
+                    className="text-green-500"
+                    text={t('account_detail.active')}
+                  />
+                </div>
+                <div className="bg-white-60 h-[10px] w-[1px]" />
                 <Typography.Body
                   variant="14_medium"
                   className="text-white"
-                  text={shortAddress(accountDetail?.owner || '')}
+                  text={t('account_detail.account_id')}
                 />
-
-                <CopyButton
-                  className="size-3"
-                  onClick={() => {
-                    navigator.clipboard.writeText(accountDetail?.owner || '');
-                    toastSuccess(t('address_copied'));
-                  }}
+                <Typography.Body
+                  variant="14_medium"
+                  className="text-white"
+                  text={accountDetail?.id?.toString() || ''}
                 />
               </div>
             </div>
-            <div className="flex flex-1 flex-col items-center gap-2">
-              <Typography.Body
-                variant="14_medium"
-                className="text-white-60"
-                text={t('account_detail.consumers_count')}
-              />
-              <Typography.Body
-                variant="14_medium"
-                className="text-white"
-                text={accountDetail?.consumerCount?.toString() || '0'}
-              />
-            </div>
 
-            <div className="flex flex-1 flex-col items-center gap-2">
-              <Typography.Body
-                variant="14_medium"
-                className="text-white-60"
-                text={t('account_detail.balance_value')}
-              />
-              <Typography.Body
-                variant="14_medium"
-                className="text-white"
-                text={formatWithDecimals(accountDetail?.balance || '0').toString()}
-              />
+            <div className="flex items-center gap-6">
+              <div className="flex flex-1 flex-col gap-2">
+                <Typography.Body
+                  variant="14_medium"
+                  className="text-white-60"
+                  text={t('account_detail.owner')}
+                />
+                <div className="flex items-center gap-2">
+                  <Typography.Body
+                    variant="14_medium"
+                    className="text-white"
+                    text={shortAddress(accountDetail?.owner || '')}
+                  />
+
+                  <CopyButton
+                    className="size-3"
+                    onClick={() => {
+                      navigator.clipboard.writeText(accountDetail?.owner || '');
+                      toastSuccess(t('address_copied'));
+                    }}
+                  />
+                </div>
+              </div>
+              <div className="flex flex-1 flex-col items-center gap-2">
+                <Typography.Body
+                  variant="14_medium"
+                  className="text-white-60"
+                  text={t('account_detail.consumers_count')}
+                />
+                <Typography.Body
+                  variant="14_medium"
+                  className="text-white"
+                  text={accountDetail?.consumerCount?.toString() || '0'}
+                />
+              </div>
+
+              <div className="flex flex-1 flex-col items-center gap-2">
+                <Typography.Body
+                  variant="14_medium"
+                  className="text-white-60"
+                  text={t('account_detail.balance_value')}
+                />
+                <Typography.Body
+                  variant="14_medium"
+                  className="text-white"
+                  text={formatWithDecimals(accountDetail?.balance || '0').toString()}
+                />
+              </div>
             </div>
           </div>
-        </div>
-        <div className="flex flex-1 flex-col gap-4">
-          <AppButton
-            text={t('account_detail.withdraw')}
-            variant="secondary-gray"
-            size="40"
-            className="w-full"
-            onClick={() => onOpenCreateAccountSheet('WITHDRAW')}
+          <div className="flex flex-1 flex-col gap-4">
+            <AppButton
+              text={t('account_detail.withdraw')}
+              variant="secondary-gray"
+              size="40"
+              className="w-full"
+              onClick={() => onOpenCreateAccountSheet('WITHDRAW')}
+            />
+            <AppButton
+              text={t('account_detail.deposit')}
+              size="40"
+              className="w-full"
+              onClick={() => onOpenCreateAccountSheet('ADD_DEPOSIT')}
+            />
+          </div>
+        </AppCard>
+      </FadeInDown>
+
+      <FadeInUp>
+        <div className="mt-20 mb-10 flex flex-col justify-between gap-4 lg:flex-row">
+          <Typography.Headline
+            variant="h6"
+            className="text-white"
+            text={t('account_detail.consumers')}
           />
           <AppButton
-            text={t('account_detail.deposit')}
+            text={t('account_detail.add_consumer')}
             size="40"
-            className="w-full"
-            onClick={() => onOpenCreateAccountSheet('ADD_DEPOSIT')}
+            iconLeft={<UserPlus className="size-4" />}
+            onClick={() => onOpenCreateAccountSheet('ADD_CONSUMER')}
           />
         </div>
-      </AppCard>
-
-      <div className="mt-20 mb-10 flex flex-col justify-between gap-4 lg:flex-row">
-        <Typography.Headline
-          variant="h6"
-          className="text-white"
-          text={t('account_detail.consumers')}
-        />
-        <AppButton
-          text={t('account_detail.add_consumer')}
-          size="40"
-          iconLeft={<UserPlus className="size-4" />}
-          onClick={() => onOpenCreateAccountSheet('ADD_CONSUMER')}
-        />
-      </div>
-
-      <div className="bg-gradient rounded-12 border-white-10 flex flex-col items-start justify-start gap-6 p-5">
-        <ScrollArea className="w-full">
-          <table className="w-full border-none">
-            <thead>
-              <tr>
-                <th className="min-w-[200px] p-4 text-left">
-                  <Typography.Body
-                    variant="14_medium"
-                    className="text-white-70"
-                    text={t('account_detail.address')}
-                  />
-                </th>
-                <th className="min-w-[100px] p-4 text-left">
-                  <Typography.Body
-                    variant="14_medium"
-                    className="text-white-70"
-                    text={t('account_detail.added')}
-                  />
-                </th>
-                <th className="min-w-[200px] p-4 text-left">
-                  <Typography.Body
-                    variant="14_medium"
-                    className="text-white-70"
-                    text={t('account_detail.last_fulfillment')}
-                  />
-                </th>
-                <th className="min-w-[200px] p-4 text-left">
-                  <Typography.Body
-                    variant="14_medium"
-                    className="text-white-70"
-                    text={t('account_detail.total_spent')}
-                  />
-                </th>
-                <th className="p-4"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {accountDetail?.consumers.map((item, index) => (
-                <tr
-                  key={item.id}
-                  className={`hover:bg-white-10 ${index === accountDetail?.consumers.length - 1 ? '' : 'border-bottom-white-10'}`}
-                >
-                  <td className="p-4">
-                    <div className="flex items-center gap-2">
-                      <Image
-                        src={getRandomAvatar()}
-                        alt={item.address}
-                        className="size-6 rounded-full"
-                        width={24}
-                        height={24}
-                      />
-                      <Typography.Body
-                        variant="14_regular"
-                        text={shortAddress(item.address)}
-                        className="text-white-70"
-                      />
-                    </div>
-                  </td>
-                  <td className="p-4">
-                    <div className="flex items-center gap-2">
-                      <Typography.Body
-                        variant="14_regular"
-                        text={formatDate(item.createdAt, currentLocale)}
-                        className="text-white-70"
-                      />
-                    </div>
-                  </td>
-                  <td className="p-4">
-                    <Typography.Body
-                      variant="14_regular"
-                      text={formatDate(item.lastFulfillment, currentLocale)}
-                      className="text-white-70"
-                    />
-                  </td>
-                  <td className="p-4">
-                    <Typography.Body
-                      variant="14_regular"
-                      text={item.spendCount.toString()}
-                      className="text-white-70"
-                    />
-                  </td>
-                  <td className="p-4">
-                    <AppButton
-                      text={t('account_detail.remove')}
-                      size="40"
-                      variant="secondary-gray"
-                      className="rounded-12 w-full"
-                    />
-                  </td>
-                </tr>
-              ))}
-              {!isAccountsLoading && accountDetail?.consumers.length === 0 && (
+      </FadeInUp>
+      <FadeInUp>
+        <div className="bg-gradient rounded-12 border-white-10 flex flex-col items-start justify-start gap-6 p-5">
+          <ScrollArea className="w-full">
+            <table className="w-full border-none">
+              <thead>
                 <tr>
-                  <td colSpan={5} className="p-4">
-                    <Typography.Body variant="14_regular" text={t('account_detail.no_consumers')} />
-                  </td>
+                  <th className="min-w-[200px] p-4 text-left">
+                    <Typography.Body
+                      variant="14_medium"
+                      className="text-white-70"
+                      text={t('account_detail.address')}
+                    />
+                  </th>
+                  <th className="min-w-[100px] p-4 text-left">
+                    <Typography.Body
+                      variant="14_medium"
+                      className="text-white-70"
+                      text={t('account_detail.added')}
+                    />
+                  </th>
+                  <th className="min-w-[200px] p-4 text-left">
+                    <Typography.Body
+                      variant="14_medium"
+                      className="text-white-70"
+                      text={t('account_detail.last_fulfillment')}
+                    />
+                  </th>
+                  <th className="min-w-[200px] p-4 text-left">
+                    <Typography.Body
+                      variant="14_medium"
+                      className="text-white-70"
+                      text={t('account_detail.total_spent')}
+                    />
+                  </th>
+                  <th className="p-4"></th>
                 </tr>
-              )}
-
-              {isAccountsLoading &&
-                Array.from({ length: 10 }).map((_, index) => (
-                  <tr key={index}>
+              </thead>
+              <tbody>
+                {accountDetail?.consumers.map((item, index) => (
+                  <tr
+                    key={item.id}
+                    className={`hover:bg-white-10 ${index === accountDetail?.consumers.length - 1 ? '' : 'border-bottom-white-10'}`}
+                  >
                     <td className="p-4">
-                      <Skeleton className="h-6 w-full" />
+                      <div className="flex items-center gap-2">
+                        <Image
+                          src={getRandomAvatar()}
+                          alt={item.address}
+                          className="size-6 rounded-full"
+                          width={24}
+                          height={24}
+                        />
+                        <Typography.Body
+                          variant="14_regular"
+                          text={shortAddress(item.address)}
+                          className="text-white-70"
+                        />
+                      </div>
                     </td>
                     <td className="p-4">
-                      <Skeleton className="h-6 w-full" />
+                      <div className="flex items-center gap-2">
+                        <Typography.Body
+                          variant="14_regular"
+                          text={formatDate(item.createdAt, currentLocale)}
+                          className="text-white-70"
+                        />
+                      </div>
                     </td>
                     <td className="p-4">
-                      <Skeleton className="h-6 w-full" />
+                      <Typography.Body
+                        variant="14_regular"
+                        text={formatDate(item.lastFulfillment, currentLocale)}
+                        className="text-white-70"
+                      />
                     </td>
                     <td className="p-4">
-                      <Skeleton className="h-6 w-full" />
+                      <Typography.Body
+                        variant="14_regular"
+                        text={formatNumberWithUnit(formatWithDecimals(item.spendCount))}
+                        className="text-white-70"
+                      />
                     </td>
                     <td className="p-4">
-                      <Skeleton className="h-6 w-full" />
+                      <AppButton
+                        text={t('account_detail.remove')}
+                        size="40"
+                        variant="secondary-gray"
+                        className="rounded-12 w-full"
+                      />
                     </td>
                   </tr>
                 ))}
-            </tbody>
-          </table>
-          <ScrollBar orientation="horizontal" className="h-2" />
-        </ScrollArea>
-      </div>
+                {!isAccountsLoading && accountDetail?.consumers.length === 0 && (
+                  <tr>
+                    <td colSpan={5} className="p-4">
+                      <Typography.Body
+                        variant="14_regular"
+                        text={t('account_detail.no_consumers')}
+                      />
+                    </td>
+                  </tr>
+                )}
+
+                {isAccountsLoading &&
+                  Array.from({ length: 10 }).map((_, index) => (
+                    <tr key={index}>
+                      <td className="p-4">
+                        <Skeleton className="h-6 w-full" />
+                      </td>
+                      <td className="p-4">
+                        <Skeleton className="h-6 w-full" />
+                      </td>
+                      <td className="p-4">
+                        <Skeleton className="h-6 w-full" />
+                      </td>
+                      <td className="p-4">
+                        <Skeleton className="h-6 w-full" />
+                      </td>
+                      <td className="p-4">
+                        <Skeleton className="h-6 w-full" />
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+            <ScrollBar orientation="horizontal" className="h-2" />
+          </ScrollArea>
+        </div>
+      </FadeInUp>
 
       <CreateAccountSheet
         stepTo={stepTo}

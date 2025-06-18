@@ -75,6 +75,7 @@
     "page_description": "Inference Oracle is a customizable template that structures off-chain inference requests, ensuring data flow between on–chain and off–chain environments."
   },
   "account_detail": {
+    "list_accounts": "List accounts",
     "page_title": "Account Detail",
     "status": "Status",
     "time": "Time",

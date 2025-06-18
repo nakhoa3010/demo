@@ -32,15 +32,16 @@ export const formatWithDecimals = (value: string | number, decimals = 18) => {
 /**
  * format number to K, M, B, T
  */
-export const formatNumberWithUnit = (value: number) => {
-  if (value >= 1000000000) {
-    return (value / 1000000000).toFixed(1) + 'B';
+export const formatNumberWithUnit = (value: number | string) => {
+  const num = Number(value);
+  if (num >= 1000000000) {
+    return (num / 1000000000).toFixed(1) + 'B';
   }
-  if (value >= 1000000) {
-    return (value / 1000000).toFixed(1) + 'M';
+  if (num >= 1000000) {
+    return (num / 1000000).toFixed(1) + 'M';
   }
-  if (value >= 1000) {
-    return (value / 1000).toFixed(1) + 'K';
+  if (num >= 1000) {
+    return (num / 1000).toFixed(1) + 'K';
   }
   return value.toString();
 };
