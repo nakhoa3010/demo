@@ -130,4 +130,35 @@ export class AccountService {
     })
     return consumerDB
   }
+
+  async removeConsumer(txHash: string) {
+    const receipt = await this.provider.getTransactionReceipt(txHash)
+    if (receipt.status !== 1) {
+      throw new Error('Transaction failed')
+    }
+    if (receipt.to.toLowerCase() !== PREPAYMENT_ACCOUNT_ADDRESS.toLowerCase()) {
+      throw new Error('Invalid contract address')
+    }
+    const event = receipt.logs.find(
+      (log) => log.address.toLowerCase() === PREPAYMENT_ACCOUNT_ADDRESS.toLowerCase()
+    )
+    const iface = new Interface(PREPAYMENT_ACCOUNT_ABI)
+    const parsedEvent = iface.parseLog(event)
+    if (parsedEvent.name !== 'AccountConsumerRemoved') {
+      throw new Error('Invalid event')
+    }
+    const { accId, consumer } = parsedEvent.args
+    const consumerDB = await this.prisma.consumer.findFirst({
+      where: { accId: Number(accId), address: consumer.toLowerCase() }
+    })
+    if (!consumerDB) {
+      throw new Error('Consumer not found')
+    }
+    await this.prisma.consumer.delete({
+      where: { id: consumerDB.id }
+    })
+    return {
+      message: 'Consumer removed successfully'
+    }
+  }
 }

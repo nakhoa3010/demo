@@ -26,4 +26,9 @@ export class AccountController {
   async createConsumer(@Param('txHash') txHash: string) {
     return await this.accountService.createConsumer(txHash)
   }
+
+  @Post('remove-consumer/:txHash')
+  async removeConsumer(@Param('txHash') txHash: string) {
+    return await this.accountService.removeConsumer(txHash)
+  }
 }
