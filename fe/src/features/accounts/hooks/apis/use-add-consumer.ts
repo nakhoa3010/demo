@@ -9,7 +9,7 @@ export default function useAddConsumerApi() {
       return axiosClientInstance.post(`v1/account/create-consumer/${txHash}`);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [QueryKeys.allAccounts] });
+      // queryClient.invalidateQueries({ queryKey: [QueryKeys.allAccounts] });
     },
   });
   return { addConsumerApi };

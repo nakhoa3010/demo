@@ -43,4 +43,13 @@ export default class PrepaymentContract extends BaseInterface {
     const hash = (await this._handleTransactionResponse(response)) as string;
     return { hash };
   };
+
+  removeConsumerMutation = async (
+    accId: number,
+    consumerAddress: string,
+  ): Promise<{ hash: string }> => {
+    const response = await this._contract.removeConsumer(accId, consumerAddress, this._option);
+    const hash = (await this._handleTransactionResponse(response)) as string;
+    return { hash };
+  };
 }

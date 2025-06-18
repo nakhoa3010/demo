@@ -101,5 +101,13 @@
     "history": "Lịch sử giao dịch",
     "no_consumers": "Người dùng chưa được thêm vào tài khoản",
     "withdraw_success": "Rút tiền thành công. Vui lòng kiểm tra ví của bạn để xem giao dịch."
+  },
+  "remove_consumer_modal": {
+    "title": "Xóa người dùng",
+    "description": "Bạn có chắc chắn muốn xóa người dùng này không?",
+    "remove": "Xóa",
+    "cancel": "Hủy",
+    "remove_consumer_success": "Xóa người dùng thành công",
+    "remove_consumer_error": "Lỗi khi xóa người dùng, vui lòng thử lại sau"
   }
 }

@@ -101,5 +101,13 @@
     "history": "Transaction History",
     "no_consumers": "No consumers",
     "withdraw_success": "Withdrawal successful. Please check your wallet for the transaction."
+  },
+  "remove_consumer_modal": {
+    "title": "Remove Consumer",
+    "description": "Are you sure you want to remove this consumer?",
+    "remove": "Remove",
+    "cancel": "Cancel",
+    "remove_consumer_success": "Remove Consumer Successfully",
+    "remove_consumer_error": "Remove Consumer Error, please try again later"
   }
 }

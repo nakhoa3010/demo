@@ -23,6 +23,7 @@ import CreateAccountSheet from '../create-account-sheet';
 import { StepValue } from '../create-account-sheet/create-account-content';
 import Link from 'next/link';
 import { FadeInDown, FadeInUp } from '@/components/animations';
+import { RemoveConsumerModal } from '..';
 
 export default function AccountDetailHeader() {
   const { currentLocale } = useLocalizedRoutes();
@@ -33,6 +34,9 @@ export default function AccountDetailHeader() {
 
   //State to open create account sheet
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpenRemoveConsumerModal, setIsOpenRemoveConsumerModal] = useState(false);
+  const [consumerAddress, setConsumerAddress] = useState('');
+
   const [stepTo, setStepTo] = useState<StepValue>('ADD_CONSUMER');
 
   const { accountDetail, isLoading: isAccountsLoading, refetch } = useGetAccountDetail(accountId);
@@ -60,6 +64,16 @@ export default function AccountDetailHeader() {
         toastSuccess(t('account_detail.withdraw_success'));
         break;
     }
+  };
+
+  const onCallBackRemoveConsumer = () => {
+    refetch();
+    setIsOpenRemoveConsumerModal(false);
+  };
+
+  const onOpenRemoveConsumerModal = (consumerAddress: string) => {
+    setConsumerAddress(consumerAddress);
+    setIsOpenRemoveConsumerModal(true);
   };
 
   return (
@@ -278,6 +292,7 @@ export default function AccountDetailHeader() {
                         size="40"
                         variant="secondary-gray"
                         className="rounded-12 w-full"
+                        onClick={() => onOpenRemoveConsumerModal(item.address)}
                       />
                     </td>
                   </tr>
@@ -328,6 +343,14 @@ export default function AccountDetailHeader() {
         accountBalance={formatWithDecimals(accountDetail?.balance || '0')}
         isAutoGoNext={false}
         onCallBack={onCallBack}
+      />
+
+      <RemoveConsumerModal
+        open={isOpenRemoveConsumerModal}
+        accId={Number(accountId)}
+        consumerAddress={consumerAddress}
+        onOpenChange={setIsOpenRemoveConsumerModal}
+        onCallBack={onCallBackRemoveConsumer}
       />
     </Wrapper>
   );
