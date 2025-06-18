@@ -13,6 +13,7 @@ import { JobModule } from './job/job.module'
 import { ListenerModule } from './listener/listener.module'
 import { ReporterModule } from './reporter/reporter.module'
 import { VrfModule } from './vrf/vrf.module'
+import { ConsumerModule } from './consumer/consumer.module';
 
 @Module({
   imports: [
@@ -29,7 +30,8 @@ import { VrfModule } from './vrf/vrf.module'
     CronModule,
     ReporterModule,
     ListenerModule,
-    VrfModule
+    VrfModule,
+    ConsumerModule
   ],
   controllers: [AppController],
   providers: [AppService, ConfigService]

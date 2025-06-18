@@ -301,3 +301,37 @@ export async function executeAdapterById(code: string, input: { [key: string]: a
     throw new XOracleError(XOracleErrorCode.FailedToGetAdaptor, 'Failed to execute adapter')
   }
 }
+
+export async function addFulfillmentTx({
+  txHash,
+  requestId,
+  consumerAddress,
+  service,
+  amount,
+  balance,
+  status
+}: {
+  txHash: string
+  requestId: string
+  consumerAddress: string
+  service: string
+  amount: string
+  balance: string
+  status: string
+}) {
+  try {
+    const url = buildUrl(API_URL, 'consumer/fulfillment')
+    const data = {
+      txHash,
+      service,
+      amount,
+      requestId,
+      balance,
+      status,
+      consumerAddress
+    }
+    await axios.post(url, data)
+  } catch (e) {
+    console.error(e)
+  }
+}

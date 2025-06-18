@@ -12,8 +12,18 @@ export class AccountController {
     return await this.accountService.all()
   }
 
+  @Get('detail/:accId')
+  async detail(@Param('accId') accId: number) {
+    return await this.accountService.detail(Number(accId))
+  }
+
   @Post('create/:txHash')
   async create(@Param('txHash') txHash: string) {
     return await this.accountService.createPrepaymentAccount(txHash)
+  }
+
+  @Post('create-consumer/:txHash')
+  async createConsumer(@Param('txHash') txHash: string) {
+    return await this.accountService.createConsumer(txHash)
   }
 }

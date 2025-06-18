@@ -17,12 +17,17 @@ import {
   Proof
 } from '../types'
 
-import { VRF_COORDINATOR_ABI as VRFAbis } from '../constants/vrf.coordinator.abi'
+import {
+  VRF_COORDINATOR_ABI,
+  VRF_COORDINATOR_ABI as VRFAbis
+} from '../constants/vrf.coordinator.abi'
 import { getReporterByAddress, getVrfConfig } from '../apis'
 import { buildWallet, sendTransaction } from './utils'
 
 import { remove0x } from '../utils'
 import { processVrfRequest } from '@xoracle/vrf'
+import { PREPAYMENT_ACCOUNT_ABI } from '../constants/prepayment.abi'
+import { addFulfillmentTx } from './api'
 
 const FILE_NAME = import.meta.url
 
@@ -90,7 +95,7 @@ export async function job(_logger: Logger) {
       )
       logger.debug(tx, 'tx')
       // send transaction
-      await sendTx(tx, reporter, logger)
+      await sendTx(tx, reporter, inData.sender, logger)
       return tx
     } catch (e) {
       logger.error(e)
@@ -141,7 +146,7 @@ function buildTransaction(
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function sendTx(tx: any, reporter: IReporterConfig, logger: Logger) {
+async function sendTx(tx: any, reporter: IReporterConfig, sender: string, logger: Logger) {
   const wallet = buildWallet({
     privateKey: reporter.privateKey,
     providerUrl: reporter.chainRpcs[0].rpcUrl
@@ -158,4 +163,23 @@ async function sendTx(tx: any, reporter: IReporterConfig, logger: Logger) {
   }
   const txReceipt = await sendTransaction(txParams)
   logger.info(`submitted tx ${txReceipt.hash}`)
+
+  try {
+    const prepaymentInterface = new Interface(PREPAYMENT_ACCOUNT_ABI)
+    const prepaymentLog = prepaymentInterface.parseLog(txReceipt.logs[0])
+    const oldBalance = BigInt(prepaymentLog?.args?.oldBalance || 0)
+    const newBalance = BigInt(prepaymentLog?.args?.newBalance || 0)
+
+    await addFulfillmentTx({
+      txHash: txReceipt.hash,
+      requestId: '0',
+      consumerAddress: sender,
+      service: 'VRF',
+      amount: (oldBalance - newBalance).toString(),
+      balance: newBalance.toString(),
+      status: 'fulfilled'
+    })
+  } catch (e) {
+    console.log(e)
+  }
 }

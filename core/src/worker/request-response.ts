@@ -24,6 +24,8 @@ import { pipe, buildReducer, REDUCER_MAPPING } from '../utils'
 import axios from 'axios'
 import { getReporterByAddress } from '../apis'
 import { buildTransaction } from './request-response.utils'
+import { addFulfillmentTx } from './api'
+import { PREPAYMENT_ACCOUNT_ABI } from '../constants/prepayment.abi'
 
 const FILE_NAME = import.meta.url
 
@@ -76,7 +78,7 @@ export async function job(_logger: Logger) {
         oracleAddress: to,
         logger
       })
-      await sendTx(tx, reporter, logger)
+      await sendTx(tx, reporter, payloadParameters, logger)
       return tx
     } catch (e) {
       const error = e as Error | XOracleError
@@ -104,8 +106,8 @@ async function processRequest(reqEnc: string, _logger: Logger): Promise<string |
   console.log({ req })
   const firstKey = req[0].function
   console.log({ firstKey })
-  if (firstKey === 'adcs_adapter') {
-    // TODO: handle adcs adapter
+  if (firstKey === 'inference_adapter') {
+    // TODO: handle inference adapter
     const adaptorId = req[0].args
     const endpoint = `${ADCS_API_URL}/adapter/run/${adaptorId}`
     const inputRequest = req.filter((key) => key.function.includes('input_'))
@@ -135,7 +137,12 @@ async function processRequest(reqEnc: string, _logger: Logger): Promise<string |
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function sendTx(tx: any, reporter: IReporterConfig, logger: Logger) {
+async function sendTx(
+  tx: any,
+  reporter: IReporterConfig,
+  payloadParameters: IRequestResponseTransactionParameters,
+  logger: Logger
+) {
   const wallet = buildWallet({
     privateKey: reporter.privateKey,
     providerUrl: reporter.chainRpcs[0].rpcUrl
@@ -152,4 +159,21 @@ async function sendTx(tx: any, reporter: IReporterConfig, logger: Logger) {
   }
   const txReceipt = await sendTransaction(txParams)
   logger.info(`submitted tx ${txReceipt.hash}`)
+
+  try {
+    const prepaymentInterface = new Interface(PREPAYMENT_ACCOUNT_ABI)
+    const prepaymentLog = prepaymentInterface.parseLog(txReceipt.logs[0])
+    const oldBalance = BigInt(prepaymentLog?.args?.oldBalance || 0)
+    const newBalance = BigInt(prepaymentLog?.args?.newBalance || 0)
+
+    await addFulfillmentTx({
+      txHash: txReceipt.hash,
+      requestId: payloadParameters.requestId,
+      consumerAddress: payloadParameters.sender,
+      service: 'Request-Response',
+      amount: (oldBalance - newBalance).toString(),
+      balance: newBalance.toString(),
+      status: 'fulfilled'
+    })
+  } catch (e) {}
 }

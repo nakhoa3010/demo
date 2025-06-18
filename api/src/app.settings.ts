@@ -20,6 +20,8 @@ export const COINGECKO_API_URL = process.env.COINGECKO_API_URL || ''
 
 export const COINGECKO_API_KEY = process.env.COINGECKO_API_KEY || ''
 
+export const RPC_URL = process.env.RPC_URL || ''
+
 export function setAppSetting(app: INestApplication) {
   app.setGlobalPrefix('api', {
     exclude: [{ path: 'health', method: RequestMethod.GET }]
