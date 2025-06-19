@@ -1,4 +1,4 @@
-# X Oracle Contracts
+# X Oracle
 
 ## Installation
 
