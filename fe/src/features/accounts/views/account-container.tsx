@@ -33,12 +33,12 @@ const steps = [
     icon: '/icons/spin.svg',
   },
 
-  // {
-  //   title: 'account.step_vrf',
-  //   type: 'KeyHash',
-  //   contractAddress: '0x159F3BB6609B4C709F15823F3544032942106042',
-  //   icon: '/icons/spin.svg',
-  // },
+  {
+    title: 'account.step_vrf',
+    type: 'KeyHash',
+    contractAddress: '0x16f30d078cdb35c573cf70cf7f3c74fdbf420e9671bc4df8f9c58822d0b6cd58',
+    icon: '/icons/spin.svg',
+  },
 ];
 
 export default function AccountContainer() {
