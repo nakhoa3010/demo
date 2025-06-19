@@ -325,7 +325,7 @@ model Consumer {
   updatedAt         DateTime           @default(now()) @updatedAt @map("updated_at") @db.Timestamptz
   lastFulfillment   DateTime           @default(now()) @map("last_fulfillment") @db.Timestamptz 
   PrepaymentAccount PrepaymentAccount? @relation(fields: [accId], references: [id])
-  ConsumerRequest   ConsumerRequest[]
+  ConsumerRequest   ConsumerRequest[] @relation("PK_ConsumerRequest")
 
   @@map("consumer")
 }
@@ -341,7 +341,7 @@ model ConsumerRequest {
   balance    String   @default("0") @map("balance")
   createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz
   updatedAt  DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz
-  Consumer   Consumer @relation(fields: [consumerId], references: [id])
+  Consumer   Consumer @relation("PK_ConsumerRequest", fields: [consumerId], references: [id], onDelete: Cascade)
 
   @@map("consumer_request")
 }
