@@ -44,10 +44,23 @@ export class FlipcoinService {
   }
 
   async getHistory(): Promise<any> {
-    return await this.prisma.flipCoinHistory.findMany({
+    const flipCoinHistory = await this.prisma.flipCoinHistory.findMany({
       orderBy: {
         createdAt: 'desc'
       }
     })
+
+    const result = await Promise.all(
+      flipCoinHistory.map(async (history) => {
+        const dataResult = await this.contract.requestInfors(history.requestId)
+        return {
+          ...history,
+          betAmount: dataResult.betAmount.toString(),
+          hasResult: dataResult.hasResult,
+          result: dataResult.result.toString()
+        }
+      })
+    )
+    return result
   }
 }
