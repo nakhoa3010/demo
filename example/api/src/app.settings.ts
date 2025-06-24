@@ -16,7 +16,7 @@ export function setAppSetting(app: INestApplication) {
   })
 
   app.enableCors({
-    origin: ['http://localhost:3000', 'example.x-oracle.com'],
+    origin: ['http://localhost:3000', 'https://example.x-oracle.com'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     preflightContinue: false,
     optionsSuccessStatus: 204
