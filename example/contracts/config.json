@@ -1,5 +1,8 @@
 {
   "base_test": {
     "flipCoin": "0xaDda71A6D44008704F620B05Ec35F9187FaA475A"
+  },
+  "base": {
+    "aiInference": "0xbf9000bc09228d045118E964F289655B7046eBa0"
   }
 }

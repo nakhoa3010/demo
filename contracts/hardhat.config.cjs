@@ -18,6 +18,12 @@ const _base_sepolia = {
   ...commonConfig,
 }
 
+const _base = {
+  url: 'https://mainnet.base.org',
+  chainId: 8453,
+  ...commonConfig,
+}
+
 const config = {
   solidity: {
     version: '0.8.16',
@@ -39,6 +45,9 @@ const config = {
     base_sepolia: {
       ..._base_sepolia,
     },
+    base: {
+      ..._base,
+    },
   },
   paths: {
     sources: './src',
@@ -46,6 +55,7 @@ const config = {
   etherscan: {
     apiKey: {
       base_sepolia: process.env.API_KEY,
+      base: process.env.API_KEY,
     },
     customChains: [
       {
@@ -54,6 +64,14 @@ const config = {
         urls: {
           apiURL: 'https://api-sepolia.basescan.org/api',
           browserURL: 'https://sepolia.basescan.org/',
+        },
+      },
+      {
+        network: 'base',
+        chainId: 8453,
+        urls: {
+          apiURL: 'https://api.basescan.org/api',
+          browserURL: 'https://basescan.org/',
         },
       },
     ],

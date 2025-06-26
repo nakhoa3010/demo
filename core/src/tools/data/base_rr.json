@@ -1,0 +1,10 @@
+[
+  {
+    "chain": "Base",
+    "name": "Base-rr",
+    "coordinatorAddress": "0x2b5AfBC3d4ccddb438b571Dc1A6FE36ADb76d65D",
+    "eventTopic": "0xf5de04e252c7bc264fe51dceea89d95673b5166c209718c5f5a068341dab8111",
+    "startBlock": "32064078",
+    "webhookUrl": "https://webhook.x-oracle.com/events/rr"
+  }
+]
